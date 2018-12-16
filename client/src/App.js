@@ -13,6 +13,8 @@ import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import ProgressSpinner from './components/common/ProgressSpinner';
 
+import AppSearch from './components/search/AppSearch'
+
 class App extends Component {
   render() {
     return (
@@ -20,12 +22,14 @@ class App extends Component {
           <div className="App">
             <CssBaseline />
             <AppNavbar />
-            <div className="container">
-              <Register />
-              <Login />
-            </div>
+            <main>
+            <Route exact path="/search" component={AppSearch} />
+ 
+              <Route exact path="/register" component={Register} />
+              <Route exact path="/login" component={Login} />
+            </main>
             
-            <AppFooter />
+
           </div>
         </Router>
     );

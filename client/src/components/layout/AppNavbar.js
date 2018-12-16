@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
@@ -84,12 +85,6 @@ const styles = theme => ({
     height: '100vh',
     overflow: 'auto',
   },
-  chartContainer: {
-    marginLeft: -22,
-  },
-  tableContainer: {
-    height: 320,
-  },
   h5: {
     marginBottom: theme.spacing.unit * 2,
   },
@@ -129,18 +124,36 @@ class AppNavbar extends Component {
                         >
                             <MenuIcon />
                         </IconButton>
+                        <Link to="/">
                         <Typography
                             component="h1"
                             variant="h6"
-                            color="inherit"
+                            color="white"
                             noWrap
                             className={classes.title}
                             >
                             TutorUP
                         </Typography>
+                        </Link>
                     </Toolbar>
                 </AppBar>
-
+                <Drawer
+                variant="permanent"
+                classes={{
+                    paper: classNames(classes.drawerPaper, !open && classes.drawerPaperClose),
+                }}
+                open={open}
+                >
+                <div className={classes.toolbarIcon}>
+                    <IconButton onClick={this.handleDrawerClose}>
+                    <ChevronLeftIcon />
+                    </IconButton>
+                </div>
+                <Divider />
+                <List>{mainListItems}</List>
+                <Divider />
+                <List>{secondaryListItems}</List>
+                </Drawer>
             </div>
         );
     }

@@ -9,9 +9,11 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import DashboardIcon from '@material-ui/icons/Dashboard';
+import LockIcon from '@material-ui/icons/LockOutlined';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
+import SearchIcon from '@material-ui/icons/Search';
 import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 
@@ -23,24 +25,30 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Dashboard" />
     </ListItem>
+    <Link to="/login">
     <ListItem button>
       <ListItemIcon>
-        <ShoppingCartIcon />
+        <LockIcon />
       </ListItemIcon>
-      <ListItemText primary="Orders" />
+      <ListItemText primary="Login" />
     </ListItem>
+    </Link>
+    <Link to="/register">
     <ListItem button>
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
-      <ListItemText primary="Customers" />
+      <ListItemText primary="Register" />
     </ListItem>
+    </Link>
+    <Link to="/search">
     <ListItem button>
       <ListItemIcon>
-        <BarChartIcon />
+        <SearchIcon />
       </ListItemIcon>
-      <ListItemText primary="Reports" />
+      <ListItemText primary="Search Tutors" />
     </ListItem>
+    </Link>
   </div>
 );
 
