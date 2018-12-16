@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -45,45 +45,66 @@ const styles = theme => ({
   },
 });
 
-function Login(props) {
-  const { classes } = props;
+class Login extends Component {
+    state = {
+        email: '',
+        password: '',
+        errors: {}
+    }
 
-  return (
-    <main className={classes.main}>
-      <CssBaseline />
-      <Paper className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        <form className={classes.form}>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="email">Email Address</InputLabel>
-            <Input id="email" name="email" autoComplete="email" autoFocus />
-          </FormControl>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="password">Password</InputLabel>
-            <Input name="password" type="password" id="password" autoComplete="current-password" />
-          </FormControl>
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Sign in
-          </Button>
-        </form>
-      </Paper>
-    </main>
-  );
+    onSubmit = (e) => {
+        e.preventDefault();
+        
+        const { email, password } = this.state;
+        const userData = {
+            email: email,
+            password: password
+        }
+    }
+
+    onChange = (e) => {
+        this.setState({ [e.target.name]: e.target.value })
+    }
+
+    render() {
+        const { errors } = this.state;
+        const { classes } = this.props;
+        return (
+            <main className={classes.main}>
+              <Paper className={classes.paper}>
+                <Avatar className={classes.avatar}>
+                  <LockIcon />
+                </Avatar>
+                <Typography component="h1" variant="h5">
+                  Sign in
+                </Typography>
+                <form className={classes.form} onSubmit={this.onSubmit}>
+                  <FormControl margin="normal" required fullWidth>
+                    <InputLabel htmlFor="email">Email Address</InputLabel>
+                    <Input id="email" name="email" autoComplete="email" autoFocus />
+                  </FormControl>
+                  <FormControl margin="normal" required fullWidth>
+                    <InputLabel htmlFor="password">Password</InputLabel>
+                    <Input name="password" type="password" id="password" autoComplete="current-password" />
+                  </FormControl>
+                  <FormControlLabel
+                    control={<Checkbox value="remember" color="primary" />}
+                    label="Remember me"
+                  />
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                  >
+                    Sign in
+                  </Button>
+                </form>
+              </Paper>
+            </main>
+          );
+    }
 }
 
 Login.propTypes = {
