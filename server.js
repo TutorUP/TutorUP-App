@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 dotenv.config();
+const cors = require('cors');
 const helmet = require('helmet');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -9,6 +10,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = process.env.PORT || 8080;
 
+app.use(cors())
 app.use(helmet());
 
 // Normal express middleware config defaults

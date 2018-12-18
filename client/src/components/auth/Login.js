@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
+
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -49,9 +50,10 @@ class Login extends Component {
     state = {
         email: '',
         password: '',
-        errors: {}
+        errors: {},
+        drawerOpen: false
     }
-
+    
     onSubmit = (e) => {
         e.preventDefault();
         

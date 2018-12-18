@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -16,6 +17,16 @@ import BarChartIcon from '@material-ui/icons/BarChart';
 import SearchIcon from '@material-ui/icons/Search';
 import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+
+const styles = {
+  list: {
+    width: 250
+  },
+  fullList: {
+    width: 'auto'
+  }
+
+}
 
 export const mainListItems = (
   <div>

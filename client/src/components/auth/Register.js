@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
+
 import SentimentSatisfiedAlt from '@material-ui/icons/SentimentSatisfiedAlt';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -15,6 +16,21 @@ import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 const styles = theme => ({
+    container: {
+      display: 'flex',
+      flexWrap: 'wrap',
+    },
+    textField: {
+      marginLeft: theme.spacing.unit,
+      marginRight: theme.spacing.unit,
+      width: 200,
+    },
+    dense: {
+      marginTop: 19,
+    },
+    menu: {
+      width: 200,
+    },
     main: {
       width: 'auto',
       display: 'block', // Fix IE 11 issue.
@@ -57,12 +73,23 @@ class Register extends Component {
 
     onSubmit = (e) => {
         e.preventDefault();
+
+        console.log(this.state.name)
+        console.log(this.state.email)
+        console.log(this.state.password)
+        console.log(this.state.password2)
         
-        const { email, password } = this.state;
-        const userData = {
+        const { name, email, password, password2 } = this.state;
+        const newUser = {
+            name: name,
             email: email,
-            password: password
+            password: password,
+            password2: password2
         }
+
+        axios.post('/api/users/register', newUser)
+          .then(res => console.log(res.data))
+          .catch(err => console.error(err))
     }
 
     onChange = (e) => {
@@ -81,22 +108,22 @@ class Register extends Component {
                 <Typography component="h1" variant="h5">
                   Register
                 </Typography>
-                <form className={classes.form} onSubmit={this.onSubmit}>
+                <form className={classes.container} autoComplete="off" onSubmit={this.onSubmit}>
                 <FormControl margin="normal" required fullWidth>
                     <InputLabel htmlFor="name">Name</InputLabel>
-                    <Input id="name" name="name" autoComplete="email" autoFocus />
+                    <Input id="name" name="name" autoComplete="email" autoFocus onChange={this.onChange}/>
                   </FormControl>
                   <FormControl margin="normal" required fullWidth>
                     <InputLabel htmlFor="email">Email Address</InputLabel>
-                    <Input id="email" name="email" autoComplete="email" autoFocus />
+                    <Input id="email" name="email" autoComplete="email" autoFocus onChange={this.onChange}/>
                   </FormControl>
                   <FormControl margin="normal" required fullWidth>
                     <InputLabel htmlFor="password">Password</InputLabel>
-                    <Input name="password" type="password" id="password" autoComplete="current-password" />
+                    <Input name="password" type="password" id="password" autoComplete="current-password" onChange={this.onChange}/>
                   </FormControl>
                   <FormControl margin="normal" required fullWidth>
                     <InputLabel htmlFor="password2">Confirm Password</InputLabel>
-                    <Input name="password2" type="password" id="password2" autoComplete="current-password" />
+                    <Input name="password2" type="password" id="password2" autoComplete="current-password" onChange={this.onChange}/>
                   </FormControl>
                   <FormControlLabel
                     control={<Checkbox value="remember" color="primary" />}
