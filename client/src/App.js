@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import classNames from 'classnames';
 import { Provider } from 'react-redux';
+import store from './store';
 import './App.css';
 import withStyles from '@material-ui/core/styles/withStyles';
 
@@ -31,18 +32,20 @@ class App extends Component {
   render() {
     const { classes } = this.props;
     return (
-        <Router>
-          <div className="App">
-            <CssBaseline />
-            <AppNavbar />
-            <main className={classes.content}>
-              <div className={classes.appBarSpacer} />
-              <Route exact path="/search" component={AppSearch} />
-              <Route exact path="/register" component={Register} />
-              <Route exact path="/login" component={Login} />
-            </main>
-          </div>
-        </Router>
+        <Provider store={ store }>
+          <Router>
+            <div className="App">
+              <CssBaseline />
+              <AppNavbar />
+              <main className={classes.content}>
+                <div className={classes.appBarSpacer} />
+                <Route exact path="/search" component={AppSearch} />
+                <Route exact path="/register" component={Register} />
+                <Route exact path="/login" component={Login} />
+              </main>
+            </div>
+          </Router>
+        </Provider>
     );
   }
 }

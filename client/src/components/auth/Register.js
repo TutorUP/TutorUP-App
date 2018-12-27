@@ -73,11 +73,6 @@ class Register extends Component {
 
     onSubmit = (e) => {
         e.preventDefault();
-
-        console.log(this.state.name)
-        console.log(this.state.email)
-        console.log(this.state.password)
-        console.log(this.state.password2)
         
         const { name, email, password, password2 } = this.state;
         const newUser = {
@@ -89,7 +84,7 @@ class Register extends Component {
 
         axios.post('/api/users/register', newUser)
           .then(res => console.log(res.data))
-          .catch(err => console.error(err))
+          .catch(err => this.setState({ errors: err.response.data }));
     }
 
     onChange = (e) => {
