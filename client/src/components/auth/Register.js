@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import { registerUser } from '../../actions/authActions';
 
 import SentimentSatisfiedAlt from '@material-ui/icons/SentimentSatisfiedAlt';
 import Avatar from '@material-ui/core/Avatar';
@@ -82,9 +84,11 @@ class Register extends Component {
             password2: password2
         }
 
-        axios.post('/api/users/register', newUser)
-          .then(res => console.log(res.data))
-          .catch(err => this.setState({ errors: err.response.data }));
+        this.props.registerUser(newUser);
+
+        // axios.post('/api/users/register', newUser)
+        //   .then(res => console.log(res.data))
+        //   .catch(err => this.setState({ errors: err.response.data }));
     }
 
     onChange = (e) => {
@@ -94,6 +98,8 @@ class Register extends Component {
     render() {
         const { errors } = this.state;
         const { classes } = this.props;
+        const { user } = this.props.auth;
+
         return (
             <main className={classes.main}>
               <Paper className={classes.paper}>
@@ -103,6 +109,7 @@ class Register extends Component {
                 <Typography component="h1" variant="h5">
                   Register
                 </Typography>
+                {user ? user.name : null}
                 <form className={classes.container} autoComplete="off" onSubmit={this.onSubmit}>
                 <FormControl margin="normal" required fullWidth>
                     <InputLabel htmlFor="name">Name</InputLabel>
@@ -142,7 +149,13 @@ class Register extends Component {
 }
 
 Register.propTypes = {
-    classes: PropTypes.object.isRequired,
-  };
+  registerUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
+};
 
-  export default withStyles(styles)(Register);
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+  export default connect(mapStateToProps, { registerUser })(withStyles(styles)(Register));
