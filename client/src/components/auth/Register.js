@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { registerUser } from '../../actions/authActions';
 
@@ -84,11 +84,14 @@ class Register extends Component {
             password2: password2
         }
 
-        this.props.registerUser(newUser);
+        this.props.registerUser(newUser, this.props.history);
+    }
 
-        // axios.post('/api/users/register', newUser)
-        //   .then(res => console.log(res.data))
-        //   .catch(err => this.setState({ errors: err.response.data }));
+    componentWillReceiveProps(nextProps) {
+      if (nextProps.errors) {
+        this.setState({ errors: nextProps.errors });
+      }
+
     }
 
     onChange = (e) => {
@@ -98,7 +101,6 @@ class Register extends Component {
     render() {
         const { errors } = this.state;
         const { classes } = this.props;
-        const { user } = this.props.auth;
 
         return (
             <main className={classes.main}>
@@ -109,7 +111,6 @@ class Register extends Component {
                 <Typography component="h1" variant="h5">
                   Register
                 </Typography>
-                {user ? user.name : null}
                 <form className={classes.container} autoComplete="off" onSubmit={this.onSubmit}>
                 <FormControl margin="normal" required fullWidth>
                     <InputLabel htmlFor="name">Name</InputLabel>
@@ -151,11 +152,13 @@ class Register extends Component {
 Register.propTypes = {
   registerUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  errors: state.errors
 });
 
-  export default connect(mapStateToProps, { registerUser })(withStyles(styles)(Register));
+export default connect(mapStateToProps, { registerUser })(withStyles(styles)(withRouter(Register)));
