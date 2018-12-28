@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { loginUser } from '../../actions/authActions';
 import axios from 'axios';
 
 import Avatar from '@material-ui/core/Avatar';
@@ -110,7 +112,15 @@ class Login extends Component {
 }
 
 Login.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  erros: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Login);
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+})
+
+export default connect(null, { loginUser })(withStyles(styles)(Login));

@@ -46,9 +46,6 @@ const Header = () => (
         width={40}
       />
     </a>
-    <a href="./" className="logo">
-      aeki
-    </a>
     <ConnectedSearchBox />
   </header>
 );

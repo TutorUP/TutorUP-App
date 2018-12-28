@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -11,6 +12,8 @@ import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import Divider from '@material-ui/core/Divider';
 import { fade } from '@material-ui/core/styles/colorManipulator';
+
+import { clearCurrentProfile, logoutUser } from '../../actions/authActions';
 
 import SearchIcon from '@material-ui/icons/Search';
 import IconButton from '@material-ui/core/IconButton';
@@ -137,13 +140,20 @@ class AppNavbar extends Component {
         this.setState({ open: false });
     };
 
+    onLogoutClick = (e) => {
+      e.preventDefault();
+      this.props.clearCurrentProfile();
+      this.props.logoutUser();
+    }
+
     render() {
         const { open } = this.state;
         const { classes } = this.props;
         return (
             <div>
+                <CssBaseline />
                 <AppBar
-                    position="absolute"
+                    position="fixed"
                     color="primary"
                     className={classNames(classes.appBar, open && classes.appBarShift)}
                 >
@@ -184,22 +194,21 @@ class AppNavbar extends Component {
                     </Toolbar>
                 </AppBar>
                 <Drawer
-                variant="permanent"
-                anchor="left"
-                classes={{
-                    paper: classNames(classes.drawerPaper, !open && classes.drawerPaperClose),
-                }}
-                open={open}
-                >
-                <div className={classes.toolbarIcon}>
-                    <IconButton onClick={this.handleDrawerClose}>
-                    <ChevronLeftIcon />
-                    </IconButton>
-                </div>
-                <Divider />
-                <List>{mainListItems}</List>
-                <Divider />
-                <List>{secondaryListItems}</List>
+                  anchor="left"
+                  classes={{
+                      paper: classNames(classes.drawerPaper, !open && classes.drawerPaperClose),
+                  }}
+                  open={open}
+                  >
+                  <div className={classes.toolbarIcon}>
+                      <IconButton onClick={this.handleDrawerClose}>
+                        <ChevronLeftIcon />
+                      </IconButton>
+                  </div>
+                  <Divider />
+                  <List>{mainListItems}</List>
+                  <Divider />
+                  <List>{secondaryListItems}</List>
                 </Drawer>
             </div>
         );

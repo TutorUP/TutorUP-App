@@ -13,6 +13,7 @@ import AppNavbar from './components/layout/AppNavbar';
 import AppFooter from './components/layout/AppFooter';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
+import Dashboard from './components/dashboard/Dashboard';
 import ProgressSpinner from './components/common/ProgressSpinner';
 
 import AppSearch from './components/search/AppSearch'
@@ -42,7 +43,9 @@ class App extends Component {
                 <Route exact path="/search" component={AppSearch} />
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
+                <Route exact path="/dashboard" component={Dashboard} />
               </main>
+              <AppFooter />
             </div>
           </Router>
         </Provider>
