@@ -30,42 +30,44 @@ const styles = {
 
 export const mainListItems = (
   <div>
-    <ListItem button>
-      <ListItemIcon>
-        <DashboardIcon />
-      </ListItemIcon>
-      <ListItemText primary="Dashboard" />
-    </ListItem>
+    <Link to="/dashboard">
+      <ListItem button>
+        <ListItemIcon>
+          <DashboardIcon />
+        </ListItemIcon>
+        <ListItemText primary="Dashboard" />
+      </ListItem>
+    </Link>
     <Link to="/login">
-    <ListItem button>
-      <ListItemIcon>
-        <LockIcon />
-      </ListItemIcon>
-      <ListItemText primary="Login" />
-    </ListItem>
+      <ListItem button>
+        <ListItemIcon>
+          <LockIcon />
+        </ListItemIcon>
+        <ListItemText primary="Login" />
+      </ListItem>
     </Link>
     <Link to="/register">
-    <ListItem button>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Register" />
-    </ListItem>
+      <ListItem button>
+        <ListItemIcon>
+          <PeopleIcon />
+        </ListItemIcon>
+        <ListItemText primary="Register" />
+      </ListItem>
     </Link>
     <Link to="/search">
-    <ListItem button>
-      <ListItemIcon>
-        <SearchIcon />
-      </ListItemIcon>
-      <ListItemText primary="Search Tutors" />
-    </ListItem>
+      <ListItem button>
+        <ListItemIcon>
+          <SearchIcon />
+        </ListItemIcon>
+        <ListItemText primary="Search Tutors" />
+      </ListItem>
     </Link>
   </div>
 );
 
 export const secondaryListItems = (
   <div>
-    <ListSubheader inset>Saved reports</ListSubheader>
+    <ListSubheader inset>Notifications</ListSubheader>
     <ListItem button>
       <ListItemIcon>
         <AssignmentIcon />

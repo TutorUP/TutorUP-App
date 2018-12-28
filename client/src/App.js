@@ -11,6 +11,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 // components
 import AppNavbar from './components/layout/AppNavbar';
 import AppFooter from './components/layout/AppFooter';
+import AppLanding from './components/layout/AppLanding';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import Dashboard from './components/dashboard/Dashboard';
@@ -40,6 +41,7 @@ class App extends Component {
               <AppNavbar />
               <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
+                <Route exact path="/" component={AppLanding} />
                 <Route exact path="/search" component={AppSearch} />
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />

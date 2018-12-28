@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import classNames from 'classnames';
+import { connect } from 'react-redux';
+
+import { logoutUser } from '../../actions/authActions';
+import { clearCurrentProfile } from '../../actions/profileActions';
+import { mainListItems, secondaryListItems } from './AppNavbarLinks';
+
+// Material UI imports
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -12,16 +18,12 @@ import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import Divider from '@material-ui/core/Divider';
 import { fade } from '@material-ui/core/styles/colorManipulator';
-
-import { clearCurrentProfile, logoutUser } from '../../actions/authActions';
-
 import SearchIcon from '@material-ui/icons/Search';
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import { mainListItems, secondaryListItems } from './AppNavbarLinks';
 
 const drawerWidth = 240;
 
@@ -151,7 +153,6 @@ class AppNavbar extends Component {
         const { classes } = this.props;
         return (
             <div>
-                <CssBaseline />
                 <AppBar
                     position="fixed"
                     color="primary"
@@ -217,6 +218,12 @@ class AppNavbar extends Component {
 
 AppNavbar.propTypes = {
     classes: PropTypes.object.isRequired,
+    logoutUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(AppNavbar);
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(null, { logoutUser, clearCurrentProfile })(withStyles(styles)(AppNavbar));
