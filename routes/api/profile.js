@@ -3,7 +3,6 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const passport = require('passport');
 
-
 const Profile = require('../../models/Profile');
 const User = require('../../models/User');
 
@@ -12,7 +11,7 @@ const User = require('../../models/User');
 // @access  Public
 router.get('/test', (req, res) => res.json({ msg: 'Profile Route Works' }));
 
-// @route   GET api/profiles/all
+// @route   GET api/profile/all
 // @desc    Get all users' profiles
 // @access  Public
 router.get('/all', (req, res) => {
@@ -30,7 +29,7 @@ router.get('/all', (req, res) => {
         .catch(err => res.status(404).json({ profile: 'There are no profiles', err }));
 });
 
-// @route   GET api/profiles/profile
+// @route   GET api/profile
 // @desc    Get current user's profile
 // @access  Private
 router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {

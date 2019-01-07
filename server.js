@@ -5,10 +5,16 @@ const cors = require('cors');
 const helmet = require('helmet');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const passport = require('passport');
+const path = require('path');
 
+// Load routes
+const users = require('./routes/api/users');
+const profile = require('./routes/api/profile');
+const posts = require('./routes/api/posts');
 
 const app = express();
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 5000;
 
 app.use(cors())
 app.use(helmet());
@@ -25,10 +31,11 @@ mongoose
     .then(() => console.info('MongoDB Connected'))
     .catch(err => console.error(err));
 
-// Load routes
-const users = require('./routes/api/users');
-const profile = require('./routes/api/profile');
-const posts = require('./routes/api/posts');
+// Passport middleware
+app.use(passport.initialize());
+
+// Passport Config
+require('./config/userAuth')(passport);
 
 app.use('/test', (req, res) => {
     res.send('Test worked.');

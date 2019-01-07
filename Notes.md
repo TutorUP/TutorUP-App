@@ -27,3 +27,7 @@ bcrypt.compare(password, user.password).then(isMatch => {
     }
 })
 ```
+
+- Protected routes using Passport JWT auth strategy
+
+- When user first logs in they don't have a profile: they are prompted to create one via profile form

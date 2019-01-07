@@ -4,11 +4,12 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 
-// Load User model
-const User = require('../../models/User');
-
+// Load Validation
 const validateRegisterInput = require('../../validation/registerAuth');
 const validateLoginInput = require('../../validation/loginAuth');
+
+// Load User model
+const User = require('../../models/User');
 
 // @route   GET api/users/test
 // @desc    Tests users route
@@ -30,14 +31,18 @@ router.post('/register', (req, res, next) => {
             return res.status(400).json(errors);
         }
         else {
-            
+            // TODO: add avatar to user
+            let avatar = 'Avatar here';
+
             const newUser = new User({
                 name: req.body.name,
                 email: req.body.email,
                 password: req.body.password,
-                isTutor: true
+                isTutor: true,
+                avatar
             });
             
+            // Generate hashed password to save to DB
             bcrypt.genSalt(parseInt(process.env.saltRounds), (err, salt) => {
                 bcrypt.hash(newUser.password, salt, (err, hash) => {
                     if (err) throw err;
@@ -74,12 +79,16 @@ router.post('/login', (req, res) => {
                 return res.status(404).json(errors);
             }
             
+            // Check password
             bcrypt.compare(password, user.password)
                 .then(isMatch => {
-                    if(isMatch) {
+                    if (isMatch) {
                         // User Matched
-                        const payload = { id: user.id, name: user.name, avatar: user.avatar }; // Create JWT Payload
+                        const payload = { id: user.id, 
+                                        name: user.name, 
+                                        avatar: user.avatar }; // Create JWT Payload
                         
+                        // Sign token
                         jwt.sign(
                             payload,
                             process.env.secretOrKey,
