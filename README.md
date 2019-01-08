@@ -12,8 +12,8 @@
 2. Serverless backend
 
 ## Technologies
-- Express
-- Mongoose
+- Express: Fast, flexible Node.js web application framework
+- Mongoose: Models MongoDB objects for Node.js (ORM)
 - React
 - Redux
 - Passport

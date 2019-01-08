@@ -16,6 +16,7 @@ import AppLanding from './components/layout/AppLanding';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import Dashboard from './components/dashboard/Dashboard';
+import CreateProfile from './components/profile/CreateProfile';
 import ProgressSpinner from './components/common/ProgressSpinner';
 
 import AppSearch from './components/search/AppSearch'
@@ -47,6 +48,7 @@ class App extends Component {
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/dashboard" component={Dashboard} />
+                <Route exact path="/create-profile" component={CreateProfile} />
                 {/* For Routes protected by Auth */}
                 <Switch>
                 </Switch>
