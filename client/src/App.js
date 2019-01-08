@@ -9,6 +9,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 // components
+import PrivateRoute from './components/common/PrivateRoute';
 import AppNavbar from './components/layout/AppNavbar';
 import AppFooter from './components/layout/AppFooter';
 import AppLanding from './components/layout/AppLanding';
@@ -46,6 +47,9 @@ class App extends Component {
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/dashboard" component={Dashboard} />
+                {/* For Routes protected by Auth */}
+                <Switch>
+                </Switch>
               </main>
               <AppFooter />
             </div>

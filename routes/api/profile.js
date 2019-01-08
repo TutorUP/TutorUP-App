@@ -6,6 +6,9 @@ const passport = require('passport');
 const Profile = require('../../models/Profile');
 const User = require('../../models/User');
 
+// Load validation
+const validateProfileInput = require('../../validation/profileValidation');
+
 // @route   GET api/profile/test
 // @desc    Tests profile route
 // @access  Public
@@ -44,5 +47,44 @@ router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => 
         })
         .catch(err => res.status(404).json(err));
 });
+
+// @route   POST api/profile
+// @desc    Create or edit user profile
+// @access  Private
+router.post('/', passport.authenticate('jwt', { session: false}), (req, res) => {
+    const { errors, isValid } = validateProfileInput(req.body);
+
+    // Check validation
+    if (!isValid) {
+        return res.status(400).json(errors);
+    }
+    
+    // Get fields
+    const profileFields = {};
+    profileFields.user = req.user.id;
+    if (req.body.handle) profileFields.handle = req.body.handle;
+    if (req.body.major) profileFields.major = req.body.major;
+    if (req.body.status) profileFields.status = req.body.status;
+
+    // Classes - Split into array
+    if (typeof req.body.classes !== 'undefined') profileFields.classes = req.body.classes.split(',');
+    if (req.body.bio) profileFields.bio = req.body.bio;
+
+    Profile.findOne({ user: req.user.id }).then(profile => {
+        if (profile) {
+            // Update profile
+            Profile.findOneAndUpdate(
+                { user: req.user.id },
+                { $set: profileFields },
+                { new: true }
+            ).then(profile => res.json(profile));
+        }
+        // Profile not found
+        else {
+
+        }
+    })
+
+})
 
 module.exports = router;

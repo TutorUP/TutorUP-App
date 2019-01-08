@@ -74,7 +74,7 @@ class Login extends Component {
         const { errors } = this.state;
         const { classes } = this.props;
         return (
-            <main className={classes.main}>
+            <div className={classes.main}>
               <Paper className={classes.paper}>
                 <Avatar className={classes.avatar}>
                   <LockIcon />
@@ -106,7 +106,7 @@ class Login extends Component {
                   </Button>
                 </form>
               </Paper>
-            </main>
+            </div>
           );
     }
 }
