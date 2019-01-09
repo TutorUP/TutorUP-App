@@ -17,6 +17,7 @@
 - React
 - Redux
 - Passport
+- Material-UI: Google Style Library
 
 ## Local Setup
 1. Create mLab account and create database
@@ -27,6 +28,8 @@
 - passport
 - passport-jwt
 - bcrypt
+- express
+- material-ui
 
 ## Look into
 - Algolia (search)
