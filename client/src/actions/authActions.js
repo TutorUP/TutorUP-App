@@ -16,7 +16,8 @@ export const registerUser = (userData, history) => dispatch => {
         );
 }
 
-export const loginUser = (userData) => dispatch => {
+// Login - Get User JWT
+export const loginUser = userData => dispatch => {
     axios.post('/api/users/login', userData)
         .then(res => {
             // save to localStorage

@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Formik } from "formik";
+import { string, object, ref } from 'yup';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import RegisterForm from './RegisterForm';
+
+// redux action
 import { registerUser } from '../../actions/authActions';
 
 import SentimentSatisfiedAlt from '@material-ui/icons/SentimentSatisfiedAlt';
@@ -12,7 +17,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
-import LockIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -64,6 +68,11 @@ const styles = theme => ({
     },
   });
 
+// Validation with Yup
+const validationSchema = object({
+  name: string("Name")
+})
+
 class Register extends Component {
     state = {
         name: '',
@@ -103,14 +112,18 @@ class Register extends Component {
         const { classes } = this.props;
 
         return (
-            <main className={classes.main}>
-              <Paper className={classes.paper}>
+            <div className={classes.main}>
+              <Paper className={classes.paper} elevation={1}>
                 <Avatar className={classes.avatar}>
                   <SentimentSatisfiedAlt />
                 </Avatar>
                 <Typography component="h1" variant="h5">
                   Register
                 </Typography>
+                <Formik
+                  render={props => <RegisterForm {...props}/>}
+                  validationSchema={validationSchema}
+                />
                 <form className={classes.container} autoComplete="off" onSubmit={this.onSubmit}>
                 <FormControl margin="normal" required fullWidth>
                     <InputLabel htmlFor="name">Name</InputLabel>
@@ -143,7 +156,7 @@ class Register extends Component {
                   </Button>
                 </form>
               </Paper>
-            </main>
+            </div>
           );
     }
 

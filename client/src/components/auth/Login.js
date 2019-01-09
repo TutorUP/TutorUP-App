@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { loginUser } from '../../actions/authActions';
-import axios from 'axios';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -55,6 +54,18 @@ class Login extends Component {
         errors: {},
         drawerOpen: false
     }
+
+    componentDidMount() {
+      if (this.props.auth.isAuthenticated) {
+        this.props.history.push('/dashboard');
+      }
+    }
+
+    componentWillReceiveProps(nextProps) {
+      if (nextProps.auth.isAuthenticated) {
+        this.props.history.push('/dashboard')
+      }
+    }
     
     onSubmit = (e) => {
         e.preventDefault();
@@ -64,6 +75,7 @@ class Login extends Component {
             email: email,
             password: password
         }
+        this.props.loginUser(userData);
     }
 
     onChange = (e) => {
@@ -85,11 +97,12 @@ class Login extends Component {
                 <form className={classes.form} onSubmit={this.onSubmit}>
                   <FormControl margin="normal" required fullWidth>
                     <InputLabel htmlFor="email">Email Address</InputLabel>
-                    <Input id="email" name="email" autoComplete="email" autoFocus />
+                    <Input id="email" name="email" autoComplete="email" autoFocus onChange={this.onChange}/>
                   </FormControl>
                   <FormControl margin="normal" required fullWidth>
                     <InputLabel htmlFor="password">Password</InputLabel>
-                    <Input name="password" type="password" id="password" autoComplete="current-password" />
+                    <Input name="password" type="password" id="password" autoComplete="current-password" 
+                    onChange={this.onChange}/>
                   </FormControl>
                   <FormControlLabel
                     control={<Checkbox value="remember" color="primary" />}
@@ -123,4 +136,4 @@ const mapStateToProps = state => ({
   errors: state.errors
 })
 
-export default connect(null, { loginUser })(withStyles(styles)(Login));
+export default connect(mapStateToProps, { loginUser })(withStyles(styles)(Login));
