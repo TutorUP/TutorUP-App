@@ -13,10 +13,17 @@ const ProfileSchema = new Schema({
        required: true,
        max: 40 
     },
-    major: {
-        type: String,
-        required: true
-    },
+    education: [{
+        major: {
+            type: String,
+            required: true
+        },
+        minor: {
+            type: String
+        }
+
+    }],
+
     status: {
         type: String,
         required: true
@@ -27,6 +34,18 @@ const ProfileSchema = new Schema({
     },
     bio: {
         type: String
+    },
+    isTutor: {
+        type: Boolean
+    },
+    availability: {
+        from: {
+            type: Date,
+            required: true
+        },
+        to: {
+            type: Date
+        }
     },
     date: {
         type: Date,

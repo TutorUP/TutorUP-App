@@ -18,12 +18,9 @@ import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import Divider from '@material-ui/core/Divider';
 import { fade } from '@material-ui/core/styles/colorManipulator';
-import SearchIcon from '@material-ui/icons/Search';
 import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 
 const drawerWidth = 240;
 
@@ -142,7 +139,7 @@ class AppNavbar extends Component {
         this.setState({ open: false });
     };
 
-    onLogoutClick = (e) => {
+    onLogoutClick = e => {
       e.preventDefault();
       this.props.clearCurrentProfile();
       this.props.logoutUser();
@@ -151,6 +148,7 @@ class AppNavbar extends Component {
     render() {
         const { open } = this.state;
         const { classes } = this.props;
+        const { isAuthenticated, user } = this.props.auth;
         return (
             <div>
                 <AppBar
@@ -180,18 +178,6 @@ class AppNavbar extends Component {
                         </Typography>
                         </Link>
                         <div className={classes.grow} />
-                        <div className={classes.search}>
-                          <div className={classes.searchIcon}>
-                            <SearchIcon />
-                          </div>
-                          <InputBase
-                            placeholder="Search…"
-                            classes={{
-                              root: classes.inputRoot,
-                              input: classes.inputInput,
-                            }}
-                          />
-                        </div>
                     </Toolbar>
                 </AppBar>
                 <Drawer
@@ -201,15 +187,16 @@ class AppNavbar extends Component {
                   }}
                   open={open}
                   >
+                  <div tabIndex={0} role="button" onClick={this.handleDrawerClose} onKeyDown={this.handleDrawerClose}>
                   <div className={classes.toolbarIcon}>
                       <IconButton onClick={this.handleDrawerClose}>
                         <ChevronLeftIcon />
                       </IconButton>
                   </div>
-                  <Divider />
                   <List>{mainListItems}</List>
                   <Divider />
                   <List>{secondaryListItems}</List>
+                  </div>
                 </Drawer>
             </div>
         );
@@ -226,4 +213,4 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(null, { logoutUser, clearCurrentProfile })(withStyles(styles)(AppNavbar));
+export default connect(mapStateToProps, { logoutUser, clearCurrentProfile })(withStyles(styles)(AppNavbar));
