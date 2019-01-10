@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import classNames from 'classnames';
-import { Provider } from 'react-redux';
-import store from './store';
 import './App.css';
-import withStyles from '@material-ui/core/styles/withStyles';
 
+// Redux related
+import { Provider } from 'react-redux';
+import store from './redux/store';
+
+// MUI imports
+import withStyles from '@material-ui/core/styles/withStyles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 // components
@@ -17,9 +19,9 @@ import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import Dashboard from './components/dashboard/Dashboard';
 import CreateProfile from './components/profile/CreateProfile';
-import ProgressSpinner from './components/common/ProgressSpinner';
 
 import AppSearch from './components/search/AppSearch'
+import CalendarSearch from './components/search/CalendarSearch';
 
 const styles = theme => ({
   content: {
@@ -32,7 +34,6 @@ const styles = theme => ({
 })
 
 class App extends Component {
-
   render() {
     const { classes } = this.props;
     return (
@@ -45,12 +46,16 @@ class App extends Component {
                 <div className={classes.appBarSpacer} />
                 <Route exact path="/" component={AppLanding} />
                 <Route exact path="/search" component={AppSearch} />
+                <Route exact path="/calendar" component={CalendarSearch} />
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
-                <Route exact path="/dashboard" component={Dashboard} />
-                <Route exact path="/create-profile" component={CreateProfile} />
+                
                 {/* For Routes protected by Auth */}
                 <Switch>
+                  <PrivateRoute exact path="/dashboard" component={Dashboard}/>
+                </Switch>
+                <Switch>
+                  <PrivateRoute exact path="/create-profile" component={CreateProfile} />
                 </Switch>
               </main>
               <AppFooter />
