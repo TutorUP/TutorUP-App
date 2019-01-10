@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import RegisterForm from './RegisterForm';
 
 // redux action
-import { registerUser } from '../../actions/authActions';
+import { registerUser } from '../../redux/actions/authActions';
 
 import SentimentSatisfiedAlt from '@material-ui/icons/SentimentSatisfiedAlt';
 import Avatar from '@material-ui/core/Avatar';

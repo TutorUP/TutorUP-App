@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { loginUser } from '../../actions/authActions';
+import { loginUser } from '../../redux/actions/authActions';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';

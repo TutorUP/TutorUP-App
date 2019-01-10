@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getCurrentProfile } from '../../actions/profileActions';
+import { getCurrentProfile } from '../../redux/actions/profileActions';
 import ProgressSpinner from '../common/ProgressSpinner';
 
 import Typography from '@material-ui/core/Typography';

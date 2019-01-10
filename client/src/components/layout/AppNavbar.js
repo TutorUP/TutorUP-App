@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 
-import { logoutUser } from '../../actions/authActions';
-import { clearCurrentProfile } from '../../actions/profileActions';
+import { logoutUser } from '../../redux/actions/authActions';
+import { clearCurrentProfile } from '../../redux/actions/profileActions';
 import { secondaryListItems, authLinks, guestLinks } from './AppNavbarLinks';
 
 // Material UI imports
