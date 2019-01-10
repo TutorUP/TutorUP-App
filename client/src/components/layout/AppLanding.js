@@ -10,6 +10,8 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
+import VideoBackground from '../common/VideoBackground';
+
 import StarIcon from '@material-ui/icons/StarBorder';
 
 const styles = theme => ({
@@ -101,7 +103,7 @@ const AppLanding= props => {
   const { classes } = props;
   return (
     <React.Fragment>
-        <Grid container spacing={40} alignItems="flex-end">
+        {/* <Grid container spacing={40} alignItems="flex-end">
           {tiers.map(tier => (
             // Enterprise card is full width at sm breakpoint
             <Grid item key={tier.title} xs={12} sm={tier.title === 'Enterprise' ? 12 : 6} md={4}>
@@ -137,7 +139,8 @@ const AppLanding= props => {
               </Card>
             </Grid>
           ))}
-        </Grid>
+        </Grid> */}
+        <VideoBackground />
     </React.Fragment>
   )
 }
