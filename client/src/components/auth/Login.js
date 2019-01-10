@@ -82,12 +82,12 @@ class Login extends Component {
         this.props.loginUser(userData);
     }
 
-    onChange = (e) => {
+    onChange = e => {
         this.setState({ [e.target.name]: e.target.value })
     }
 
     render() {
-        const { errors } = this.state;
+        const { email, password, errors } = this.state;
         const { classes } = this.props;
         return (
             <div className={classes.main}>
@@ -103,15 +103,13 @@ class Login extends Component {
                     <InputLabel htmlFor="email">Email Address</InputLabel>
                     <Input id="email" name="email" autoComplete="email" autoFocus onChange={this.onChange}/>
                   </FormControl>
+                  {errors.email}
                   <FormControl margin="normal" required fullWidth>
                     <InputLabel htmlFor="password">Password</InputLabel>
                     <Input name="password" type="password" id="password" autoComplete="current-password" 
                     onChange={this.onChange}/>
                   </FormControl>
-                  <FormControlLabel
-                    control={<Checkbox value="remember" color="primary" />}
-                    label="Remember me"
-                  />
+                  {errors.password}                 
                   <Button
                     type="submit"
                     fullWidth

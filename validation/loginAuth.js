@@ -18,6 +18,10 @@ module.exports = function validateLoginInput(data) {
     if (Validator.isEmpty(data.password)) {
         errors.password = 'Password field is required';
     }
+
+    if (!Validator.isLength(data.password, { min: 8, max: 50})) {
+        errors.password = 'Password needs to be at least 10 characters';
+    }
     
     return {
         errors,

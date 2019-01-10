@@ -37,10 +37,6 @@ app.use(passport.initialize());
 // Passport Config
 require('./config/userAuth')(passport);
 
-app.use('/test', (req, res) => {
-    res.send('Test worked.');
-});
-
 app.use('/api/users', users);
 app.use('/api/profile', profile);
 app.use('/api/posts', posts);

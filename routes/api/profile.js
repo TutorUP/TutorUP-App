@@ -9,11 +9,6 @@ const User = require('../../models/User');
 // Load validation
 const validateProfileInput = require('../../validation/profileValidation');
 
-// @route   GET api/profile/test
-// @desc    Tests profile route
-// @access  Public
-router.get('/test', (req, res) => res.json({ msg: 'Profile Route Works' }));
-
 // @route   GET api/profile/all
 // @desc    Get all users' profiles
 // @access  Public
@@ -70,21 +65,23 @@ router.post('/', passport.authenticate('jwt', { session: false}), (req, res) => 
     if (typeof req.body.classes !== 'undefined') profileFields.classes = req.body.classes.split(',');
     if (req.body.bio) profileFields.bio = req.body.bio;
 
-    Profile.findOne({ user: req.user.id }).then(profile => {
-        if (profile) {
-            // Update profile
-            Profile.findOneAndUpdate(
-                { user: req.user.id },
-                { $set: profileFields },
-                { new: true }
-            ).then(profile => res.json(profile));
-        }
-        // Profile not found
-        else {
+    console.log(profileFields.classes)
 
-        }
-    })
+    // Profile.findOne({ user: req.user.id }).then(profile => {
+    //     if (profile) {
+    //         // Update profile
+    //         Profile.findOneAndUpdate(
+    //             { user: req.user.id },
+    //             { $set: profileFields },
+    //             { new: true }
+    //         ).then(profile => res.json(profile));
+    //     }
+    //     // Profile not found
+    //     else {
 
-})
+    //     }
+    // });
+
+});
 
 module.exports = router;

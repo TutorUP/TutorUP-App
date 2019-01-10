@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { createProfile } from '../../redux/actions/profileActions';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
@@ -11,13 +12,25 @@ import Avatar from '@material-ui/core/Avatar';
 import { FormControl, Input, InputLabel, TextField } from '@material-ui/core';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
+    root: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+    formControl: {
+        margin: theme.spacing.unit,
+        minWidth: 120,
+    },
+    selectEmpty: {
+        marginTop: theme.spacing.unit * 2,
+    },
     paper: {
         padding: theme.spacing.unit * 2,
         textAlign: 'center',
         color: theme.palette.text.secondary,
-      },
+    },
 
 
 })
@@ -27,6 +40,7 @@ class CreateProfile extends Component {
      handle: '',
      bio: '',
      classes: '',
+     status: '',
      major: '',
      minor: '',
      errors: {}
@@ -42,6 +56,8 @@ class CreateProfile extends Component {
          classes,
          major, minor
      }
+
+     console.log(profileData)
 
      this.props.createProfile(profileData, this.props.history);
  }
@@ -63,13 +79,13 @@ render() {
                     <Typography variant="subtitle1" gutterBottom>
                         Add some information to make you stand out
                     </Typography>
-                    <form onSubmit={this.onSubmit}>
-                        <FormControl margin="normal" required fullWidth>
+                    <form className={classes.root} onSubmit={this.onSubmit}>
+                        <FormControl className={classes.formControl} margin="normal" required>
                             <InputLabel htmlFor="handle">Profile Handle</InputLabel>
                             <Input id="handle" name="handle" onChange={this.onChange}>
                             </Input>
                         </FormControl>
-                        <FormControl>
+                        <FormControl className={classes.formControl} margin="normal" required>
                             <InputLabel htmlFor="major">Major</InputLabel>
                             <Select value={this.state.major} onChange={this.onChange} inputProps={{
                                 name: 'major',
@@ -81,10 +97,25 @@ render() {
                                 <MenuItem value={10}>Ten</MenuItem>
                                 <MenuItem value={20}>Twenty</MenuItem>
                                 <MenuItem value={30}>Thirty</MenuItem>
+                                <MenuItem value={'Geography'}>Geography</MenuItem>
                             </Select>
                         </FormControl>
-                        <TextField id="bio" label="Short Bio" placeholder="Tell a little about yourself" fullWidth margin="normal" multiline>
-                        </TextField>
+                        <FormControl className={classes.formControl} margin="normal" required>
+                            <InputLabel htmlFor="classes">Classes</InputLabel>
+                            <Input id="classes" name="classes" onChange={this.onChange}>
+                            </Input>
+                        </FormControl>
+                        <FormControl className={classes.formControl} margin="normal" required>
+                            <InputLabel htmlFor="status">Status</InputLabel>
+                            <Input id="status" name="status" onChange={this.onChange}>
+                            </Input>
+                        </FormControl>
+                        <FormControl className={classes.formControl} margin="normal" fullWidth variant="outlined">
+                            <InputLabel htmlFor="bui">Short Bio</InputLabel>
+                            <Input type="text" id="bio" name="bio" multiline fullWidth onChange={this.onChange}>
+                            </Input>
+                        </FormControl>
+                        <Button type="submit" variant="outlined" color="inherit">Submit</Button>
                     </form>
                 </Paper>
             </Grid>
@@ -107,4 +138,4 @@ const mapStateToProps = state => ({
 
 })
 
-export default connect(mapStateToProps)(withRouter(withStyles(styles)(CreateProfile)));
+export default connect(mapStateToProps, { createProfile })(withRouter(withStyles(styles)(CreateProfile)));

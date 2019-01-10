@@ -22,6 +22,12 @@ export const getCurrentProfile = () => dispatch => {
 /* TODO: Get profile by handle */
 /* TODO: Create Profile */
 
+export const createProfile = (profileData, history) => dispatch => {
+    axios.post('/api/profile', profileData)
+        .then(res => history.push('/dashboard'))
+        .catch(err => console.log(err));
+}
+
 // Get all profiles
 export const listProfiles = () => dispatch => {
     dispatch(setProfileLoading());

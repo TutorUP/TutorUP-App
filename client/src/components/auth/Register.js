@@ -82,7 +82,7 @@ class Register extends Component {
         errors: {}
     }
 
-    onSubmit = (e) => {
+    onSubmit = e => {
         e.preventDefault();
         
         const { name, email, password, password2 } = this.state;
@@ -103,7 +103,7 @@ class Register extends Component {
 
     }
 
-    onChange = (e) => {
+    onChange = e => {
         this.setState({ [e.target.name]: e.target.value })
     }
 

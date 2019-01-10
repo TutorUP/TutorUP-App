@@ -97,10 +97,10 @@ const tiers = [
     
 ];
 
-function AppLanding(props) {
-    const { classes } = props;
+const AppLanding= props => {
+  const { classes } = props;
   return (
-    <div>
+    <React.Fragment>
         <Grid container spacing={40} alignItems="flex-end">
           {tiers.map(tier => (
             // Enterprise card is full width at sm breakpoint
@@ -138,9 +138,7 @@ function AppLanding(props) {
             </Grid>
           ))}
         </Grid>
-        
-      
-    </div>
+    </React.Fragment>
   )
 }
 
