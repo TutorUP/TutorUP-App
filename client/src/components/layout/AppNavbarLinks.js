@@ -19,11 +19,10 @@ const styles = {
   fullList: {
     width: 'auto'
   }
-
 }
 
-export const mainListItems = (
-  <div>
+export const authLinks = (
+  <React.Fragment>
     <Link to="/dashboard">
       <ListItem button>
         <ListItemIcon>
@@ -32,6 +31,19 @@ export const mainListItems = (
         <ListItemText primary="Dashboard" />
       </ListItem>
     </Link>
+    <Link to="/search">
+      <ListItem button>
+        <ListItemIcon>
+          <SearchIcon />
+        </ListItemIcon>
+        <ListItemText primary="Search Tutors" />
+      </ListItem>
+    </Link>
+  </React.Fragment>
+);
+
+export const guestLinks = (
+  <React.Fragment>
     <Link to="/login">
       <ListItem button>
         <ListItemIcon>
@@ -48,20 +60,12 @@ export const mainListItems = (
         <ListItemText primary="Register" />
       </ListItem>
     </Link>
-    <Link to="/search">
-      <ListItem button>
-        <ListItemIcon>
-          <SearchIcon />
-        </ListItemIcon>
-        <ListItemText primary="Search Tutors" />
-      </ListItem>
-    </Link>
-  </div>
+  </React.Fragment>
 );
 
 export const secondaryListItems = (
   <div>
-    <ListSubheader inset>Notifications</ListSubheader>
+    <ListSubheader inset>Actions</ListSubheader>
     <ListItem button>
       <ListItemIcon>
         <AssignmentIcon />

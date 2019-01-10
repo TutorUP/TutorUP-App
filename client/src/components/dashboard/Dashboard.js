@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getCurrentProfile } from '../../actions/profileActions';
 import ProgressSpinner from '../common/ProgressSpinner';
@@ -25,18 +26,23 @@ class Dashboard extends Component {
         }
         else {
             dashboardContent = (
-                <React.Fragment>
-                    <Typography>Welcome {user.name}</Typography>
-                </React.Fragment>
+                <div className="section">
+                    <div className="container">
+                        <div className="row">
+                            <Typography>Welcome {user.name}</Typography>
+                            <p>You have not yet setup a profile, please add some info</p>
+                            <Link to="/create-profile" className="btn btn-lg btn-info">
+                                Create Profile
+                            </Link>
+                    </div>
+                    </div>
+                </div>
             )
         }
 
-
-
-
         return (
         <React.Fragment>
-            <Grid container spacing={10} alignItems="flex-end">
+            <Grid container alignItems="flex-end">
             <Card>
                 <CardContent>
                     {dashboardContent}

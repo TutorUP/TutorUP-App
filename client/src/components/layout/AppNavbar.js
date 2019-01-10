@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import { logoutUser } from '../../actions/authActions';
 import { clearCurrentProfile } from '../../actions/profileActions';
-import { mainListItems, secondaryListItems } from './AppNavbarLinks';
+import { secondaryListItems, authLinks, guestLinks } from './AppNavbarLinks';
 
 // Material UI imports
 import { withStyles } from '@material-ui/core/styles';
@@ -21,6 +21,10 @@ import { fade } from '@material-ui/core/styles/colorManipulator';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 
 const drawerWidth = 240;
 
@@ -193,9 +197,19 @@ class AppNavbar extends Component {
                         <ChevronLeftIcon />
                       </IconButton>
                   </div>
-                  <List>{mainListItems}</List>
+                  {isAuthenticated ? <List>{authLinks}</List> : <List>{guestLinks}</List>}
+                  {isAuthenticated && 
+                  <ListItem button onClick={this.onLogoutClick}>
+                    <ListItemIcon>
+                      <DirectionsRunIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Logout" />
+                  </ListItem>
+                  }
                   <Divider />
+                  {isAuthenticated &&
                   <List>{secondaryListItems}</List>
+                  }
                   </div>
                 </Drawer>
             </div>
