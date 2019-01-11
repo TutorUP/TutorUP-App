@@ -1,5 +1,3 @@
-/* eslint react/prop-types: 0 */
-
 import React from 'react';
 import {
   InstantSearch,
@@ -13,10 +11,16 @@ import {
   Highlight,
   Panel,
   Configure,
+
   connectSearchBox,
+  connectRange,
   connectInfiniteHits,
   connectStateResults,
 } from 'react-instantsearch-dom';
+
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import SearchIcon from '@material-ui/icons/Search';
 
 export default function AppSearch() {
   return (
@@ -88,47 +92,37 @@ const Facets = () => (
         <RangeInput attribute="price" />
       </Panel>
     </section>
-
-    <div className="thank-you">
-      Data courtesy of <a href="https://developer.bestbuy.com/">Best Buy</a>
-    </div>
   </aside>
 );
 
 const CustomSearchBox = ({ currentRefinement, refine }) => (
   <div className="input-group">
-    <input
-      type="text"
-      value={currentRefinement}
-      onChange={e => refine(e.target.value)}
-      autoComplete="off"
-      className="form-control"
-      id="q"
+    <TextField 
+    type="text"
+    value={currentRefinement}
+    onChange={e => refine(e.target.value)}
+    autoComplete="off"
+    id="q"
     />
-    <span className="input-group-btn">
-      <button className="btn btn-default">
-        <i className="fa fa-search" />
-      </button>
-    </span>
   </div>
 );
 
-function CustomHits({ hits, refine, hasMore }) {
+const CustomHits = ({ hits, refine, hasMore }) => {
   return (
     <main id="hits">
       {hits.map(hit => (
         <Hit item={hit} key={hit.objectID} />
       ))}
-      <button
-        className="btn btn-primary btn-block btn-load-more"
-        onClick={refine}
-        disabled={!hasMore}
-      >
-        Load more
-      </button>
+      <Button color="secondary" onClick={refine} disabled={!hasMore}>
+        Load More
+      </Button>
     </main>
   );
 }
+
+
+const ConnectedSearchBox = connectSearchBox(CustomSearchBox);
+const ConnectedHits = connectInfiniteHits(CustomHits);
 
 const Hit = ({ item }) => {
   const icons = [];
@@ -208,5 +202,4 @@ const CustomResults = connectStateResults(({ searchState, searchResult }) => {
   }
 });
 
-const ConnectedSearchBox = connectSearchBox(CustomSearchBox);
-const ConnectedHits = connectInfiniteHits(CustomHits);
+

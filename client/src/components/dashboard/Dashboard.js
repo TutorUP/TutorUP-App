@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getCurrentProfile } from '../../redux/actions/profileActions';
@@ -8,9 +9,14 @@ import ProgressSpinner from '../common/ProgressSpinner';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import NotificationPopUp from '../common/NotificationPopUp';
+
+const styles = {
+    root: {
+      width: '100%',
+      maxWidth: 500,
+    },
+  };
 
 class Dashboard extends Component {
     state = {
@@ -31,18 +37,14 @@ class Dashboard extends Component {
         }
         else {
             dashboardContent = (
-                <div className="section">
-                    <div className="container">
-                        <div className="row">
-                            <Typography>Welcome {user.name}</Typography>
-                            <p>You have not yet setup a profile, please add some info</p>
+                        <Grid container justify="center" alignItems="center">
+                            <Typography variant="h2" gutterBottom>Welcome {user.name}</Typography>
+                            <Typography variant="subtitle1" gutterBottom>You have not yet setup a profile, please add some info</Typography>
                             <Link to="/create-profile" className="btn btn-lg btn-info">
                                 Create Profile
                             </Link>
-                    </div>
-                    </div>
-                </div>
-            )
+                        </Grid>
+            );
         }
 
         return (
@@ -70,4 +72,4 @@ const mapStateToProps = state => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps, { getCurrentProfile })(Dashboard);
+export default connect(mapStateToProps, { getCurrentProfile })(withStyles(styles)(Dashboard));

@@ -15,7 +15,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
 import Divider from '@material-ui/core/Divider';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import IconButton from '@material-ui/core/IconButton';
@@ -152,7 +151,7 @@ class AppNavbar extends Component {
     render() {
         const { open } = this.state;
         const { classes } = this.props;
-        const { isAuthenticated, user } = this.props.auth;
+        const { isAuthenticated } = this.props.auth;
         return (
             <div>
                 <AppBar
@@ -207,9 +206,7 @@ class AppNavbar extends Component {
                   </ListItem>
                   }
                   <Divider />
-                  {isAuthenticated &&
                   <List>{secondaryListItems}</List>
-                  }
                   </div>
                 </Drawer>
             </div>

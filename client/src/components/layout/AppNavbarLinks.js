@@ -21,6 +21,10 @@ const styles = {
   }
 }
 
+const ListItemLink = props => {
+  return <ListItem button component="a" {...props} />;
+}
+
 export const authLinks = (
   <React.Fragment>
     <Link to="/dashboard">
@@ -83,6 +87,14 @@ export const secondaryListItems = (
         <AssignmentIcon />
       </ListItemIcon>
       <ListItemText primary="Year-end sale" />
+    </ListItem>
+    <ListItem button>
+      <ListItemIcon>
+        <AssignmentIcon />
+      </ListItemIcon>
+      <ListItemLink href="https://github.com/TutorUP/TutorUP-App">
+            <ListItemText primary="GitHub" />
+      </ListItemLink>
     </ListItem>
   </div>
 );

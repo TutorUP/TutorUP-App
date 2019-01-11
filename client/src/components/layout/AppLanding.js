@@ -1,18 +1,8 @@
 import React from 'react';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardHeader from '@material-ui/core/CardHeader';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 
 import VideoBackground from '../common/VideoBackground';
-
-import StarIcon from '@material-ui/icons/StarBorder';
 
 const styles = theme => ({
     '@global': {
@@ -63,41 +53,41 @@ const styles = theme => ({
   });
 
 
-const tiers = [
-    {
-      title: 'Free',
-      price: '0',
-      description: ['10 users included', '2 GB of storage', 'Help center access', 'Email support'],
-      buttonText: 'Sign up for free',
-      buttonVariant: 'outlined',
-    },
-    {
-      title: 'Pro',
-      subheader: 'Most popular',
-      price: '15',
-      description: [
-        '20 users included',
-        '10 GB of storage',
-        'Help center access',
-        'Priority email support',
-      ],
-      buttonText: 'Get started',
-      buttonVariant: 'contained',
-    },
-    {
-      title: 'Enterprise',
-      price: '30',
-      description: [
-        '50 users included',
-        '30 GB of storage',
-        'Help center access',
-        'Phone & email support',
-      ],
-      buttonText: 'Contact us',
-      buttonVariant: 'outlined',
-    },
+// const tiers = [
+//     {
+//       title: 'Free',
+//       price: '0',
+//       description: ['10 users included', '2 GB of storage', 'Help center access', 'Email support'],
+//       buttonText: 'Sign up for free',
+//       buttonVariant: 'outlined',
+//     },
+//     {
+//       title: 'Pro',
+//       subheader: 'Most popular',
+//       price: '15',
+//       description: [
+//         '20 users included',
+//         '10 GB of storage',
+//         'Help center access',
+//         'Priority email support',
+//       ],
+//       buttonText: 'Get started',
+//       buttonVariant: 'contained',
+//     },
+//     {
+//       title: 'Enterprise',
+//       price: '30',
+//       description: [
+//         '50 users included',
+//         '30 GB of storage',
+//         'Help center access',
+//         'Phone & email support',
+//       ],
+//       buttonText: 'Contact us',
+//       buttonVariant: 'outlined',
+//     },
     
-];
+// ];
 
 const AppLanding= props => {
   const { classes } = props;
@@ -143,6 +133,10 @@ const AppLanding= props => {
         <VideoBackground />
     </React.Fragment>
   )
+}
+
+AppLanding.propTypes = {
+  classes: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(AppLanding);

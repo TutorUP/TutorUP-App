@@ -6,8 +6,6 @@ import { loginUser } from '../../redux/actions/authActions';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import LockIcon from '@material-ui/icons/LockOutlined';
@@ -87,11 +85,11 @@ class Login extends Component {
     }
 
     render() {
-        const { email, password, errors } = this.state;
+        const { errors } = this.state;
         const { classes } = this.props;
         return (
             <div className={classes.main}>
-              <Paper className={classes.paper}>
+              <Paper className={classes.paper} elevation={3}>
                 <Avatar className={classes.avatar}>
                   <LockIcon />
                 </Avatar>

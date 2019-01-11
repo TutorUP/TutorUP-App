@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Formik } from "formik";
-import { string, object, ref } from 'yup';
+import { string, object } from 'yup';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import RegisterForm from './RegisterForm';
@@ -13,8 +13,6 @@ import SentimentSatisfiedAlt from '@material-ui/icons/SentimentSatisfiedAlt';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import Paper from '@material-ui/core/Paper';
@@ -108,12 +106,11 @@ class Register extends Component {
     }
 
     render() {
-        const { errors } = this.state;
         const { classes } = this.props;
 
         return (
             <div className={classes.main}>
-              <Paper className={classes.paper} elevation={1}>
+              <Paper className={classes.paper} elevation={3}>
                 <Avatar className={classes.avatar}>
                   <SentimentSatisfiedAlt />
                 </Avatar>
@@ -141,10 +138,6 @@ class Register extends Component {
                     <InputLabel htmlFor="password2">Confirm Password</InputLabel>
                     <Input name="password2" type="password" id="password2" autoComplete="current-password" onChange={this.onChange}/>
                   </FormControl>
-                  <FormControlLabel
-                    control={<Checkbox value="remember" color="primary" />}
-                    label="Remember me"
-                  />
                   <Button
                     type="submit"
                     fullWidth

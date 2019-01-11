@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { createProfile } from '../../redux/actions/profileActions';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import { studentMajorsOptions } from '../../utils/constants';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
@@ -31,9 +32,7 @@ const styles = theme => ({
         textAlign: 'center',
         color: theme.palette.text.secondary,
     },
-
-
-})
+});
 
 class CreateProfile extends Component {
  state = {
@@ -48,13 +47,15 @@ class CreateProfile extends Component {
 
  onSubmit = e => {
      e.preventDefault();
-     const { handle, bio, classes, major, minor } = this.state;
+     const { handle, bio, classes, major, minor, status } = this.state;
 
      const profileData = {
          handle,
          bio,
          classes,
-         major, minor
+         major, 
+         minor,
+         status
      }
 
      console.log(profileData)
@@ -68,6 +69,8 @@ class CreateProfile extends Component {
 
 render() {
     const { classes } = this.props;
+
+
     return (
       <div>
         <Grid container>
@@ -94,10 +97,10 @@ render() {
                                 <MenuItem value="">
                                 <em>None</em>
                                 </MenuItem>
-                                <MenuItem value={10}>Ten</MenuItem>
-                                <MenuItem value={20}>Twenty</MenuItem>
-                                <MenuItem value={30}>Thirty</MenuItem>
-                                <MenuItem value={'Geography'}>Geography</MenuItem>
+                                <MenuItem value={'Computer Science'}>Computer Science</MenuItem>
+                                <MenuItem value={'Biology'}>Biology</MenuItem>
+                                <MenuItem value={'Mathematics'}>Mathematics</MenuItem>
+                  
                             </Select>
                         </FormControl>
                         <FormControl className={classes.formControl} margin="normal" required>
