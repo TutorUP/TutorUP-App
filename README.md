@@ -1,5 +1,11 @@
 # TutorUP Capstone Application
 
+## Running Application
+1. Install npm
+2. Run `npm install` or `yarn install` at app root
+3. Install the React app dependencies: Run `npm install` or `yarn install` within the /client folder
+
+
 ## About
 - University of Portland students can:
 1. Login/Register as a user

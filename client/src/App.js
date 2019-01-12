@@ -20,6 +20,9 @@ import Login from './components/auth/Login';
 import Dashboard from './components/dashboard/Dashboard';
 import CreateProfile from './components/profile/CreateProfile';
 
+import AddAvailability from './components/profileOptions/AddAvailability';
+import Profile from './components/profile/Profile';
+
 import AppSearch from './components/search/AppSearch'
 import CalendarSearch from './components/search/CalendarSearch';
 
@@ -49,6 +52,7 @@ class App extends Component {
                 <Route exact path="/calendar" component={CalendarSearch} />
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
+                <Route exact path="/myprofile" component={Profile} />
                 
                 {/* For Routes protected by Auth */}
                 <Switch>
@@ -56,6 +60,9 @@ class App extends Component {
                 </Switch>
                 <Switch>
                   <PrivateRoute exact path="/create-profile" component={CreateProfile} />
+                </Switch>
+                <Switch>
+                  <PrivateRoute exact path="/add-availability" component={AddAvailability}/>
                 </Switch>
               </main>
               <AppFooter />

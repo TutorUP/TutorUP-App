@@ -1,16 +1,21 @@
 import React from 'react';
 import {
   InstantSearch,
+  PoweredBy,
   HierarchicalMenu,
   RefinementList,
+  SearchBox,
+  Hits,
   SortBy,
+  RangeInput,
   Stats,
   ClearRefinements,
   RatingMenu,
-  RangeInput,
   Highlight,
   Panel,
   Configure,
+  Pagination,
+  InfiniteHits,
 
   connectSearchBox,
   connectRange,
@@ -25,32 +30,41 @@ import SearchIcon from '@material-ui/icons/Search';
 export default function AppSearch() {
   return (
     <InstantSearch
-      appId="latency"
-      apiKey="6be0576ff61c053d5f9a3225e2a90f76"
-      indexName="instant_search"
+      appId="LPXZWTGHEO"
+      apiKey="f4e905345d007fddef9651fa859614b2"
+      indexName="dev_TutorUP_Profiles"
     >
       <Configure hitsPerPage={16} />
       <Header />
       <div className="content-wrapper">
-        <Facets />
-        <CustomResults />
+        <RangeInput attribute="classes.availableFrom" />
+        <RefinementList attribute="classes.classname" />
+        <RefinementList attribute="major" />
+
+        <Hits hitComponent={Product} />
+        <br />
+        <Pagination />
+        <PoweredBy />
+
+
       </div>
     </InstantSearch>
   );
 }
 
+const Product = ({ hit }) => {
+  return (
+      <div>
+        <Highlight attribute="handle" hit={hit} />
+
+      </div>
+  );
+}
+
 const Header = () => (
-  <header className="content-wrapper">
-    <a
-      href="https://community.algolia.com/react-instantsearch/"
-      className="is-logo"
-    >
-      <img
-        src="https://res.cloudinary.com/hilnmyskv/image/upload/w_100,h_100,dpr_2.0//v1461180087/logo-instantsearchjs-avatar.png"
-        width={40}
-      />
-    </a>
+  <header className="content-wrapper header">
     <ConnectedSearchBox />
+    <br />
   </header>
 );
 
@@ -63,6 +77,9 @@ const Facets = () => (
     />
 
     <section className="facet-wrapper">
+      <div className="facet-category-title facet">Refine By</div>
+
+
       <div className="facet-category-title facet">Show results for</div>
       <HierarchicalMenu
         attributes={[
@@ -71,25 +88,22 @@ const Facets = () => (
           'hierarchicalCategories.lvl2',
         ]}
       />
-    </section>
 
-    <section className="facet-wrapper">
-      <div className="facet-category-title facet">Refine By</div>
 
       <Panel header={<h5>Type</h5>}>
         <RefinementList attribute="type" operator="or" limit={5} />
       </Panel>
 
-      <Panel header={<h5>Brand</h5>}>
-        <RefinementList attribute="brand" operator="or" limit={5} searchable />
+      <Panel header={<h5>Handle</h5>}>
+        <RefinementList attributesForFaceting="handle" operator="or" limit={5} searchable />
       </Panel>
 
       <Panel header={<h5>Rating</h5>}>
         <RatingMenu attribute="rating" max={5} />
       </Panel>
 
-      <Panel header={<h5>Price</h5>}>
-        <RangeInput attribute="price" />
+      <Panel header={<h5>Date</h5>}>
+        <RangeInput attribute="availableFrom" />
       </Panel>
     </section>
   </aside>
@@ -125,44 +139,24 @@ const ConnectedSearchBox = connectSearchBox(CustomSearchBox);
 const ConnectedHits = connectInfiniteHits(CustomHits);
 
 const Hit = ({ item }) => {
-  const icons = [];
-  for (let i = 0; i < 5; i++) {
-    const suffixClassName = i >= item.rating ? '--empty' : '';
-    const suffixXlink = i >= item.rating ? 'Empty' : '';
-
-    icons.push(
-      <svg
-        key={i}
-        className={`ais-RatingMenu-starIcon ais-RatingMenu-starIcon${suffixClassName}`}
-        aria-hidden="true"
-        width="24"
-        height="24"
-      >
-        <use xlinkHref={`#ais-RatingMenu-star${suffixXlink}Symbol`} />
-      </svg>
-    );
-  }
   return (
     <article className="hit">
       <div className="product-picture-wrapper">
         <div className="product-picture">
           <img
-            src={`https://res.cloudinary.com/hilnmyskv/image/fetch/h_300,q_100,f_auto/${
-              item.image
-            }`}
+            src={item.avatar}
           />
         </div>
       </div>
       <div className="product-desc-wrapper">
         <div className="product-name">
-          <Highlight attribute="name" hit={item} />
+          <Highlight attribute="handle" hit={item.handle} />
         </div>
         <div className="product-type">
-          <Highlight attribute="type" hit={item} />
+          <Highlight attribute="classes.availableFrom" hit={item.classes.availableFrom} />
         </div>
         <div className="product-footer">
-          <div className="ais-RatingMenu-link">{icons}</div>
-          <div className="product-price">${item.price}</div>
+          <div className="product-price">{item.isTutor}</div>
         </div>
       </div>
     </article>
@@ -183,17 +177,6 @@ const CustomResults = connectStateResults(({ searchState, searchResult }) => {
     return (
       <div className="results-wrapper">
         <section id="results-topbar">
-          <div className="sort-by">
-            <label>Sort by</label>
-            <SortBy
-              items={[
-                { value: 'instant_search', label: 'Featured' },
-                { value: 'instant_search_price_asc', label: 'Price asc.' },
-                { value: 'instant_search_price_desc', label: 'Price desc.' },
-              ]}
-              defaultRefinement="instant_search"
-            />
-          </div>
           <Stats />
         </section>
         <ConnectedHits />

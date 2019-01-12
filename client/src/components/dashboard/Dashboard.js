@@ -6,6 +6,9 @@ import { connect } from 'react-redux';
 import { getCurrentProfile } from '../../redux/actions/profileActions';
 import ProgressSpinner from '../common/ProgressSpinner';
 
+// Profile Components
+import ProfileOptions from './ProfileOptions';
+
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
@@ -36,25 +39,33 @@ class Dashboard extends Component {
             dashboardContent = <ProgressSpinner />
         }
         else {
-            dashboardContent = (
-                        <Grid container justify="center" alignItems="center">
-                            <Typography variant="h2" gutterBottom>Welcome {user.name}</Typography>
-                            <Typography variant="subtitle1" gutterBottom>You have not yet setup a profile, please add some info</Typography>
-                            <Link to="/create-profile" className="btn btn-lg btn-info">
-                                Create Profile
-                            </Link>
-                        </Grid>
+            dashboardContent = Object.keys(profile).length > 0 ? (
+                <Grid container justify="center" alignItems="center">
+                    <Typography variant="h2" gutterBottom>Welcome 
+                        <Link to={`/profile/${profile.handle}`}> {user.name}</Link>
+                    </Typography>
+                    <ProfileOptions />
+                </Grid>
+
+            ) : (
+                <Grid container justify="center" alignItems="center">
+                    <Typography variant="h2" gutterBottom>Welcome {user.name}</Typography>
+                    <Typography variant="subtitle1" gutterBottom>You have not yet setup a profile, please add some info</Typography>
+                    <Link to="/create-profile" className="btn btn-lg btn-info">
+                        Create Profile
+                    </Link>
+                </Grid>
             );
         }
 
         return (
         <React.Fragment>
             <Grid container alignItems="flex-end">
-            <Card>
-                <CardContent>
-                    {dashboardContent}
-                </CardContent>
-            </Card>
+                <Card>
+                    <CardContent>
+                        {dashboardContent}
+                    </CardContent>
+                </Card>
             </Grid>
         </React.Fragment>
         )
