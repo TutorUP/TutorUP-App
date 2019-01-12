@@ -45,3 +45,6 @@ class myForm extends Component {
     export default connect(mapStateToProps, { ajaxAction })(myForm);
 }
 ```
+
+## Redirecting from within a component
+- Use withRouter to do that: `import { withRouter } from 'react-router-dom'`

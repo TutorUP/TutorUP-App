@@ -27,6 +27,26 @@ router.get('/all', (req, res) => {
         .catch(err => res.status(404).json({ profile: 'There are no profiles', err }));
 });
 
+// @route   GET api/profile/handle/:handle
+// @desc    Get profile by handle
+// @access  Public
+
+router.get('/handle/:handle', (req, res) => {
+    const errors = {};
+  
+    Profile.findOne({ handle: req.params.handle })
+      .populate('user', ['name', 'avatar'])
+      .then(profile => {
+        if (!profile) {
+          errors.noprofile = 'There is no profile for this user';
+          res.status(404).json(errors);
+        }
+  
+        res.json(profile);
+      })
+      .catch(err => res.status(404).json(err));
+  });
+
 // @route   GET api/profile
 // @desc    Get current user's profile
 // @access  Private
@@ -62,26 +82,41 @@ router.post('/', passport.authenticate('jwt', { session: false}), (req, res) => 
     if (req.body.status) profileFields.status = req.body.status;
 
     // Classes - Split into array
-    if (typeof req.body.classes !== 'undefined') profileFields.classes = req.body.classes.split(',');
+    if (typeof req.body.classes !== 'undefined') profileFields.classes = req.body.classes.split(',').map(el => el.trim());
     if (req.body.bio) profileFields.bio = req.body.bio;
 
-    console.log(profileFields.classes)
+    Profile.findOne({ user: req.user.id }).then(profile => {
+        if (profile) {
+            // Update profile
+            Profile.findOneAndUpdate(
+                { user: req.user.id },
+                { $set: profileFields },
+                { new: true }
+            ).then(profile => res.json(profile));
+        }
+        // Profile not found
+        else {
+            Profile.findOne({ handle: profileFields.handle }).then(profile => {
+                if (profile) {
+                    errors.handle = 'That handle already exists';
+                    res.status(400).json(errors);
+                }
 
-    // Profile.findOne({ user: req.user.id }).then(profile => {
-    //     if (profile) {
-    //         // Update profile
-    //         Profile.findOneAndUpdate(
-    //             { user: req.user.id },
-    //             { $set: profileFields },
-    //             { new: true }
-    //         ).then(profile => res.json(profile));
-    //     }
-    //     // Profile not found
-    //     else {
-
-    //     }
-    // });
-
+                new Profile(profileFields).save().then(profile => res.json(profile));
+            });
+        }
+    });
 });
+
+// @route   POST api/profile/availability
+// @desc    Add availability to profile
+// @access  Private
+router.post('/availability', passport.authenticate('jwt', { session: false })), (req, res) => {
+    Profile.findOne({ user: req.user.id }).then(profile => {
+        const timeSlot = {
+            from: req.body.from
+        }
+    })
+}
 
 module.exports = router;

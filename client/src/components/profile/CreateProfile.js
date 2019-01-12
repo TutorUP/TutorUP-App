@@ -37,10 +37,10 @@ const styles = theme => ({
 class CreateProfile extends Component {
  state = {
      handle: '',
+     major: '',
      bio: '',
      classes: '',
      status: '',
-     major: '',
      minor: '',
      errors: {}
  }

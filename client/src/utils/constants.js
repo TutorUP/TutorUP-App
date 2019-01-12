@@ -36,7 +36,7 @@ export const studentMajorsOptions = [
     { label: 'Theology', value: 'Theology' },
 ]
 
-const studentMinorOptions = [
+export const studentMinorOptions = [
     { label: '', value: '' },
     { label: '', value: '' },
     { label: '', value: '' },

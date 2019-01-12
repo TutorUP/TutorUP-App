@@ -34,5 +34,7 @@
 ## Look into
 - Algolia (search)
 - Serverless (for cloud function backend)
-- Socket.io (Chatrooms)
+- * Rocket Chat * (Chatrooms! Free Slack basically)
 
+## Run container in background
+- `docker-compose up -d`
