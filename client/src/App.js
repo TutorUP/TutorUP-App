@@ -5,6 +5,8 @@ import './App.css';
 // Redux related
 import { Provider } from 'react-redux';
 import store from './redux/store';
+import { setCurrentUser, logoutUser } from './redux/actions/authActions';
+import { clearCurrentProfile } from './redux/actions/profileActions';
 
 // MUI imports
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -19,11 +21,35 @@ import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import Dashboard from './components/dashboard/Dashboard';
 import CreateProfile from './components/profile/CreateProfile';
+import EditProfile from './components/profile/EditProfile';
+
+// containers
+import ProfileShowcase from './components/showcase/ProfileShowcase';
+import { checkAuth } from './utils/authPersist';
 
 import AddAvailability from './components/profileOptions/AddAvailability';
 import Profile from './components/profile/Profile';
 
-import AppSearch from './components/search/AppSearch'
+import AppSearch from './components/search/AppSearch';
+
+
+// Check for JWT for persistence
+if (localStorage.jwtToken) {
+  const decoded = checkAuth();
+  // Set user and isAuthenticated
+  store.dispatch(setCurrentUser(decoded));
+
+  // Check for expired token
+  const currentTime = Date.now() / 1000;
+  if (decoded.exp < currentTime) {
+    // Logout user
+    store.dispatch(logoutUser());
+    // Clear current Profile
+    store.dispatch(clearCurrentProfile());  
+    // Redirect to login
+    window.location.href = '/login';
+  }
+}
 
 const styles = theme => ({
   content: {
@@ -33,7 +59,7 @@ const styles = theme => ({
     overflow: 'auto'
   },
   appBarSpacer: theme.mixins.toolbar,
-})
+});
 
 class App extends Component {
   render() {
@@ -51,6 +77,7 @@ class App extends Component {
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/myprofile" component={Profile} />
+                <Route exact path="/profiles" component={ProfileShowcase} />
                 
                 {/* For Routes protected by Auth */}
                 <Switch>
@@ -58,6 +85,9 @@ class App extends Component {
                 </Switch>
                 <Switch>
                   <PrivateRoute exact path="/create-profile" component={CreateProfile} />
+                </Switch>
+                <Switch>
+                  <PrivateRoute exact path="/edit-profile" component={EditProfile} />
                 </Switch>
                 <Switch>
                   <PrivateRoute exact path="/add-availability" component={AddAvailability}/>

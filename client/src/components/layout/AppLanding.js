@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
 import VideoBackground from '../common/VideoBackground';
@@ -53,16 +52,11 @@ const styles = theme => ({
   });
 
 const AppLanding= props => {
-  const { classes } = props;
   return (
     <React.Fragment>
         <VideoBackground />
     </React.Fragment>
   );
-}
-
-AppLanding.propTypes = {
-  classes: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(AppLanding);

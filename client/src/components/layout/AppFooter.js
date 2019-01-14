@@ -16,7 +16,7 @@ const { classes } = props;
   return (
     <React.Fragment>
         <footer className={classes.footer}>
-            <Typography variant="h6" align="center" gutterBottom>
+            <Typography variant="h3" align="center" gutterBottom>
             TutorUP
             </Typography>
             <Typography variant="subtitle1" align="center" color="textSecondary" component="p">

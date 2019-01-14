@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { getCurrentProfile } from '../../redux/actions/profileActions';
 import ProgressSpinner from '../common/ProgressSpinner';
-
 // Profile Components
 import ProfileOptions from './ProfileOptions';
 
+
+import { connect } from 'react-redux';
+import { getCurrentProfile, deleteAccount } from '../../redux/actions/profileActions';
+
+
+import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
 
 const styles = {
     root: {
@@ -30,7 +33,12 @@ class Dashboard extends Component {
         this.props.getCurrentProfile();
     }
 
+    onDeleteClick = e => {
+        // this.props.deleteAccount();
+    }
+
     render() {
+        const { classes } = this.props;
         const { user } = this.props.auth;
         const { profile, loading } = this.props.profile;
         let dashboardContent;
@@ -40,11 +48,18 @@ class Dashboard extends Component {
         }
         else {
             dashboardContent = Object.keys(profile).length > 0 ? (
-                <Grid container justify="center" alignItems="center">
+                <Grid container className={classes.root}>
                     <Typography variant="h2" gutterBottom>Welcome 
                         <Link to={`/profile/${profile.handle}`}> {user.name}</Link>
                     </Typography>
                     <ProfileOptions />
+                    <Button 
+                    variant="outlined" 
+                    color="secondary" 
+                    onClick={this.onDeleteClick()}
+                    className={classes.button}>
+                        Delete Your Account
+                    </Button>
                 </Grid>
 
             ) : (
@@ -59,21 +74,23 @@ class Dashboard extends Component {
         }
 
         return (
-        <React.Fragment>
-            <Grid container alignItems="flex-end">
-                <Card>
-                    <CardContent>
-                        {dashboardContent}
-                    </CardContent>
-                </Card>
-            </Grid>
-        </React.Fragment>
-        )
+            <React.Fragment>
+                <Grid container alignItems="flex-end">
+                    <Card>
+                        <CardContent>
+                            {dashboardContent}
+                        </CardContent>
+                    </Card>
+                </Grid>
+            </React.Fragment>
+        );
     }
 }
 
 Dashboard.propTypes = {
+    classes: PropTypes.object.isRequired,
     getCurrentProfile: PropTypes.func.isRequired,
+    deleteAccount: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     profile: PropTypes.object.isRequired
 }
@@ -83,4 +100,4 @@ const mapStateToProps = state => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps, { getCurrentProfile })(withStyles(styles)(Dashboard));
+export default connect(mapStateToProps, { getCurrentProfile, deleteAccount })(withStyles(styles)(Dashboard));

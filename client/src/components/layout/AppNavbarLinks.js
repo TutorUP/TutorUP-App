@@ -12,15 +12,6 @@ import PeopleIcon from '@material-ui/icons/People';
 import SearchIcon from '@material-ui/icons/Search';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 
-const styles = {
-  list: {
-    width: 250
-  },
-  fullList: {
-    width: 'auto'
-  }
-}
-
 const ListItemLink = props => {
   return <ListItem button component="a" {...props} />;
 }
@@ -74,19 +65,17 @@ export const secondaryListItems = (
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
-      <ListItemText primary="Current month" />
+      <ListItemLink href="#">
+            <ListItemText primary="About" />
+      </ListItemLink>
     </ListItem>
     <ListItem button>
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
-      <ListItemText primary="Last quarter" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Year-end sale" />
+      <ListItemLink href="https://engineering.projects.up.edu/nguyenda18/">
+            <ListItemText primary="Profile" />
+      </ListItemLink>
     </ListItem>
     <ListItem button>
       <ListItemIcon>

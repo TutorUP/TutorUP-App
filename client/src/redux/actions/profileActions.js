@@ -1,5 +1,13 @@
 import axios from 'axios';
-import { GET_PROFILE, GET_PROFILES, PROFILE_LOADING, GET_ERRORS, CLEAR_CURRENT_PROFILE, SET_CURRENT_USER } from './types';
+import { 
+    GET_PROFILE, 
+    GET_PROFILES, 
+    PROFILE_LOADING, 
+    GET_ERRORS, 
+    CLEAR_CURRENT_PROFILE, 
+    SET_CURRENT_USER 
+} 
+from './types';
 
 // Get current profile
 export const getCurrentProfile = () => dispatch => {
@@ -67,7 +75,7 @@ export const deleteAvailability = id => dispatch => {
 
 
 // Get all profiles
-export const listProfiles = () => dispatch => {
+export const getProfiles = () => dispatch => {
     dispatch(setProfileLoading());
     axios.get('/api/profile/all')
     .then(res => {
@@ -102,18 +110,18 @@ export const deleteAccount = () => dispatch => {
           })
         );
     }
-  };
+}
 
 // Profile loading
 export const setProfileLoading = () => {
     return {
         type: PROFILE_LOADING
-    }
+    };
 }
 
 // Clear profile
 export const clearCurrentProfile = () => {
     return {
         type: CLEAR_CURRENT_PROFILE
-    }
+    };
 }
