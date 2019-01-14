@@ -1,13 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 
+// MUI imports
+import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 
 const styles = {
     card: {
@@ -27,15 +32,22 @@ const styles = {
 };
 
 const ProfileItem = props => {
-    const { classes } = props;
+    const { classes, profile } = props;
 
     return (
     <React.Fragment>
         <Card className={classes.card}>
             <CardContent>
-                <Typography gutterButtom>
-                    Name
+                <Typography>
+                    {profile.handle} {profile.status}
                 </Typography>
+            </CardContent>
+            <CardContent>
+              {profile.classes.slice(0, 4).map((myClass, index) => (
+                <List key={index}>
+                    <ListItemText primary={myClass} />
+                </List>
+              ))}
             </CardContent>
             <CardActions>
                 <Button size="small" color="primary">
@@ -44,7 +56,11 @@ const ProfileItem = props => {
             </CardActions>
         </Card>
     </React.Fragment>
-  )
+  );
 }
 
-export default ProfileItem;
+ProfileItem.propTypes = {
+    profile: PropTypes.object.isRequired
+};
+
+export default withStyles(styles)(ProfileItem);
