@@ -10,12 +10,13 @@ import MomentUtils from '@date-io/moment';
 import { DateTimePicker } from 'material-ui-pickers';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { FormControl, Input, InputLabel } from '@material-ui/core';
 
 class AddAvailability extends Component {
     state = {
-        subject: '',
-        from: new Date(),
-        to: new Date(),
+        department: '',
+        courseNum: '',
+        availableTime: new Date(),
         errors: '',
     }
 
@@ -28,20 +29,18 @@ class AddAvailability extends Component {
             this.setState({ errors: nextProps.errors });
         }
     }
-
     onSubmit = e => {
         e.preventDefault();
 
-        let { subject, from, to } = this.state;
+        let { department, courseNum, availableTime } = this.state;
 
-        // parse Moments as unix timestamps
-        from = from.unix();
-        to = to.unix();
+        // parse Moment as unix timestamps
+        availableTime = availableTime.unix();
 
         const availabilityData = {
-            subject,
-            from,
-            to
+            department,
+            courseNum,
+            availableTime
         }
 
         console.log(availabilityData)
@@ -54,39 +53,45 @@ class AddAvailability extends Component {
         this.setState({[e.target.name]: e.target.value});
     }
 
-    handleFromDateChange = date => {
-        this.setState({ from : date });
-    }
-
-    handleToDateChange = date => {
-        this.setState({ to: date });
+    handleDateChange = date => {
+        this.setState({ availableTime : date });
     }
 
     render() {
-        const { from, to, errors } = this.state;
+        const { department, courseNum, availableTime, errors } = this.state;
         
-
         return (
             <div>
                 <Link to="/dashboard">Go Back</Link>
                 <Typography variant="h2" gutterBottom>Add Availability</Typography>
-                <Typography variant="p" gutterBottom>Select what time you can meet up with a tutor/tutee</Typography>
+                <Typography variant="subtitle1" gutterBottom>Select what time you can meet up with a tutor/tutee</Typography>
                 <form onSubmit={this.onSubmit}>
-                    <MuiPickersUtilsProvider utils={MomentUtils}>
-                        <DateTimePicker 
-                        disablePast
-                        minDate={Date.now()} 
-                        maxDate={to} 
-                        showTodayButton
-                        keyboard 
-                        label="From Date" 
-                        value={from} 
-                        onChange={this.handleFromDateChange} 
-                    />
-                    </MuiPickersUtilsProvider>
-                    <MuiPickersUtilsProvider utils={MomentUtils}>
-                        <DateTimePicker minDate={from} keyboard label="To Date" value={to} onChange={this.handleToDateChange} />
-                    </MuiPickersUtilsProvider>
+                    <FormControl required>
+                        <InputLabel htmlFor="department">
+                        Select a Department
+                        </InputLabel>
+                        <Input id="department" name="department" onChange={this.onChange} value={department}>
+                        </Input>
+                    </FormControl>
+                    <FormControl required>
+                        <InputLabel htmlFor="coursenum">
+                        Enter a Course Number
+                        </InputLabel>
+                        <Input id="courseNum" name="courseNum" onChange={this.onChange} value={courseNum}>
+                        </Input>
+                    </FormControl>
+                        <MuiPickersUtilsProvider utils={MomentUtils}>
+                            <DateTimePicker 
+                            disablePast
+                            minDate={Date.now()}
+                            showTodayButton
+                            keyboard 
+                            label="Available Date" 
+                            value={availableTime} 
+                            onChange={this.handleDateChange} 
+                        />
+                        </MuiPickersUtilsProvider>
+       
                     {errors}
                     <Button type="submit" variant="outlined" color="inherit">Submit</Button>
                 </form>

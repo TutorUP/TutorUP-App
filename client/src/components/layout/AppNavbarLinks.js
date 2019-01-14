@@ -7,6 +7,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import DashboardIcon from '@material-ui/icons/Dashboard';
+import AddIcon from '@material-ui/icons/Add';
 import LockIcon from '@material-ui/icons/LockOutlined';
 import PeopleIcon from '@material-ui/icons/People';
 import SearchIcon from '@material-ui/icons/Search';
@@ -58,7 +59,7 @@ export const guestLinks = (
     <Link to="/register">
       <ListItem button>
         <ListItemIcon>
-          <PeopleIcon />
+          <AddIcon />
         </ListItemIcon>
         <ListItemText primary="Register" />
       </ListItem>
@@ -90,7 +91,7 @@ export const secondaryListItems = (
         <AssignmentIcon />
       </ListItemIcon>
       <ListItemLink href="https://engineering.projects.up.edu/nguyenda18/">
-            <ListItemText primary="Profile" />
+            <ListItemText primary="Capstone Page" />
       </ListItemLink>
     </ListItem>
     <ListItem button>

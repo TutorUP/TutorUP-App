@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 // MUI imports
 import { withStyles } from '@material-ui/core/styles';
@@ -10,21 +11,16 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
 const styles = {
     card: {
-      minWidth: 275,
+      minWidth: 200,
     },
     bullet: {
       display: 'inline-block',
       margin: '0 2px',
       transform: 'scale(0.8)',
-    },
-    title: {
-      fontSize: 14,
     },
     pos: {
       marginBottom: 12,
@@ -38,20 +34,22 @@ const ProfileItem = props => {
     <React.Fragment>
         <Card className={classes.card}>
             <CardContent>
-                <Typography>
+                <Typography variant='h3'>
                     {profile.handle} {profile.status}
                 </Typography>
             </CardContent>
             <CardContent>
               {profile.classes.slice(0, 4).map((myClass, index) => (
                 <List key={index}>
-                    <ListItemText primary={myClass} />
+                    <ListItemText className={classes.bullet} primary={myClass} />
                 </List>
               ))}
             </CardContent>
             <CardActions>
-                <Button size="small" color="primary">
-                    View Profile
+                <Button name="viewProfile" size="small" color="secondary">
+                    <Link to={`/profile/${profile.handle}`}>
+                        View Profile
+                    </Link>
                 </Button>
             </CardActions>
         </Card>

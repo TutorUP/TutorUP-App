@@ -25,7 +25,7 @@ class ProfilesShowcase extends Component {
         let profileItems;
 
         if (profiles === null || loading) {
-            profileItems = <h1>Loading Profiles</h1>
+            profileItems = <h1>Loading Profiles...</h1>
         }
         else {
             profileItems = profiles.length > 0 ?
