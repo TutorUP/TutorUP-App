@@ -23,6 +23,8 @@ import Dashboard from './components/dashboard/Dashboard';
 import CreateProfile from './components/profile/CreateProfile';
 import EditProfile from './components/profile/EditProfile';
 
+import NotFound from './components/common/NotFound';
+
 // containers
 import ProfileShowcase from './components/showcase/ProfileShowcase';
 import { checkAuth } from './utils/authPersist';
@@ -76,8 +78,9 @@ class App extends Component {
                 <Route exact path="/search" component={AppSearch} />
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
-                <Route exact path="/myprofile" component={Profile} />
+                <Route exact path="/profile/:handle" component={Profile} />
                 <Route exact path="/profiles" component={ProfileShowcase} />
+                <Route exact path="/not-found" component={NotFound} />
                 
                 {/* For Routes protected by Auth */}
                 <Switch>

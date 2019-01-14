@@ -34,6 +34,14 @@ export const authLinks = (
         <ListItemText primary="Search Tutors" />
       </ListItem>
     </Link>
+    <Link to="/profiles">
+      <ListItem button>
+        <ListItemIcon>
+          <PeopleIcon />
+        </ListItemIcon>
+        <ListItemText primary="Profiles" />
+      </ListItem>
+    </Link>
   </React.Fragment>
 );
 
@@ -53,6 +61,14 @@ export const guestLinks = (
           <PeopleIcon />
         </ListItemIcon>
         <ListItemText primary="Register" />
+      </ListItem>
+    </Link>
+    <Link to="/profiles">
+      <ListItem button>
+        <ListItemIcon>
+          <PeopleIcon />
+        </ListItemIcon>
+        <ListItemText primary="Profiles" />
       </ListItem>
     </Link>
   </React.Fragment>

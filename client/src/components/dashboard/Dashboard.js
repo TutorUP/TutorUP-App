@@ -20,7 +20,6 @@ import Button from '@material-ui/core/Button';
 const styles = {
     root: {
       width: '100%',
-      maxWidth: 500,
     },
   };
 
@@ -34,7 +33,7 @@ class Dashboard extends Component {
     }
 
     onDeleteClick = e => {
-        // this.props.deleteAccount();
+        this.props.deleteAccount();
     }
 
     render() {
@@ -48,7 +47,7 @@ class Dashboard extends Component {
         }
         else {
             dashboardContent = Object.keys(profile).length > 0 ? (
-                <Grid container className={classes.root}>
+                <Grid xs={12} className={classes.root}>
                     <Typography variant="h2" gutterBottom>Welcome 
                         <Link to={`/profile/${profile.handle}`}> {user.name}</Link>
                     </Typography>
@@ -56,7 +55,7 @@ class Dashboard extends Component {
                     <Button 
                     variant="outlined" 
                     color="secondary" 
-                    onClick={this.onDeleteClick()}
+                    onClick={this.onDeleteClick}
                     className={classes.button}>
                         Delete Your Account
                     </Button>

@@ -41,7 +41,7 @@ export default function AppSearch() {
         <RefinementList attribute="classes.classname" />
         <RefinementList attribute="major" />
 
-        <Hits hitComponent={Product} />
+        <Hits />
         <br />
         <Pagination />
         <PoweredBy />
@@ -111,6 +111,7 @@ const Facets = () => (
 
 const CustomSearchBox = ({ currentRefinement, refine }) => (
   <div className="input-group">
+    <SearchIcon />
     <TextField 
     type="text"
     value={currentRefinement}

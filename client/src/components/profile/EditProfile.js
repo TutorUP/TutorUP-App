@@ -129,9 +129,19 @@ render() {
                             </Input>
                         </FormControl>
                         <FormControl className={classes.formControl} margin="normal" required>
-                            <InputLabel htmlFor="status">Status</InputLabel>
-                            <Input id="status" name="status" value={status} onChange={this.onChange}>
-                            </Input>
+                            <InputLabel htmlFor="major">Status</InputLabel>
+                            <Select value={this.state.status} onChange={this.onChange} inputProps={{
+                                name: 'status',
+                                id: 'status'
+                            }}>
+                                <MenuItem value="">
+                                <em>None</em>
+                                </MenuItem>
+                                <MenuItem value={'Freshman'}>Freshman</MenuItem>
+                                <MenuItem value={'Sophomore'}>Sophomore</MenuItem>
+                                <MenuItem value={'Junior'}>Junior</MenuItem>
+                                <MenuItem value={'Senior'}>Senior</MenuItem>
+                            </Select>
                         </FormControl>
                         <FormControl className={classes.formControl} margin="normal" fullWidth variant="outlined">
                             <InputLabel htmlFor="bui">Short Bio</InputLabel>
