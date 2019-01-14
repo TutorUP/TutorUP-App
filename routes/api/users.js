@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const keys = require('../../config/keys');
 const passport = require('passport');
 
 // Load Validation
@@ -33,12 +34,11 @@ router.post('/register', (req, res, next) => {
                 name: req.body.name,
                 email: req.body.email,
                 password: req.body.password,
-                isTutor: true,
                 avatar
             });
             
-            // Generate hashed password to save to DB
-            bcrypt.genSalt(parseInt(process.env.saltRounds), (err, salt) => {
+            // Generate hashed passwMediaKeySystemAccess
+            bcrypt.genSalt(parseInt(keys.saltRounds), (err, salt) => {
                 bcrypt.hash(newUser.password, salt, (err, hash) => {
                     if (err) throw err;
                     newUser.password = hash;
@@ -59,9 +59,7 @@ router.post('/login', (req, res) => {
     const { errors, isValid } = validateLoginInput(req.body);
     
     // Check Validation
-    if (!isValid) {
-        return res.status(400).json(errors);
-    }
+    if (!isValid) return res.status(400).json(errors);
     
     const email = req.body.email;
     const password = req.body.password;
@@ -86,7 +84,7 @@ router.post('/login', (req, res) => {
                         // Sign token
                         jwt.sign(
                             payload,
-                            process.env.secretOrKey,
+                            keys.secretOrKey,
                             { expiresIn: 3600 },
                             (err, token) => {
                                 if (err) console.error(err);

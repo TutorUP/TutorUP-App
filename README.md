@@ -42,5 +42,8 @@
 - Serverless (for cloud function backend)
 - * Rocket Chat * (Chatrooms! Free Slack basically)
 
+## Testing
+- `expect(component).to.have.class('something')`
+
 ## Run container in background
 - `docker-compose up -d`

@@ -24,7 +24,6 @@ import AddAvailability from './components/profileOptions/AddAvailability';
 import Profile from './components/profile/Profile';
 
 import AppSearch from './components/search/AppSearch'
-import CalendarSearch from './components/search/CalendarSearch';
 
 const styles = theme => ({
   content: {
@@ -49,7 +48,6 @@ class App extends Component {
                 <div className={classes.appBarSpacer} />
                 <Route exact path="/" component={AppLanding} />
                 <Route exact path="/search" component={AppSearch} />
-                <Route exact path="/calendar" component={CalendarSearch} />
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/myprofile" component={Profile} />
