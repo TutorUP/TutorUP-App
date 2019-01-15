@@ -1,12 +1,14 @@
 const express = require('express');
 const dotenv = require('dotenv');
 dotenv.config();
+const session = require('express-session');
 const cors = require('cors');
 const helmet = require('helmet');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const path = require('path');
+const keys = require('./config/keys');
 
 // Load routes
 const users = require('./routes/api/users');
@@ -29,22 +31,35 @@ app.use(bodyParser.json());
 // Connect to DB
 mongoose
     .set('useNewUrlParser', true)
-    .connect(process.env.mongoURI)
+    .connect(keys.mongoURI)
     .then(() => console.info('MongoDB Connected'))
     .catch(err => console.error(err));
 
-// Passport middleware
-app.use(passport.initialize());
- // app.use(passport.session());
+// Config express-session
+const sessConfig = {
+    secret: keys.sessionSecret,
+    cookie: {},
+    resave: false,
+    saveUninitialized: true
+};
+
+app.use(session(sessConfig));
 
 // Passport Config
 require('./config/userAuth')(passport);
+
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 app.use('/api/users', users);
 app.use('/api/profile', profile);
 app.use('/api/posts', posts);
 
 if (process.env.NODE_ENV === 'production') {
+    sessConfig.cookie.secure = true;
+
     // Set static folder
     app.use(expess.static('client/build'));
 
@@ -52,7 +67,5 @@ if (process.env.NODE_ENV === 'production') {
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
     });
 }
-
-
 
 app.listen(port, () => console.info(`Server started on port ${port}`));

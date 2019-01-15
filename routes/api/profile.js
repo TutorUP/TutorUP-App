@@ -158,12 +158,33 @@ router.delete('/', passport.authenticate('jwt', { session: false }),
 // @access  Private
 router.post('/availability', passport.authenticate('jwt', { session: false }), (req, res) => {
     Profile.findOne({ user: req.user.id }).then(profile => {
-        const availability = {
+        const newAvailability = {
             department: req.body.department,
             courseNum: req.body.courseNum,
             availableTime: req.body.availableTime
-        }
+        };
+
+        profile.availability.unshift(newAvailability);
+        profile.save().then(profile => res.json(profile));
     });
+});
+
+// @route   DELETE api/profile/availability/:avb_id
+// @desc    Delete availability from profile
+// @access  Private
+router.delete('/availability/:avb_id', passport.authenticate('jwt', { session: false}), (req, res) => {
+    Profile.findOne({ user: req.user.id })
+        .then(profile => {
+            // Get remove index
+            const removeIndex = profile.availability.map(item => item.id).indexOf(req.params.avb_id);
+
+            // Splice out of array
+            profile.availability.splice(removeIndex, 1);
+
+            // Save
+            profile.save().then(profile => res.json(profile));
+        })
+        .catch(err => res.status(404).json(err));
 });
 
 
