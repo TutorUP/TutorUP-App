@@ -8,9 +8,13 @@ import { addAvailability } from '../../redux/actions/profileActions';
 import { MuiPickersUtilsProvider } from 'material-ui-pickers';
 import MomentUtils from '@date-io/moment';
 import { DateTimePicker } from 'material-ui-pickers';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { FormControl, Input, InputLabel } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
 
 class AddAvailability extends Component {
     state = {
@@ -43,9 +47,7 @@ class AddAvailability extends Component {
             availableTime
         }
 
-        console.log(availabilityData)
-
-        // this.props.addAvailability(availabilityData, this.props.history);
+        this.props.addAvailability(availabilityData, this.props.history);
 
     }
 
@@ -61,42 +63,48 @@ class AddAvailability extends Component {
         const { department, courseNum, availableTime, errors } = this.state;
         
         return (
-            <div>
+            <Card>
                 <Link to="/dashboard">Go Back</Link>
                 <Typography variant="h2" gutterBottom>Add Availability</Typography>
                 <Typography variant="subtitle1" gutterBottom>Select what time you can meet up with a tutor/tutee</Typography>
                 <form onSubmit={this.onSubmit}>
-                    <FormControl required>
-                        <InputLabel htmlFor="department">
-                        Select a Department
-                        </InputLabel>
-                        <Input id="department" name="department" onChange={this.onChange} value={department}>
-                        </Input>
-                    </FormControl>
-                    <FormControl required>
-                        <InputLabel htmlFor="coursenum">
-                        Enter a Course Number
-                        </InputLabel>
-                        <Input id="courseNum" name="courseNum" onChange={this.onChange} value={courseNum}>
-                        </Input>
-                    </FormControl>
-                        <MuiPickersUtilsProvider utils={MomentUtils}>
-                            <DateTimePicker 
-                            disablePast
-                            minDate={Date.now()}
-                            showTodayButton
-                            keyboard 
-                            label="Available Date" 
-                            value={availableTime} 
-                            onChange={this.handleDateChange} 
-                        />
-                        </MuiPickersUtilsProvider>
-       
-                    {errors}
-                    <Button type="submit" variant="outlined" color="inherit">Submit</Button>
+                    <Grid container spacing={100}>
+                        <Grid item xs={12} md={6}>
+                            <FormControl required>
+                                <InputLabel htmlFor="department">
+                                Select a Department
+                                </InputLabel>
+                                <Input id="department" name="department" onChange={this.onChange} value={department}>
+                                </Input>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12} md={6}>
+                        <FormControl required>
+                            <InputLabel htmlFor="coursenum">
+                            Enter a Course Number
+                            </InputLabel>
+                            <Input id="courseNum" name="courseNum" onChange={this.onChange} value={courseNum}>
+                            </Input>
+                        </FormControl>
+                        </Grid>
+                            <MuiPickersUtilsProvider utils={MomentUtils}>
+                                <DateTimePicker 
+                                    disablePast
+                                    minDate={Date.now()}
+                                    showTodayButton
+                                    keyboard 
+                                    label="Available Date" 
+                                    value={availableTime} 
+                                    onChange={this.handleDateChange} 
+                                />
+                            </MuiPickersUtilsProvider>
+                        {errors}
+                        <Button type="submit" variant="outlined" color="inherit">Submit</Button>
+                    </Grid>
                 </form>
 
-            </div>
+            </Card>
+
         );
     }
 }

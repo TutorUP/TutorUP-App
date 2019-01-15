@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { createProfile } from '../../redux/actions/profileActions';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { studentMajorsOptions } from '../../utils/constants';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
@@ -13,6 +12,9 @@ import { FormControl, Input, InputLabel } from '@material-ui/core';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
+
+// import components
+import SelectList from '../common/SelectList';
 
 const styles = theme => ({
     root: {

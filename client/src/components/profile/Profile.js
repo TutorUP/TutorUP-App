@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 // components
 import ProgressSpinner from '../common/ProgressSpinner';
 import ProfileAbout from './ProfileAbout';
+import ProfileAvailability from './ProfileAvailability';
 
 // MUI imports
 import { withStyles } from '@material-ui/core/styles';
@@ -64,6 +65,7 @@ render() {
         <div>
             <Link to="/profiles">Back to Profiles</Link>
             <ProfileAbout profile={profile} />
+            <ProfileAvailability availability={profile.availability} />
         </div>
     );
 

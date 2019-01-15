@@ -34,11 +34,12 @@ const ProfileItem = props => {
     <React.Fragment>
         <Card className={classes.card}>
             <CardContent>
-                <Typography variant='h3'>
+                <Typography variant="h4">
                     {profile.handle} {profile.status}
                 </Typography>
-            </CardContent>
-            <CardContent>
+                <Typography>
+                    Classes
+                </Typography>
               {profile.classes.slice(0, 4).map((myClass, index) => (
                 <List key={index}>
                     <ListItemText className={classes.bullet} primary={myClass} />

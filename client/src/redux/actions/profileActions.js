@@ -106,6 +106,20 @@ export const getProfileByName = name => dispatch => {
     });
 }
 
+export const filterProfile = filterString => dispatch => {
+    axios.get(`/api/profile/searchMajor/${filterString}`)
+    .then(res => {
+        dispatch({
+            payload: res.data
+        })
+    })
+    .catch(err => {
+        dispatch({
+            payload: null
+        })
+    });
+}
+
 // Delete account & profile
 export const deleteAccount = () => dispatch => {
     if (window.confirm('Are you sure? This can NOT be undone!')) {

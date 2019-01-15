@@ -14,6 +14,16 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import { Card } from '@material-ui/core';
+
+const styles = {
+    card: {
+        minWidth: 400,
+    },
+    title: {
+        fontSize: 14
+    }
+};
 
 class ProfilesShowcase extends Component {
     componentDidMount() {
@@ -21,11 +31,16 @@ class ProfilesShowcase extends Component {
     }
 
     render() {
+        const { classes } = this.props;
         const { profiles, loading } = this.props.profile;
         let profileItems;
 
         if (profiles === null || loading) {
-            profileItems = <h1>Loading Profiles...</h1>
+            profileItems = (
+            <Card>
+            <ProgressSpinner />
+            </Card>
+        )
         }
         else {
             profileItems = profiles.length > 0 ?
@@ -40,10 +55,10 @@ class ProfilesShowcase extends Component {
         }
 
         return (
-            <Grid>
-                <h1>Tutor Profiles</h1>
+            <Card className={classes.card}>
+                <Typography variant="h2">Tutor Profiles</Typography>
                 {profileItems}
-            </Grid>
+            </Card>
         );
     }
 }
@@ -56,4 +71,4 @@ const mapStateToProps = state => ({
     profile: state.profile
 });
 
-export default connect(mapStateToProps, { getProfiles })(ProfilesShowcase)
+export default connect(mapStateToProps, { getProfiles })(withStyles(styles)(ProfilesShowcase))

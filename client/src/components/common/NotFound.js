@@ -1,17 +1,10 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
 import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
-
-const styles = theme => ({
-    
-})
 
 function NotFound() {
   return (
     <div>
-      <h1>Page Not Found</h1>
-      
+      <Typography variant='h3'>Page Not Found</Typography>
     </div>
   )
 }

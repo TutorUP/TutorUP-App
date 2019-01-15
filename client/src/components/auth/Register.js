@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Formik } from "formik";
 import { string, object } from 'yup';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import RegisterForm from './RegisterForm';
 
 // redux action
 import { registerUser } from '../../redux/actions/authActions';
@@ -117,10 +115,6 @@ class Register extends Component {
                 <Typography component="h1" variant="h5">
                   Register
                 </Typography>
-                <Formik
-                  render={props => <RegisterForm {...props}/>}
-                  validationSchema={validationSchema}
-                />
                 <form className={classes.container} autoComplete="off" onSubmit={this.onSubmit}>
                 <FormControl margin="normal" required fullWidth>
                     <InputLabel htmlFor="name">Name</InputLabel>

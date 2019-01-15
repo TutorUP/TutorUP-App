@@ -9,7 +9,7 @@ const styles = theme => ({
     },
   });
 
-function ProgressSpinner(props) {
+const ProgressSpinner = props => {
     const { classes } = props;
     return (
         <div>
@@ -20,7 +20,7 @@ function ProgressSpinner(props) {
 
 ProgressSpinner.propTypes = {
     classes: PropTypes.object.isRequired,
-  };
+};
   
 
 export default withStyles(styles)(ProgressSpinner);

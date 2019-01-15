@@ -38,19 +38,32 @@ const ProfileSchema = new Schema({
     phone: {
         type: Number
     },
-    availability: {
-        from: {
-            type: Number,
-
-        },
-        to: {
-            type: Number,
-         
+    availability: [
+        {
+            department: {
+                type: String
+            },
+            courseNum: {
+                type: String
+            },
+            availableTime: {
+                type: Number, // store dates as Unix timestamps
+            },
         }
-    },
+    ],
     date: {
         type: Date,
         default: Date.now
+    }
+});
+
+ProfileSchema.index({
+    name: 'text',
+    description: 'text'
+}, {
+    weights: {
+        user: 5,
+        bio: 1
     }
 });
 
