@@ -5,7 +5,8 @@
 2. Run `npm install` or `yarn install` at app root
 3. Install the React app dependencies: Run `npm install` or `yarn install` within the /client folder
 4. Follow Local Setup instructions (to connect to mLab mongoDB)
-5. Run `npm run dev` or `yarn dev`
+5. Create a keys_dev.js file in <project_root>/config folder. This will be ignored by Git so you don't commit your juicy credentials!
+6. Run `npm run dev` or `yarn dev`
 
 
 ## About
