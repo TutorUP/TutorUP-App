@@ -4,6 +4,8 @@
 1. Install npm
 2. Run `npm install` or `yarn install` at app root
 3. Install the React app dependencies: Run `npm install` or `yarn install` within the /client folder
+4. Follow Local Setup instructions (to connect to mLab mongoDB)
+5. Run `npm run dev` or `yarn dev`
 
 
 ## About
@@ -26,7 +28,7 @@
 - Material-UI: Google Style Library
 
 ## Local Setup
-1. Create mLab account and create database
+1. Create mLab account and create database, add to config/keys_dev.js
 
 ## Dependencies
 - react-redux
