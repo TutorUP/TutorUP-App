@@ -6,7 +6,10 @@
 3. Install the React app dependencies: Run `npm install` or `yarn install` within the /client folder
 4. Follow Local Setup instructions (to connect to mLab mongoDB)
 5. Create a keys_dev.js file in <project_root>/config folder. This will be ignored by Git so you don't commit your juicy credentials!
-6. Run `npm run dev` or `yarn dev`
+6. Install the useful Chrome extensions to work with React and Redux (look into not needing this to run properly!!)
+- https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en
+- https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en 
+7. Run `npm run dev` or `yarn dev`
 
 
 ## About
