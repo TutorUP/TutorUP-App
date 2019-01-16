@@ -14,7 +14,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 
 // import components
-import SelectList from '../common/SelectList';
 
 const styles = theme => ({
     root: {
