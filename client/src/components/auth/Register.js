@@ -104,7 +104,7 @@ class Register extends Component {
     }
 
     render() {
-        const { classes } = this.props;
+        const { classes, errors } = this.props;
 
         return (
             <div className={classes.main}>
@@ -116,22 +116,26 @@ class Register extends Component {
                   Register
                 </Typography>
                 <form className={classes.container} autoComplete="off" onSubmit={this.onSubmit}>
-                <FormControl margin="normal" required fullWidth>
+                  <FormControl margin="normal" required fullWidth>
                     <InputLabel htmlFor="name">Name</InputLabel>
                     <Input id="name" name="name" autoComplete="email" autoFocus onChange={this.onChange}/>
                   </FormControl>
+                  {errors.name}
                   <FormControl margin="normal" required fullWidth>
                     <InputLabel htmlFor="email">Email Address</InputLabel>
                     <Input id="email" name="email" autoComplete="email" autoFocus onChange={this.onChange}/>
                   </FormControl>
+                  {errors.email}
                   <FormControl margin="normal" required fullWidth>
                     <InputLabel htmlFor="password">Password</InputLabel>
                     <Input name="password" type="password" id="password" autoComplete="current-password" onChange={this.onChange}/>
                   </FormControl>
+                  {errors.password}
                   <FormControl margin="normal" required fullWidth>
                     <InputLabel htmlFor="password2">Confirm Password</InputLabel>
                     <Input name="password2" type="password" id="password2" autoComplete="current-password" onChange={this.onChange}/>
                   </FormControl>
+                  {errors.password2}
                   <Button
                     type="submit"
                     fullWidth
