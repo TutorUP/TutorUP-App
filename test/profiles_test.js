@@ -1,6 +1,9 @@
 const sinon = require('sinon');
+const request = require('supertest');
 const chai = require('chai');
 const expect = chai.expect;
+
+const app = require('../server');
 
 const mongoose = require('mongoose');
 const Profile = require('../models/Profile');

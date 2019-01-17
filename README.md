@@ -24,6 +24,12 @@
 1. Chatroom setup
 2. Serverless backend
 
+## Quick Notes
+- Server-side backend stuff is in root
+- Client-side frontend stuff is in /client folder
+- Concurrency is an installed dependency that allows you to run both -ends at once with single command
+- If you make any new config files with important credentials add it to the .gitignore before pushing to Git
+
 ## Technologies
 - Express: Fast, flexible Node.js web application framework
 - Mongoose: Models MongoDB objects for Node.js (ORM)
@@ -31,6 +37,10 @@
 - Redux
 - Passport
 - Material-UI: Google Style Library
+
+## Testing Technologies
+- Mocha: JS framework for Node.js that allows async testing
+- Chai: Assertion lib used for testing HTTP requests
 
 ## Local Setup
 1. Create mLab account and create database, add to config/keys_dev.js

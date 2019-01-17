@@ -19,7 +19,7 @@ const { classes } = props;
             <Typography variant="h3" align="center" gutterBottom>
             TutorUP
             </Typography>
-            <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
+            <Typography variant="subtitle1" align="center" component="p">
             <a href="https://icons8.com/icon/81348/books">Books icon by Icons8</a> <br/> Capstone 2019
             </Typography>
       </footer>
