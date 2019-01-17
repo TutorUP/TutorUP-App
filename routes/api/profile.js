@@ -12,54 +12,57 @@ const validateProfileInput = require('../../validation/profileValidation');
 // @route   GET api/profile/all
 // @desc    Get all users' profiles
 // @access  Public
-router.get('/all', (req, res) => {
+router.get('/all', async (req, res) => {
     const errors = {};
-    Profile.find()
-        .populate('user', ['name', 'avatar'])
-        .then(profiles => {
-            if (!profiles) {
-                errors.noprofile = 'There are no profiles';
-                return res.status(404).json();
-            }
-            
-            res.json(profiles);
-        })
-        .catch(err => res.status(404).json({ profile: 'There are no profiles', err }));
+    try {
+        const profiles = await Profile.find().populate('user', ['name', 'avatar']);
+        if (!profiles) {
+            errors.noprofile = 'This user has not created a profile';
+            return res.status(404).json();
+        }
+        res.json(profiles);
+    }
+    catch (err) {
+        res.status(404).json({ profile: 'Error retrieving profile' });
+    }
 });
 
 // @route   GET api/profile/handle/:handle
 // @desc    Get profile by handle
 // @access  Public
-router.get('/handle/:handle', (req, res) => {
+router.get('/handle/:handle', async (req, res) => {
     const errors = {};
-  
-    Profile.findOne({ handle: req.params.handle })
-      .populate('user', ['name', 'avatar'])
-      .then(profile => {
+    try {
+        const profile = await Profile.findOne({ handle: req.params.handle })
+                                    .populate('user', ['name', 'avatar']);
         if (!profile) {
-          errors.noprofile = 'There is no profile for this user';
-          res.status(404).json(errors);
+            errors.noprofile = 'There is no profile for this user';
+            res.status(404).json(errors);
         }
-  
         res.json(profile);
-      })
-      .catch(err => res.status(404).json(err));
+
+    }
+    catch (err) {
+        res.status(404).json(err);
+    }
   });
 
 // @route   GET api/profile
 // @desc    Get current user's profile
 // @access  Private
-router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
+router.get('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
     const errors = {};
-    Profile.findOne({ user: req.user.id })
-        .then(profile => {
-            if (!profile) {
-                errors.noprofile = 'There is no profile for this user';
-                return res.status(404).json(errors);
-            }
-            res.json(profile);
-        })
-        .catch(err => res.status(404).json(err));
+    try {
+        const profile =  await Profile.findOne({ user: req.user.id });
+        if (!profile) {
+            errors.noprofile = 'There is no profile for this user';
+            return res.status(404).json(errors);
+        }
+        res.json(profile);
+    }
+    catch (err) {
+        res.status(404).json(err);
+    }
 });
 
 // @route   GET api/profile/search/:handle
@@ -156,17 +159,21 @@ router.delete('/', passport.authenticate('jwt', { session: false }),
 // @route   POST api/profile/availability
 // @desc    Add availability to profile
 // @access  Private
-router.post('/availability', passport.authenticate('jwt', { session: false }), (req, res) => {
-    Profile.findOne({ user: req.user.id }).then(profile => {
+router.post('/availability', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    try {
+        const profile = await Profile.findOne({ user: req.user.id });
         const newAvailability = {
             department: req.body.department,
             courseNum: req.body.courseNum,
             availableTime: req.body.availableTime
         };
-
         profile.availability.unshift(newAvailability);
         profile.save().then(profile => res.json(profile));
-    });
+
+    }
+    catch (err) {
+        console.error(err);
+    }
 });
 
 // @route   DELETE api/profile/availability/:avb_id
@@ -186,7 +193,5 @@ router.delete('/availability/:avb_id', passport.authenticate('jwt', { session: f
         })
         .catch(err => res.status(404).json(err));
 });
-
-
 
 module.exports = router;
