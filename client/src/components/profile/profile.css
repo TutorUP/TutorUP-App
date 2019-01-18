@@ -1,0 +1,21 @@
+.chip {
+	margin-right: 10px;
+}
+
+.cardHeader {
+	border-bottom: 1px solid rgba(0, 0, 0, 0.23);
+}
+
+.spaceBelow {
+	margin-bottom: 10px;
+}
+
+.spaceAbove {
+	margin-top: 10px;
+}
+
+.icon {
+	color: #838383;
+	margin-left: 3px;
+	font-size: 20px;
+}
