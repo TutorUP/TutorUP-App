@@ -7,6 +7,9 @@ const splitString = string => {
 }
 
 describe("Splits comma-separated String into array", () => {
-    let classes = 'CS345, CS123, PHY247, HIS203, ENG112, THTR203';
-    expect(splitString(classes)).to.have.lengthOf(6);
+    it('Should format classes as array', done => {
+        let classes = 'CS345, CS123, PHY247, HIS203, ENG112, THTR203';
+        expect(splitString(classes)).to.have.lengthOf(6);
+        done();
+    });
 });
