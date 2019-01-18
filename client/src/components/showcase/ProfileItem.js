@@ -28,7 +28,7 @@ const ProfileItem = props => {
 
     return (
     <React.Fragment>
-        <Card className={classes.card}>
+        <Card raised>
             <CardContent>
                 <Typography variant="h4" gutterBottom>
                     {profile.handle} : <Chip color="primary" variant="outlined" label={profile.status}/>

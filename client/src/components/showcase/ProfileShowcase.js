@@ -18,11 +18,8 @@ import { Card } from '@material-ui/core';
 
 const styles = {
     card: {
-        minWidth: 400,
+        minWidth: 300,
     },
-    title: {
-        fontSize: 14
-    }
 };
 
 class ProfilesShowcase extends Component {
@@ -37,9 +34,8 @@ class ProfilesShowcase extends Component {
 
         if (profiles === null || loading) {
             profileItems = (
-            <Card>
             <ProgressSpinner />
-            </Card>
+
         )
         }
         else {
@@ -56,7 +52,7 @@ class ProfilesShowcase extends Component {
 
         return (
             <Card className={classes.card}>
-                <Typography variant="h2">Tutor Profiles</Typography>
+                <Typography variant="h2" gutterBottom>Tutor Profiles</Typography>
                 {profileItems}
             </Card>
         );
