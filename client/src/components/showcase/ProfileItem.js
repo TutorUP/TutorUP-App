@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
+// redux import
+import { connect } from 'react-redux';
+
 // MUI imports
 import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
@@ -28,7 +31,7 @@ const styles = {
 };
 
 const ProfileItem = props => {
-    const { classes, profile } = props;
+    const { classes, profile, auth } = props;
 
     return (
     <React.Fragment>
@@ -52,6 +55,11 @@ const ProfileItem = props => {
                         View Profile
                     </Link>
                 </Button>
+                {profile.user._id === auth.user.id && 
+                        <Button name="editProfile" size="small" color="secondary">
+                        <Link to={'/edit-profile'}>Edit Your Profile</Link>
+                        </Button>
+                }
             </CardActions>
         </Card>
     </React.Fragment>
@@ -62,4 +70,8 @@ ProfileItem.propTypes = {
     profile: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(ProfileItem);
+const mapStateToProps = state => ({
+    auth: state.auth
+});
+
+export default connect(mapStateToProps)(withStyles(styles)(ProfileItem));
