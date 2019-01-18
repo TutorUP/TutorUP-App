@@ -7,7 +7,7 @@ describe('Profile with valid input', () => {
         const ProfileData = {
             major: 'Computer Science',
             status: 'Sophomore',
-            classes: ['CS341', 'HST123', 'CS203', 'THEO101']
+            classes: 'CS343, HST123, CS203, THEO101'
         }
 
         const { errors, isValid } = validateProfileInput(ProfileData);
@@ -22,7 +22,7 @@ describe('Profile with missing major', () => {
         const ProfileData = {
             major: '',
             status: 'Sophomore',
-            classes: ['CS341', 'HST123', 'CS203', 'THEO101']
+            classes: 'CS343, HST123, CS203, THEO101'
         }
 
         const { errors, isValid } = validateProfileInput(ProfileData);
@@ -32,52 +32,32 @@ describe('Profile with missing major', () => {
     });
 });
 
-// describe('Profile with invalid password (empty password)', () => {
-//     it('Should return error', done => {
-//         const ProfileData = {
-//             email: 'miles@up.edu',
-//             password: '',
-//             password2: ''
-//         }
+describe('Profile with missing status', () => {
+    it('Should return error', done => {
+        const ProfileData = {
+            major: 'Computer Science',
+            status: '',
+            classes: 'CS343, HST123, CS203, THEO101'
+        }
 
-//         const { errors, isValid } = validateProfileInput(ProfileData);
-//         expect(isValid).to.be.false;
-//         expect(errors).to.deep.equal({
-//             password: "Password must be at least 6 characters"
-//         });
-//         done();
-//     });
-// });
+        const { errors, isValid } = validateProfileInput(ProfileData);
+        expect(isValid).to.be.false;
+        expect(errors).to.deep.equal({status: 'Status field is required'});
+        done();
+    });
+});
 
-// describe('Profile with invalid password (non-proper length)', () => {
-//     it('Should return error', done => {
-//         const ProfileData = {
-//             email: 'miles@up.edu',
-//             password: 'miles',
-//             password2: 'miles'
-//         }
+describe('Profile with missing classes', () => {
+    it('Should return error', done => {
+        const ProfileData = {
+            major: 'Computer Science',
+            status: 'Sophomore',
+            classes: ''
+        }
 
-//         const { errors, isValid } = validateProfileInput(ProfileData);
-//         expect(isValid).to.be.false;
-//         expect(errors).to.deep.equal({password: "Password must be at least 6 characters"});
-//         done();
-//     });
-// });
-
-// describe('Profile with empty form', () => {
-//     it('Should return error', done => {
-//         const ProfileData = {
-//             email: '',
-//             password: '',
-//         }
-
-//         const { errors, isValid } = validateProfileInput(ProfileData);
-//         expect(isValid).to.be.false;
-//         expect(errors).to.deep.equal({
-//             email: "Email field is required",
-//             password: "Password must be at least 6 characters",
-//         });
-//         done();
-//     });
-// });
-
+        const { errors, isValid } = validateProfileInput(ProfileData);
+        expect(isValid).to.be.false;
+        expect(errors).to.deep.equal({classes: 'Classes  required'});
+        done();
+    });
+});
