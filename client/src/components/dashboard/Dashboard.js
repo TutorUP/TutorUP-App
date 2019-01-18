@@ -19,11 +19,22 @@ import Button from '@material-ui/core/Button';
 
 import NotificationPopUp from '../common/NotificationPopUp';
 
-const styles = {
+const styles = theme => ({
     root: {
-      width: '100%',
+      marginLeft: theme.spacing.unit * 3,
+      marginRight: theme.spacing.unit * 3,
+        [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
+            width: 400,
+            marginLeft: 'auto',
+            marginRight: 'auto',
+        },
+    marginTop: theme.spacing.unit * 8,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
     },
-  };
+  });
 
 class Dashboard extends Component {
     state = {
@@ -61,6 +72,7 @@ class Dashboard extends Component {
                         <Link to={`/profile/${profile.handle}`}> {user.name}</Link>
                     </Typography>
                     <ProfileOptions />
+                    <br />
                     <Button 
                     variant="outlined" 
                     color="secondary" 

@@ -167,9 +167,8 @@ router.post('/availability', passport.authenticate('jwt', { session: false }), a
             courseNum: req.body.courseNum,
             availableTime: req.body.availableTime
         };
-        profile.availability.unshift(newAvailability);
+        profile.availability = [newAvailability, ...profile.availability]
         profile.save().then(profile => res.json(profile));
-
     }
     catch (err) {
         console.error(err);
