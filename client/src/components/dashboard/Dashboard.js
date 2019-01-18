@@ -17,6 +17,8 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 
+import NotificationPopUp from '../common/NotificationPopUp';
+
 const styles = {
     root: {
       width: '100%',
@@ -25,7 +27,7 @@ const styles = {
 
 class Dashboard extends Component {
     state = {
-        snackbar: false
+        snackbar: true
     }
 
     componentDidMount() {
@@ -33,10 +35,17 @@ class Dashboard extends Component {
     }
 
     onDeleteClick = e => {
+        this.setState({ snackbar: false });
         this.props.deleteAccount();
+
+    }
+
+    handleClose = e => {
+        this.setState({ snackbar: !this.state.snackbar });
     }
 
     render() {
+        const { snackbar } = this.state;
         const { classes } = this.props;
         const { user } = this.props.auth;
         const { profile, loading } = this.props.profile;
@@ -47,7 +56,7 @@ class Dashboard extends Component {
         }
         else {
             dashboardContent = Object.keys(profile).length > 0 ? (
-                <Grid xs={12} className={classes.root}>
+                <Grid className={classes.root}>
                     <Typography variant="h2" gutterBottom>Welcome 
                         <Link to={`/profile/${profile.handle}`}> {user.name}</Link>
                     </Typography>
@@ -59,6 +68,9 @@ class Dashboard extends Component {
                     className={classes.button}>
                         Delete Your Account
                     </Button>
+                    {profile !== null &&
+                        <NotificationPopUp open={!snackbar} message="Thanks for staying" handleClose={this.handleClose} />
+                    }
                 </Grid>
 
             ) : (
@@ -68,13 +80,15 @@ class Dashboard extends Component {
                     <Link to="/create-profile" className="btn btn-lg btn-info">
                         Create Profile
                     </Link>
+                    <NotificationPopUp open={snackbar} message="Boo yah! You're here! Add a profile" handleClose={this.handleClose} />
                 </Grid>
+                
             );
         }
 
         return (
             <React.Fragment>
-                <Grid container alignItems="flex-end">
+                <Grid container>
                     <Card>
                         <CardContent>
                             {dashboardContent}

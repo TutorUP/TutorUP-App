@@ -18,17 +18,3 @@ describe('Profile', () => {
         });
     });
 });
-
-// Test the GET profiles
-describe('/GET profiles', () => {
-    it('should GET all profiles', done => {
-        chai.request(server)
-            .get('/api/profile/all')
-            .end((err, res) => {
-                    res.should.have.status(200);
-                    res.body.should.be.a('array');
-                    res.body.length.should.be.eql(5);
-                done();
-            });
-    });
-});

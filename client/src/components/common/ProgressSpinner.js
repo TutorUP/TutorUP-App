@@ -13,7 +13,10 @@ const ProgressSpinner = props => {
     const { classes } = props;
     return (
         <div>
-            <CircularProgress className={classes.progress} size="100" color="secondary" />
+            <CircularProgress 
+            className={classes.progress} 
+            size="200" 
+            color="secondary" />
         </div>
     );
 }

@@ -125,7 +125,7 @@ render() {
                         </FormControl>
                         <FormControl className={classes.formControl} margin="normal" required>
                             <InputLabel htmlFor="classes">Classes</InputLabel>
-                            <Input id="classes" name="classes" value={classes} onChange={this.onChange}>
+                            <Input id="classes" name="classes" value={classes} onChange={this.onChange} placeholder="Add comma-separated classes...">
                             </Input>
                         </FormControl>
                         <FormControl className={classes.formControl} margin="normal" required>
