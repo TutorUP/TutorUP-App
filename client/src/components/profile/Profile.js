@@ -30,7 +30,6 @@ const styles = theme => ({
         },
     },
     header: {
-        backgroundColor: theme.palette.grey[800],
         color: theme.palette.common.white,
         marginBottom: theme.spacing.unit * 4,
     },
@@ -63,25 +62,12 @@ render() {
     
     profileContent = (profile === null || loading) ? <ProgressSpinner /> : (
         <div>
-            <Link to="/profiles">Back to Profiles</Link>
             <ProfileAbout profile={profile} />
-            <ProfileAvailability availability={profile.availability} />
         </div>
     );
 
     return (
-        <div className={classes.layout}>
-            <Paper className={classes.header}>
-                <Grid container>
-                    <div className={classes.profileFeatured}>
-                        <Typography component="h1" variant="h3" color="inherit" gutterBottom>
-                            User Profile
-                        </Typography>
-                        {profileContent}
-                    </div>
-                </Grid>
-            </Paper>
-        </div>
+        <div>{profileContent}</div>
     );
   }
 }

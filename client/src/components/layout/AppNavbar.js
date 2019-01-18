@@ -7,6 +7,8 @@ import { connect } from 'react-redux';
 import { logoutUser } from '../../redux/actions/authActions';
 import { clearCurrentProfile } from '../../redux/actions/profileActions';
 import { secondaryListItems, authLinks, guestLinks } from './AppNavbarLinks';
+import './layout.css';
+import { headerImage } from './logodark.png';
 
 // Material UI imports
 import { withStyles } from '@material-ui/core/styles';
@@ -34,6 +36,7 @@ const styles = theme => ({
   },
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
+    backgroundColor: '#494949',
   },
   toolbarIcon: {
     display: 'flex',
@@ -59,7 +62,7 @@ const styles = theme => ({
   },
   menuButton: {
     marginLeft: 12,
-    marginRight: 36,
+    marginRight: 12,
   },
   menuButtonHidden: {
     display: 'none',
@@ -170,15 +173,8 @@ class AppNavbar extends Component {
                         >
                             <MenuIcon />
                         </IconButton>
-                        <Link to="/">
-                        <Typography
-                            component="h1"
-                            variant="h6"
-                            noWrap
-                            className={classes.title}
-                            >
-                            TutorUP
-                        </Typography>
+                        <Link to="/" className="link">
+                          <img src="logodark.png" className="headerImg"></img>
                         </Link>
                         <div className={classes.grow} />
                     </Toolbar>

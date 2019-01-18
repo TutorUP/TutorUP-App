@@ -47,7 +47,7 @@ class Dashboard extends Component {
         }
         else {
             dashboardContent = Object.keys(profile).length > 0 ? (
-                <Grid xs={12} className={classes.root}>
+                <Grid className={classes.root}>
                     <Typography variant="h2" gutterBottom>Welcome 
                         <Link to={`/profile/${profile.handle}`}> {user.name}</Link>
                     </Typography>
@@ -62,7 +62,7 @@ class Dashboard extends Component {
                 </Grid>
 
             ) : (
-                <Grid container justify="center" alignItems="center">
+                <Grid>
                     <Typography variant="h2" gutterBottom>Welcome {user.name}</Typography>
                     <Typography variant="subtitle1" gutterBottom>You have not yet setup a profile, please add some info</Typography>
                     <Link to="/create-profile" className="btn btn-lg btn-info">
@@ -74,7 +74,7 @@ class Dashboard extends Component {
 
         return (
             <React.Fragment>
-                <Grid container alignItems="flex-end">
+                <Grid>
                     <Card>
                         <CardContent>
                             {dashboardContent}

@@ -15,7 +15,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 // components
 import PrivateRoute from './components/common/PrivateRoute';
 import AppNavbar from './components/layout/AppNavbar';
-import AppFooter from './components/layout/AppFooter';
 import AppLanding from './components/layout/AppLanding';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
@@ -34,6 +33,12 @@ import Profile from './components/profile/Profile';
 
 import AppSearch from './components/search/AppSearch';
 
+// icons
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCalendarCheck, faTag, faInfoCircle, faEnvelope} from '@fortawesome/free-solid-svg-icons'
+
+library.add(faCalendarCheck, faTag, faInfoCircle, faEnvelope)
 
 // Check for JWT for persistence
 if (localStorage.jwtToken) {
@@ -96,7 +101,6 @@ class App extends Component {
                   <PrivateRoute exact path="/add-availability" component={AddAvailability}/>
                 </Switch>
               </main>
-              <AppFooter />
             </div>
           </Router>
         </Provider>

@@ -12,6 +12,7 @@ import LockIcon from '@material-ui/icons/LockOutlined';
 import PeopleIcon from '@material-ui/icons/People';
 import SearchIcon from '@material-ui/icons/Search';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import './layout.css';
 
 const ListItemLink = props => {
   return <ListItem button component="a" {...props} />;
@@ -19,7 +20,7 @@ const ListItemLink = props => {
 
 export const authLinks = (
   <React.Fragment>
-    <Link to="/dashboard">
+    <Link to="/dashboard" className="link">
       <ListItem button>
         <ListItemIcon>
           <DashboardIcon />
@@ -27,7 +28,7 @@ export const authLinks = (
         <ListItemText primary="Dashboard" />
       </ListItem>
     </Link>
-    <Link to="/search">
+    <Link to="/search" className="link">
       <ListItem button>
         <ListItemIcon>
           <SearchIcon />
@@ -35,7 +36,7 @@ export const authLinks = (
         <ListItemText primary="Search Tutors" />
       </ListItem>
     </Link>
-    <Link to="/profiles">
+    <Link to="/profiles" className="link">
       <ListItem button>
         <ListItemIcon>
           <PeopleIcon />
@@ -48,7 +49,7 @@ export const authLinks = (
 
 export const guestLinks = (
   <React.Fragment>
-    <Link to="/login">
+    <Link to="/login" className="link">
       <ListItem button>
         <ListItemIcon>
           <LockIcon />
@@ -56,7 +57,7 @@ export const guestLinks = (
         <ListItemText primary="Login" />
       </ListItem>
     </Link>
-    <Link to="/register">
+    <Link to="/register" className="link">
       <ListItem button>
         <ListItemIcon>
           <AddIcon />
@@ -64,7 +65,7 @@ export const guestLinks = (
         <ListItemText primary="Register" />
       </ListItem>
     </Link>
-    <Link to="/profiles">
+    <Link to="/profiles" className="link">
       <ListItem button>
         <ListItemIcon>
           <PeopleIcon />
