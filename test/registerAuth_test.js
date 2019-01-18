@@ -63,6 +63,7 @@ describe('Register with invalid password (non matching password2)', () => {
         }
 
         const { errors, isValid } = validateRegisterInput(registerData);
+        expect(isValid).to.be.false;
         expect(errors).to.deep.equal({password2: "Passwords must match"});
         done();
     });
@@ -78,7 +79,29 @@ describe('Register with invalid password (non-proper length)', () => {
         }
 
         const { errors, isValid } = validateRegisterInput(registerData);
+        expect(isValid).to.be.false;
         expect(errors).to.deep.equal({password: "Password must be at least 6 characters"});
+        done();
+    });
+});
+
+describe('Register with empty form', () => {
+    it('Should return error', done => {
+        const registerData = {
+            name: '',
+            email: '',
+            password: '',
+            password2: ''
+        }
+
+        const { errors, isValid } = validateRegisterInput(registerData);
+        expect(isValid).to.be.false;
+        expect(errors).to.deep.equal({
+            name: "Name field is required",
+            email: "Email is invalid",
+            password: "Password must be at least 6 characters",
+            password2: "Confirm Password field is required"
+        });
         done();
     });
 });
