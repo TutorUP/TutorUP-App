@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const keys = require('../../config/keys');
 const passport = require('passport');
+const gravatar = require('gravatar');
 
 // Load Validation
 const validateRegisterInput = require('../../validation/registerAuth');
@@ -28,8 +29,12 @@ router.post('/register', async (req, res, next) => {
             return res.status(400).json(errors);
         }
         else {
-            // TODO: add avatar to user
-            let avatar = 'Avatar here';
+            // Add avatar to user from email
+            const avatar = gravatar.url(req.body.email, {
+                s: '200',
+                r: 'pg',
+                d: 'mm'
+            });
 
             const newUser = new User({
                 name: req.body.name,
@@ -38,7 +43,7 @@ router.post('/register', async (req, res, next) => {
                 avatar
             });
             
-            // Generate hashed passwMediaKeySystemAccess
+            // Generate hashed password
             bcrypt.genSalt(parseInt(keys.saltRounds), (err, salt) => {
                 bcrypt.hash(newUser.password, salt, (err, hash) => {
                     if (err) throw err;
