@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
-import { studentMajorsOptions } from '../../utils/constants';
 
 import { createProfile, getCurrentProfile } from '../../redux/actions/profileActions';
 
@@ -93,9 +92,9 @@ render() {
         <Grid container>
             <Grid item xs={12}>
                 <Paper elevation={1}>
-                    <Link to="/dashboard">
+                    <Button component={Link} to="/dashboard">
                         Back to Dashboard
-                    </Link>
+                    </Button>
                     <Typography variant="h4" component="h1">
                         Edit Your Profile
                     </Typography>
@@ -110,7 +109,7 @@ render() {
                         </FormControl>
                         <FormControl className={classes.formControl} margin="normal" required>
                             <InputLabel htmlFor="major">Major</InputLabel>
-                            <Select value={this.state.major} onChange={this.onChange} inputProps={{
+                            <Select value={major} onChange={this.onChange} inputProps={{
                                 name: 'major',
                                 id: 'major'
                             }}>
@@ -125,12 +124,12 @@ render() {
                         </FormControl>
                         <FormControl className={classes.formControl} margin="normal" required>
                             <InputLabel htmlFor="classes">Classes</InputLabel>
-                            <Input id="classes" name="classes" value={classes} onChange={this.onChange}>
+                            <Input id="classes" name="classes" value={classes} onChange={this.onChange} placeholder="Add comma-separated classes...">
                             </Input>
                         </FormControl>
                         <FormControl className={classes.formControl} margin="normal" required>
                             <InputLabel htmlFor="major">Status</InputLabel>
-                            <Select value={this.state.status} onChange={this.onChange} inputProps={{
+                            <Select value={status} onChange={this.onChange} inputProps={{
                                 name: 'status',
                                 id: 'status'
                             }}>

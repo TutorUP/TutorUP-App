@@ -21,6 +21,7 @@ import Divider from '@material-ui/core/Divider';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
 import ListItem from '@material-ui/core/ListItem';
@@ -114,15 +115,6 @@ const styles = theme => ({
       width: 'auto',
     },
   },
-  searchIcon: {
-    width: theme.spacing.unit,
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   inputRoot: {
     color: 'inherit',
     width: '100%',
@@ -137,7 +129,8 @@ class AppNavbar extends Component {
         open: false
     };
 
-    handleDrawerOpen = () => {
+    handleDrawerOpen = e => {
+      console.log(e.target.value)
         this.setState({ open: true });
     };
     

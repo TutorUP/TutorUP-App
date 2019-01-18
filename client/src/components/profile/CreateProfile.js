@@ -13,9 +13,6 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 
-// import components
-// import SelectList from '../common/SelectList';
-
 const styles = theme => ({
     root: {
         display: 'flex',
@@ -69,7 +66,6 @@ class CreateProfile extends Component {
 render() {
     const { classes } = this.props;
 
-
     return (
       <div>
         <Grid container>
@@ -104,7 +100,7 @@ render() {
                         </FormControl>
                         <FormControl className={classes.formControl} margin="normal" required>
                             <InputLabel htmlFor="classes">Classes</InputLabel>
-                            <Input id="classes" name="classes" onChange={this.onChange}>
+                            <Input id="classes" name="classes" onChange={this.onChange} placeholder="Add comma-separated classes...">
                             </Input>
                         </FormControl>
                         <FormControl className={classes.formControl} margin="normal" required>

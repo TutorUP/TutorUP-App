@@ -1,7 +1,7 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 const styles = theme => ({
     progress: {
@@ -12,9 +12,9 @@ const styles = theme => ({
 const ProgressSpinner = props => {
     const { classes } = props;
     return (
-        <div>
-            <CircularProgress className={classes.progress} size="100" color="secondary" />
-        </div>
+        <React.Fragment>
+            <LinearProgress className={classes.progress} />
+        </React.Fragment>
     );
 }
 

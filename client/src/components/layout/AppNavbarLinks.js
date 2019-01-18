@@ -13,6 +13,7 @@ import PeopleIcon from '@material-ui/icons/People';
 import SearchIcon from '@material-ui/icons/Search';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import './layout.css';
+import CodeIcon from '@material-ui/icons/Code';
 
 const ListItemLink = props => {
   return <ListItem button component="a" {...props} />;
@@ -97,7 +98,7 @@ export const secondaryListItems = (
     </ListItem>
     <ListItem button>
       <ListItemIcon>
-        <AssignmentIcon />
+        <CodeIcon />
       </ListItemIcon>
       <ListItemLink href="https://github.com/TutorUP/TutorUP-App">
             <ListItemText primary="GitHub" />

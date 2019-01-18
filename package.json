@@ -7,13 +7,13 @@
     "node": "10.12.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --timeout 10000",
     "start": "node server.js",
     "server": "nodemon server.js",
     "client-install": "npm install --prefix client",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "repository": {
     "type": "git",
@@ -46,6 +46,7 @@
     "express-jwt": "^5.3.1",
     "express-jwt-authz": "^1.0.0",
     "express-session": "^1.15.6",
+    "gravatar": "^1.8.0",
     "helmet": "^3.15.0",
     "i": "^0.3.6",
     "jsonwebtoken": "^8.4.0",
@@ -57,9 +58,15 @@
     "passport-auth0": "^1.1.0",
     "passport-jwt": "^4.0.0",
     "path": "^0.12.7",
+    "sinon": "^7.2.2",
+    "sinon-mongoose": "^2.2.1",
+    "supertest": "^3.4.1",
     "validator": "^10.9.0"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.1",
+    "mocha": "^5.2.0",
     "nodemon": "^1.18.9"
   }
 }

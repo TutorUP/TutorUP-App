@@ -2,56 +2,65 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
+// redux import
+import { connect } from 'react-redux';
+
 // MUI imports
 import { withStyles } from '@material-ui/core/styles';
-import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import List from '@material-ui/core/List';
-import ListItemText from '@material-ui/core/ListItemText';
+import Chip from '@material-ui/core/Chip';
 
-const styles = {
+const styles = theme => ({
     card: {
-      minWidth: 200,
+      minWidth: 100,
     },
-    bullet: {
-      display: 'inline-block',
-      margin: '0 2px',
-      transform: 'scale(0.8)',
+    chip: {
+        margin: theme.spacing.unit / 2,
     },
-    pos: {
-      marginBottom: 12,
-    },
-};
+});
 
 const ProfileItem = props => {
-    const { classes, profile } = props;
+    const { classes, profile, auth } = props;
 
     return (
     <React.Fragment>
-        <Card className={classes.card}>
+        <Card raised>
             <CardContent>
-                <Typography variant="h4">
-                    {profile.handle} {profile.status}
+                <Typography variant="h4" gutterBottom>
+                    {profile.handle} : 
+                    <Chip className={classes.chip} color="primary" variant="outlined" label={profile.user.email}/>
+                    <Chip className={classes.chip} color="primary" variant="outlined" label={profile.status}/>
                 </Typography>
-                <Typography>
+                <Typography variant="subtitle1">
                     Classes
                 </Typography>
-              {profile.classes.slice(0, 4).map((myClass, index) => (
-                <List key={index}>
-                    <ListItemText className={classes.bullet} primary={myClass} />
-                </List>
-              ))}
+                {profile.classes.slice(0, 5).map((myClass, index) => (
+                    <Chip className={classes.chip} color="secondary" key={index} label={myClass} />
+                ))}
             </CardContent>
             <CardActions>
-                <Button name="viewProfile" size="small" color="secondary">
-                    <Link to={`/profile/${profile.handle}`}>
-                        View Profile
-                    </Link>
+                <Button component={Link}
+                    size="small" 
+                    color="inherit"
+                    variant="contained"
+                    to={`/profile/${profile.handle}`}
+                >
+                    View Profile
                 </Button>
+                {profile.user._id === auth.user.id && 
+                <Button component={Link} 
+                    size="small" 
+                    color="primary"
+                    variant="contained"
+                    to={`/edit-profile`}
+                >
+                    Edit Your Profile
+                </Button>
+                }
             </CardActions>
         </Card>
     </React.Fragment>
@@ -62,4 +71,8 @@ ProfileItem.propTypes = {
     profile: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(ProfileItem);
+const mapStateToProps = state => ({
+    auth: state.auth
+});
+
+export default connect(mapStateToProps)(withStyles(styles)(ProfileItem));

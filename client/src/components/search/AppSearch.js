@@ -4,9 +4,7 @@ import {
   PoweredBy,
   HierarchicalMenu,
   RefinementList,
-  SearchBox,
   Hits,
-  SortBy,
   RangeInput,
   Stats,
   ClearRefinements,
@@ -15,10 +13,8 @@ import {
   Panel,
   Configure,
   Pagination,
-  InfiniteHits,
 
   connectSearchBox,
-  connectRange,
   connectInfiniteHits,
   connectStateResults,
 } from 'react-instantsearch-dom';

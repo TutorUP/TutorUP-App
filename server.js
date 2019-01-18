@@ -30,8 +30,7 @@ app.use(bodyParser.json());
 
 // Connect to DB
 mongoose
-    .set('useNewUrlParser', true)
-    .connect(keys.mongoURI)
+    .connect(keys.mongoURI, { useNewUrlParser: true })
     .then(() => console.info('MongoDB Connected'))
     .catch(err => console.error(err));
 
@@ -61,7 +60,7 @@ if (process.env.NODE_ENV === 'production') {
     sessConfig.cookie.secure = true;
 
     // Set static folder
-    app.use(expess.static('client/build'));
+    app.use(express.static('client/build'));
 
     app.get('*', (req, res) => {
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
@@ -69,3 +68,5 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.listen(port, () => console.info(`Server started on port ${port}`));
+
+module.exports = app;
