@@ -111,15 +111,6 @@ const styles = theme => ({
       width: 'auto',
     },
   },
-  searchIcon: {
-    width: theme.spacing.unit,
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   inputRoot: {
     color: 'inherit',
     width: '100%',
