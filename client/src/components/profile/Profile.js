@@ -9,6 +9,7 @@ import ProfileAvailability from './ProfileAvailability';
 
 // MUI imports
 import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -63,7 +64,7 @@ render() {
     
     profileContent = (profile === null || loading) ? <ProgressSpinner /> : (
         <div>
-            <Link to="/profiles">Back to Profiles</Link>
+            <Button variant="outlined" component={Link} to="/profiles" color="secondary">Back to Profiles</Button>
             <ProfileAbout profile={profile} />
             <ProfileAvailability availability={profile.availability} />
         </div>

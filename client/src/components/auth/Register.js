@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { string, object } from 'yup';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -63,12 +62,6 @@ const styles = theme => ({
       marginTop: theme.spacing.unit * 3,
     },
   });
-
-// Validation with Yup
-const validationSchema = object({
-  name: string("Name")
-})
-
 class Register extends Component {
     state = {
         name: '',
@@ -118,7 +111,7 @@ class Register extends Component {
                 <form className={classes.container} autoComplete="off" onSubmit={this.onSubmit}>
                   <FormControl margin="normal" required fullWidth>
                     <InputLabel htmlFor="name">Name</InputLabel>
-                    <Input id="name" name="name" autoComplete="email" autoFocus onChange={this.onChange}/>
+                    <Input id="name" name="name" onChange={this.onChange}/>
                   </FormControl>
                   {errors.name}
                   <FormControl margin="normal" required fullWidth>
@@ -128,7 +121,7 @@ class Register extends Component {
                   {errors.email}
                   <FormControl margin="normal" required fullWidth>
                     <InputLabel htmlFor="password">Password</InputLabel>
-                    <Input name="password" type="password" id="password" autoComplete="current-password" onChange={this.onChange}/>
+                    <Input placeholder="Password needs at least 6 characters" name="password" type="password" id="password" autoComplete="current-password" onChange={this.onChange}/>
                   </FormControl>
                   {errors.password}
                   <FormControl margin="normal" required fullWidth>

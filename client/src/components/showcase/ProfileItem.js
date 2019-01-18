@@ -31,25 +31,35 @@ const ProfileItem = props => {
         <Card raised>
             <CardContent>
                 <Typography variant="h4" gutterBottom>
-                    {profile.handle} : <Chip color="primary" variant="outlined" label={profile.status}/>
+                    {profile.handle} : 
+                    <Chip className={classes.chip} color="primary" variant="outlined" label={profile.user.email}/>
+                    <Chip className={classes.chip} color="primary" variant="outlined" label={profile.status}/>
                 </Typography>
                 <Typography variant="subtitle1">
                     Classes
                 </Typography>
-              {profile.classes.slice(0, 5).map((myClass, index) => (
-                  <Chip className={classes.chip} color="secondary" key={index} label={myClass} />
-              ))}
+                {profile.classes.slice(0, 5).map((myClass, index) => (
+                    <Chip className={classes.chip} color="secondary" key={index} label={myClass} />
+                ))}
             </CardContent>
             <CardActions>
-                <Button name="viewProfile" size="small" color="secondary">
-                    <Link to={`/profile/${profile.handle}`}>
-                        View Profile
-                    </Link>
+                <Button component={Link}
+                    size="small" 
+                    color="inherit"
+                    variant="contained"
+                    to={`/profile/${profile.handle}`}
+                >
+                    View Profile
                 </Button>
                 {profile.user._id === auth.user.id && 
-                        <Button name="editProfile" size="small" color="secondary">
-                        <Link to={'/edit-profile'}>Edit Your Profile</Link>
-                        </Button>
+                <Button component={Link} 
+                    size="small" 
+                    color="primary"
+                    variant="contained"
+                    to={`/edit-profile`}
+                >
+                    Edit Your Profile
+                </Button>
                 }
             </CardActions>
         </Card>
