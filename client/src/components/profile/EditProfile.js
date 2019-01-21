@@ -16,25 +16,6 @@ import Button from '@material-ui/core/Button';
 import './profile.css';
 import UPclasses from '../common/Classes';
 
-const styles = theme => ({
-    root: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-    formControl: {
-        margin: theme.spacing.unit,
-        minWidth: 120,
-    },
-    selectEmpty: {
-        marginTop: theme.spacing.unit * 2,
-    },
-    paper: {
-        padding: theme.spacing.unit * 2,
-        textAlign: 'center',
-        color: theme.palette.text.secondary,
-    },
-});
-
 class EditProfile extends Component {
  state = {
      handle: '',
@@ -54,7 +35,7 @@ class EditProfile extends Component {
     if (nextProps.errors) this.setState({ errors: nextProps.errors });
     if (nextProps.profile.profile) {
         const profile = nextProps.profile.profile;
-        let profileClasses = profile.classes.toString();
+        let profileClasses = profile.classes ? profile.classes.toString() : '';
 
         this.setState({
             handle: profile.handle,
@@ -105,10 +86,10 @@ render() {
             <Typography variant="h4" component="h1" align="center">
                 Edit Profile
             </Typography>
-            <form className={classes.root} onSubmit={this.onSubmit}>    
+            <form onSubmit={this.onSubmit}>    
                 <Grid container spacing={24}>
-                    <Grid item xs={6} sm={3}>
-                        <FormControl className={classes.formControl} margin="normal" required fullWidth>
+                    <Grid item xs={12} sm={6} md={3}>
+                        <FormControl margin="normal" required fullWidth>
                             <InputLabel htmlFor="major">Major(s)</InputLabel>
                             <Select value={major} onChange={this.onChange} variant="outlined" inputProps={{
                                 name: 'major',
@@ -119,8 +100,8 @@ render() {
                             </Select>
                         </FormControl>
                     </Grid>
-                    <Grid item xs={6} sm={3}>
-                        <FormControl className={classes.formControl} margin="normal" required fullWidth>
+                    <Grid item xs={12} sm={6} md={3}>
+                        <FormControl margin="normal" required fullWidth>
                             <InputLabel htmlFor="minor">Minor(s)</InputLabel>
                             <Select value={major} onChange={this.onChange} inputProps={{
                                 name: 'minor',
@@ -131,8 +112,8 @@ render() {
                             </Select>
                         </FormControl>
                     </Grid>
-                    <Grid item xs={6} sm={3}>
-                        <FormControl className={classes.formControl} margin="normal" required fullWidth>
+                    <Grid item xs={12} sm={6} md={3}>
+                        <FormControl margin="normal" required fullWidth>
                         <InputLabel htmlFor="major">Class Standing</InputLabel>
                             <Select value={status} onChange={this.onChange} inputProps={{
                                 name: 'status',
@@ -146,22 +127,22 @@ render() {
                             </Select>
                         </FormControl>
                     </Grid>
-                    <Grid item xs={6} sm={3}>
-                        <FormControl className={classes.formControl} margin="normal" required>
+                    <Grid item xs={12} sm={6} md={3}>
+                        <FormControl margin="normal" required fullWidth>
                             <InputLabel htmlFor="classes">Classes</InputLabel>
                             <Input id="classes" name="classes" value={classes} onChange={this.onChange} placeholder="Add comma-separated classes...">
                             </Input>
                         </FormControl>
                     </Grid>
                     <Grid item xs={12}>
-                        <FormControl className={classes.formControl} margin="normal" fullWidth>
+                        <FormControl margin="normal" fullWidth>
                         <InputLabel htmlFor="bio">Short Bio</InputLabel>
                         <Input type="text" id="bio" name="bio" value={bio} multiline fullWidth onChange={this.onChange}>
                         </Input>
                     </FormControl>
                     </Grid>
                     <Grid item xs={12}>
-                        <FormControl className={classes.formControl} margin="normal" fullWidth>
+                        <FormControl margin="normal" fullWidth>
                         <InputLabel htmlFor="available">Availablity</InputLabel>
                         <Input type="text" id="available" name="available" value={bio} multiline fullWidth onChange={this.onChange}>
                         </Input>
@@ -194,4 +175,4 @@ const mapStateToProps = state => ({
     errors: state.errors,
 });
 
-export default connect(mapStateToProps, { createProfile, getCurrentProfile })(withRouter(withStyles(styles)(EditProfile)));
+export default connect(mapStateToProps, { createProfile, getCurrentProfile })(withRouter(EditProfile));

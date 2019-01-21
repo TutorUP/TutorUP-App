@@ -10,9 +10,6 @@ const ProfileOptions = () => (
         <Button size="large" color="primary" component={Link} to="/edit-profile">
             Edit Profile
         </Button>
-        <Button size="large" color="primary" component={Link} to="/add-availability">
-            Add Your Availability
-        </Button>
     </Grid>
 )
 
