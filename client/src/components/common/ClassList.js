@@ -1,6 +1,4 @@
-import React from 'react';
-
-const UPclasses = {
+const classList = {
  	majors: [ "Biology",
 		"Chemistry",
 		"Civil Engineering",
@@ -71,5 +69,6 @@ const UPclasses = {
 	]
  }; 
 
- export default {UPclasses};
+ export default {classList};
+
 

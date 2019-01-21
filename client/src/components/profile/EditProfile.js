@@ -14,7 +14,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import './profile.css';
-import UPclasses from '../common/Classes';
+import classList from '../common/ClassList';
 
 class EditProfile extends Component {
  state = {
@@ -69,8 +69,8 @@ class EditProfile extends Component {
 
 // on cancel go back to dashboard to eliminate need for extra button
 render() {
-    const majors = UPclasses.UPclasses.majors;
-    const minors = UPclasses.UPclasses.minors;
+    const majors = classList.classList.majors;
+    const minors = classList.classList.minors;
 
     const { handle, bio, classes, major, status } = this.state;
 
