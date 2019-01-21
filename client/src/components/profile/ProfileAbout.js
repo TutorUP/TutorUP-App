@@ -17,7 +17,6 @@ class ProfileAbout extends Component {
 
     render() {
         const { profile } = this.props;
-        console.log(profile);
 
         // Skill List
         const classes = profile.classes.map((myClass, index) => (
@@ -46,7 +45,7 @@ class ProfileAbout extends Component {
                             <FontAwesomeIcon icon="envelope" className="icon" />
                         </Grid>
                         <Grid item xs>
-                            <Typography>{profile.user.email}Email here.</Typography>
+                            <Typography>{profile.user.email}</Typography>
                         </Grid>
                     </Grid>
 

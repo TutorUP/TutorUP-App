@@ -13,6 +13,8 @@ import { FormControl, Input, InputLabel } from '@material-ui/core';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
+import './profile.css';
+import UPclasses from '../common/Classes';
 
 const styles = theme => ({
     root: {
@@ -84,74 +86,97 @@ class EditProfile extends Component {
      this.setState({ [e.target.name]: e.target.value });
  }
 
+// on cancel go back to dashboard to eliminate need for extra button
 render() {
+    const majors = UPclasses.UPclasses.majors;
+    const minors = UPclasses.UPclasses.minors;
+
     const { handle, bio, classes, major, status } = this.state;
 
+    const majorMenuItems =  majors.map((major, i) =>
+            <MenuItem key={i} value={major}>{major}</MenuItem>
+    );
+    const minorMenuItems = minors.map((minor, i) =>
+            <MenuItem key={i} value={minor}>{minor}</MenuItem>
+    );
+
     return (
-      <div>
-        <Grid container>
-            <Grid item xs={12}>
-                <Paper elevation={1}>
-                    <Button component={Link} to="/dashboard">
-                        Back to Dashboard
-                    </Button>
-                    <Typography variant="h4" component="h1">
-                        Edit Your Profile
-                    </Typography>
-                    <Typography variant="subtitle1" gutterBottom>
-                        Add your changes below
-                    </Typography>
-                    <form className={classes.root} onSubmit={this.onSubmit}>
-                        <FormControl className={classes.formControl} margin="normal" required>
-                            <InputLabel htmlFor="handle">Profile Handle</InputLabel>
-                            <Input id="handle" name="handle" value={handle} onChange={this.onChange}>
-                            </Input>
-                        </FormControl>
-                        <FormControl className={classes.formControl} margin="normal" required>
-                            <InputLabel htmlFor="major">Major</InputLabel>
-                            <Select value={major} onChange={this.onChange} inputProps={{
+      <div className="padding20">
+            <Typography variant="h4" component="h1" align="center">
+                Edit Profile
+            </Typography>
+            <form className={classes.root} onSubmit={this.onSubmit}>    
+                <Grid container spacing={24}>
+                    <Grid item xs={6} sm={3}>
+                        <FormControl className={classes.formControl} margin="normal" required fullWidth>
+                            <InputLabel htmlFor="major">Major(s)</InputLabel>
+                            <Select value={major} onChange={this.onChange} variant="outlined" inputProps={{
                                 name: 'major',
                                 id: 'major'
                             }}>
-                                <MenuItem value="">
-                                <em>None</em>
-                                </MenuItem>
-                                <MenuItem value={'Computer Science'}>Computer Science</MenuItem>
-                                <MenuItem value={'Biology'}>Biology</MenuItem>
-                                <MenuItem value={'Mathematics'}>Mathematics</MenuItem>
-                  
+                                <MenuItem value=""></MenuItem>
+                                {majorMenuItems}
                             </Select>
                         </FormControl>
-                        <FormControl className={classes.formControl} margin="normal" required>
-                            <InputLabel htmlFor="classes">Classes</InputLabel>
-                            <Input id="classes" name="classes" value={classes} onChange={this.onChange} placeholder="Add comma-separated classes...">
-                            </Input>
+                    </Grid>
+                    <Grid item xs={6} sm={3}>
+                        <FormControl className={classes.formControl} margin="normal" required fullWidth>
+                            <InputLabel htmlFor="minor">Minor(s)</InputLabel>
+                            <Select value={major} onChange={this.onChange} inputProps={{
+                                name: 'minor',
+                                id: 'minor'
+                            }}>
+                                <MenuItem value=""></MenuItem>
+                                {minorMenuItems}
+                            </Select>
                         </FormControl>
-                        <FormControl className={classes.formControl} margin="normal" required>
-                            <InputLabel htmlFor="major">Status</InputLabel>
+                    </Grid>
+                    <Grid item xs={6} sm={3}>
+                        <FormControl className={classes.formControl} margin="normal" required fullWidth>
+                        <InputLabel htmlFor="major">Class Standing</InputLabel>
                             <Select value={status} onChange={this.onChange} inputProps={{
                                 name: 'status',
                                 id: 'status'
                             }}>
-                                <MenuItem value="">
-                                <em>None</em>
-                                </MenuItem>
+                                <MenuItem value=""></MenuItem>
                                 <MenuItem value={'Freshman'}>Freshman</MenuItem>
                                 <MenuItem value={'Sophomore'}>Sophomore</MenuItem>
                                 <MenuItem value={'Junior'}>Junior</MenuItem>
                                 <MenuItem value={'Senior'}>Senior</MenuItem>
                             </Select>
                         </FormControl>
-                        <FormControl className={classes.formControl} margin="normal" fullWidth variant="outlined">
-                            <InputLabel htmlFor="bui">Short Bio</InputLabel>
-                            <Input type="text" id="bio" name="bio" value={bio} multiline fullWidth onChange={this.onChange}>
+                    </Grid>
+                    <Grid item xs={6} sm={3}>
+                        <FormControl className={classes.formControl} margin="normal" required>
+                            <InputLabel htmlFor="classes">Classes</InputLabel>
+                            <Input id="classes" name="classes" value={classes} onChange={this.onChange} placeholder="Add comma-separated classes...">
                             </Input>
                         </FormControl>
-                        <Button type="submit" variant="outlined" color="inherit">Submit</Button>
-                    </form>
-                </Paper>
-            </Grid>
-        </Grid>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <FormControl className={classes.formControl} margin="normal" fullWidth>
+                        <InputLabel htmlFor="bio">Short Bio</InputLabel>
+                        <Input type="text" id="bio" name="bio" value={bio} multiline fullWidth onChange={this.onChange}>
+                        </Input>
+                    </FormControl>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <FormControl className={classes.formControl} margin="normal" fullWidth>
+                        <InputLabel htmlFor="available">Availablity</InputLabel>
+                        <Input type="text" id="available" name="available" value={bio} multiline fullWidth onChange={this.onChange}>
+                        </Input>
+                    </FormControl>
+                    </Grid>
+                </Grid>
+                <Grid container justify="flex-end" spacing={24}>
+                    <Grid item>
+                        <Button align="right" type="cancel">Cancel</Button>
+                    </Grid> 
+                    <Grid item>   
+                        <Button align="right" type="submit" variant="outlined" color="inherit">Submit</Button>
+                    </Grid>
+                </Grid>
+            </form>
       </div>
     );
   }
