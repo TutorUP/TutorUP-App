@@ -18,10 +18,6 @@ const styles = theme => ({
         display: 'flex',
         flexWrap: 'wrap',
     },
-    formControl: {
-        margin: theme.spacing.unit,
-        minWidth: 120,
-    },
     selectEmpty: {
         marginTop: theme.spacing.unit * 2,
     },
@@ -78,12 +74,12 @@ render() {
                         Add some information to make you stand out
                     </Typography>
                     <form className={classes.root} onSubmit={this.onSubmit}>
-                        <FormControl className={classes.formControl} margin="normal" required>
+                        <FormControl margin="normal" required>
                             <InputLabel htmlFor="handle">Profile Handle</InputLabel>
                             <Input id="handle" name="handle" onChange={this.onChange}>
                             </Input>
                         </FormControl>
-                        <FormControl className={classes.formControl} margin="normal" required>
+                        <FormControl margin="normal" required>
                             <InputLabel htmlFor="major">Major</InputLabel>
                             <Select value={this.state.major} onChange={this.onChange} inputProps={{
                                 name: 'major',
@@ -98,12 +94,12 @@ render() {
                   
                             </Select>
                         </FormControl>
-                        <FormControl className={classes.formControl} margin="normal" required>
+                        <FormControl margin="normal" required>
                             <InputLabel htmlFor="classes">Classes</InputLabel>
                             <Input id="classes" name="classes" onChange={this.onChange} placeholder="Add comma-separated classes...">
                             </Input>
                         </FormControl>
-                        <FormControl className={classes.formControl} margin="normal" required>
+                        <FormControl margin="normal" required>
                             <InputLabel htmlFor="major">Status</InputLabel>
                             <Select value={this.state.status} onChange={this.onChange} inputProps={{
                                 name: 'status',
@@ -118,7 +114,7 @@ render() {
                                 <MenuItem value={'Senior'}>Senior</MenuItem>
                             </Select>
                         </FormControl>
-                        <FormControl className={classes.formControl} margin="normal" fullWidth variant="outlined">
+                        <FormControl margin="normal" fullWidth variant="outlined">
                             <InputLabel htmlFor="bui">Short Bio</InputLabel>
                             <Input type="text" id="bio" name="bio" multiline fullWidth onChange={this.onChange}>
                             </Input>
