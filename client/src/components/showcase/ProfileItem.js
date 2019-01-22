@@ -51,7 +51,7 @@ const ProfileItem = props => {
                 >
                     View Profile
                 </Button>
-                {profile.user._id === auth.user.id && 
+                {auth.isAuthenticated && profile.user._id === auth.user.id && 
                 <Button component={Link} 
                     size="small" 
                     color="primary"

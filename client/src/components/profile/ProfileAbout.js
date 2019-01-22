@@ -20,7 +20,7 @@ class ProfileAbout extends Component {
 
         // Skill List
         const classes = profile.classes.map((myClass, index) => (
-            <Chip label={myClass} className="chip" variant="outlined" />
+            <Chip key={index} label={myClass} className="chip" variant="outlined" />
         ));
 
         return (
@@ -32,7 +32,7 @@ class ProfileAbout extends Component {
                       AB
                     </Avatar>
                   }
-                  title={profile.user.name}
+                  title={profile.user.email}
                   subheader={profile.major}
                 />
                 <CardContent>
