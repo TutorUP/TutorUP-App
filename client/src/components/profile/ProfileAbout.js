@@ -4,11 +4,9 @@ import isEmpty from '../../utils/is-empty';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
 import Chip from '@material-ui/core/Chip';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './profile.css';
@@ -20,7 +18,7 @@ class ProfileAbout extends Component {
 
         // Skill List
         const classes = profile.classes.map((myClass, index) => (
-            <Chip label={myClass} className="chip" variant="outlined" />
+            <Chip key={index} label={myClass} className="chip" variant="outlined" />
         ));
 
         return (
@@ -32,7 +30,7 @@ class ProfileAbout extends Component {
                       AB
                     </Avatar>
                   }
-                  title={profile.user.name}
+                  title={profile.user.email}
                   subheader={profile.major}
                 />
                 <CardContent>

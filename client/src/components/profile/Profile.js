@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 
 // components
 import ProgressSpinner from '../common/ProgressSpinner';
@@ -9,10 +8,6 @@ import ProfileAvailability from './ProfileAvailability';
 
 // MUI imports
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
 
 // Redux imports
 import { getProfileByHandle } from '../../redux/actions/profileActions';
