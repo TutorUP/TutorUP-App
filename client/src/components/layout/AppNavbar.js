@@ -8,7 +8,6 @@ import { logoutUser } from '../../redux/actions/authActions';
 import { clearCurrentProfile } from '../../redux/actions/profileActions';
 import { secondaryListItems, authLinks, guestLinks } from './AppNavbarLinks';
 import './layout.css';
-import { headerImage } from './logodark.png';
 
 // Material UI imports
 import { withStyles } from '@material-ui/core/styles';
@@ -167,7 +166,7 @@ class AppNavbar extends Component {
                             <MenuIcon />
                         </IconButton>
                         <Link to="/" className="link">
-                          <img src="logodark.png" className="headerImg"></img>
+                          <img src="./logodark.png" className="headerImg" alt="logo"></img>
                         </Link>
                         <div className={classes.grow} />
                     </Toolbar>

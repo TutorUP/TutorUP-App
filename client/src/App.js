@@ -35,7 +35,6 @@ import AppSearch from './components/search/AppSearch';
 
 // icons
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCalendarCheck, faTag, faInfoCircle, faEnvelope} from '@fortawesome/free-solid-svg-icons'
 
 library.add(faCalendarCheck, faTag, faInfoCircle, faEnvelope)
