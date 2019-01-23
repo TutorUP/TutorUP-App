@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 // components
 import ProgressSpinner from '../common/ProgressSpinner';
 import ProfileAbout from './ProfileAbout';
-import ProfileAvailability from './ProfileAvailability';
 
 // MUI imports
 import { withStyles } from '@material-ui/core/styles';

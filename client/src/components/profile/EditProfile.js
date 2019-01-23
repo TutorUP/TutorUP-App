@@ -22,6 +22,7 @@ class EditProfile extends Component {
      classes: '',
      status: '',
      minor: '',
+     availability: '',
      errors: {}
  }
 
@@ -41,13 +42,14 @@ class EditProfile extends Component {
             bio: profile.bio,
             classes: profileClasses,
             status: profile.status,
+            availability: profile.availability
         });
     }
  }
 
  onSubmit = e => {
      e.preventDefault();
-     const { handle, bio, classes, major, minor, status } = this.state;
+     const { handle, bio, classes, major, minor, status, availability } = this.state;
 
      const profileData = {
          handle,
@@ -55,7 +57,8 @@ class EditProfile extends Component {
          classes,
          major, 
          minor,
-         status
+         status,
+         availability
      }
 
      this.props.createProfile(profileData, this.props.history);
@@ -70,7 +73,7 @@ render() {
     const majors = classList.classList.majors;
     const minors = classList.classList.minors;
 
-    const { handle, bio, classes, major, status } = this.state;
+    const { handle, bio, classes, major, status, availability } = this.state;
 
     const majorMenuItems =  majors.map((major, i) =>
             <MenuItem key={i} value={major}>{major}</MenuItem>
@@ -141,8 +144,8 @@ render() {
                     </Grid>
                     <Grid item xs={12}>
                         <FormControl margin="normal" fullWidth>
-                        <InputLabel htmlFor="available">Availablity</InputLabel>
-                        <Input type="text" id="available" name="available" value={'Availability Here'} multiline fullWidth onChange={this.onChange}>
+                        <InputLabel htmlFor="availability">Availablity</InputLabel>
+                        <Input type="text" id="availability" name="availability" value={availability} multiline fullWidth onChange={this.onChange}>
                         </Input>
                     </FormControl>
                     </Grid>

@@ -70,7 +70,7 @@ class ProfileAbout extends Component {
                               <FontAwesomeIcon icon="calendar-check" className="icon" />
                           </Grid>
                           <Grid item xs>
-                            <Typography>{profile.availability}Availability will be here.</Typography>
+                            <Typography>{profile.availability}</Typography>
                           </Grid>
                     </Grid>
                 </CardContent>

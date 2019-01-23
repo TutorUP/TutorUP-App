@@ -119,6 +119,7 @@ router.post('/', passport.authenticate('jwt', { session: false}), (req, res) => 
     // Classes - Split into array
     if (typeof req.body.classes !== 'undefined') profileFields.classes = req.body.classes.split(',').map(el => el.trim());
     if (req.body.bio) profileFields.bio = req.body.bio;
+    if (req.body.availability) profileFields.availability = req.body.availability;
 
     Profile.findOne({ user: req.user.id }).then(profile => {
         if (profile) {
@@ -155,42 +156,5 @@ router.delete('/', passport.authenticate('jwt', { session: false }),
       });
     }
 );
-
-// @route   POST api/profile/availability
-// @desc    Add availability to profile
-// @access  Private
-router.post('/availability', passport.authenticate('jwt', { session: false }), async (req, res) => {
-    try {
-        const profile = await Profile.findOne({ user: req.user.id });
-        const newAvailability = {
-            department: req.body.department,
-            courseNum: req.body.courseNum,
-            availableTime: req.body.availableTime
-        };
-        profile.availability = [newAvailability, ...profile.availability]
-        profile.save().then(profile => res.json(profile));
-    }
-    catch (err) {
-        console.error(err);
-    }
-});
-
-// @route   DELETE api/profile/availability/:avb_id
-// @desc    Delete availability from profile
-// @access  Private
-router.delete('/availability/:avb_id', passport.authenticate('jwt', { session: false}), (req, res) => {
-    Profile.findOne({ user: req.user.id })
-        .then(profile => {
-            // Get remove index
-            const removeIndex = profile.availability.map(item => item.id).indexOf(req.params.avb_id);
-
-            // Splice out of array
-            profile.availability.splice(removeIndex, 1);
-
-            // Save
-            profile.save().then(profile => res.json(profile));
-        })
-        .catch(err => res.status(404).json(err));
-});
 
 module.exports = router;

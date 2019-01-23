@@ -38,19 +38,9 @@ const ProfileSchema = new Schema({
     phone: {
         type: Number
     },
-    availability: [
-        {
-            department: {
-                type: String
-            },
-            courseNum: {
-                type: String
-            },
-            availableTime: {
-                type: Number, // store dates as Unix timestamps
-            },
-        }
-    ],
+    availability: {
+        type: String
+    },
     date: {
         type: Date,
         default: Date.now

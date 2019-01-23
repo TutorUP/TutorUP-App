@@ -28,7 +28,6 @@ import NotFound from './components/common/NotFound';
 import ProfileShowcase from './components/showcase/ProfileShowcase';
 import { checkAuth } from './utils/authPersist';
 
-import AddAvailability from './components/profileOptions/AddAvailability';
 import Profile from './components/profile/Profile';
 
 import AppSearch from './components/search/AppSearch';
@@ -95,9 +94,6 @@ class App extends Component {
                 </Switch>
                 <Switch>
                   <PrivateRoute exact path="/edit-profile" component={EditProfile} />
-                </Switch>
-                <Switch>
-                  <PrivateRoute exact path="/add-availability" component={AddAvailability}/>
                 </Switch>
               </main>
             </div>
