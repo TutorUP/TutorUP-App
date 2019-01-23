@@ -52,28 +52,6 @@ export const createProfile = (profileData, history) => dispatch => {
         .catch(err => console.log(err));
 }
 
-export const addAvailability = (availabilityData, history) => dispatch => {
-    axios.post('/api/profile/availability', availabilityData)
-    .then(res => history.push('/dashboard'))
-    .catch(err => dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-    }));
-}
-
-export const deleteAvailability = id => dispatch => {
-    axios.delete(`/api/profile/availability/${id}`)
-    .then(res => dispatch({
-        type: GET_PROFILE,
-        payload: res.data
-    }))
-    .catch(err => dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-    }));
-}
-
-
 // Get all profiles
 export const getProfiles = () => dispatch => {
     dispatch(setProfileLoading());
