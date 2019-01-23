@@ -129,7 +129,6 @@ class AppNavbar extends Component {
     };
 
     handleDrawerOpen = e => {
-      console.log(e.target.value)
         this.setState({ open: true });
     };
     
@@ -177,24 +176,28 @@ class AppNavbar extends Component {
                       paper: classNames(classes.drawerPaper, !open && classes.drawerPaperClose),
                   }}
                   open={open}
+                  onClose={this.handleDrawerClose}
                   >
-                  <div tabIndex={0} role="button" onClick={this.handleDrawerClose} onKeyDown={this.handleDrawerClose}>
-                  <div className={classes.toolbarIcon}>
-                      <IconButton onClick={this.handleDrawerClose}>
-                        <ChevronLeftIcon />
-                      </IconButton>
-                  </div>
-                  {isAuthenticated ? <List>{authLinks}</List> : <List>{guestLinks}</List>}
-                  {isAuthenticated && 
-                  <ListItem button onClick={this.onLogoutClick}>
-                    <ListItemIcon>
-                      <DirectionsRunIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Logout" />
-                  </ListItem>
-                  }
-                  <Divider />
-                  <List>{secondaryListItems}</List>
+                  <div tabIndex={0} role="button" 
+                  onClick={this.handleDrawerClose} 
+                  onKeyDown={this.handleDrawerClose}>
+                    <div className={classes.toolbarIcon}>
+                        <IconButton onClick={this.handleDrawerClose}>
+                          <ChevronLeftIcon />
+                        </IconButton>
+                    </div>
+                    {isAuthenticated ? <List>{authLinks}</List> : 
+                      <List>{guestLinks}</List>}
+                    {isAuthenticated && 
+                    <ListItem button onClick={this.onLogoutClick}>
+                      <ListItemIcon>
+                        <DirectionsRunIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Logout" />
+                    </ListItem>
+                    }
+                    <Divider />
+                    <List>{secondaryListItems}</List>
                   </div>
                 </Drawer>
             </div>
