@@ -30,7 +30,6 @@ const styles = theme => ({
 
 class CreateProfile extends Component {
  state = {
-     handle: '',
      major: '',
      bio: '',
      classes: '',
@@ -41,7 +40,8 @@ class CreateProfile extends Component {
 
  onSubmit = e => {
      e.preventDefault();
-     const { handle, bio, classes, major, minor, status } = this.state;
+     const handle = this.props.auth.user.email.split('@')[0];
+     const { bio, classes, major, minor, status } = this.state;
 
      const profileData = {
          handle,
