@@ -34,7 +34,7 @@ router.get('/handle/:handle', async (req, res) => {
     const errors = {};
     try {
         const profile = await Profile.findOne({ handle: req.params.handle })
-                                    .populate('user', ['name', 'avatar', 'email']);
+            .populate('user', ['name', 'avatar', 'email']);
         if (!profile) {
             errors.noprofile = 'There is no profile for this user';
             res.status(404).json(errors);

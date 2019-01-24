@@ -60,7 +60,8 @@ class CreateProfile extends Component {
  }
 
 render() {
-    const { classes } = this.props;
+    const { classes, auth } = this.props;
+    const myHandle = auth.user.email.split('@')[0];
 
     return (
       <div>
@@ -76,7 +77,12 @@ render() {
                     <form className={classes.root} onSubmit={this.onSubmit}>
                         <FormControl margin="normal" required>
                             <InputLabel htmlFor="handle">Profile Handle</InputLabel>
-                            <Input id="handle" name="handle" onChange={this.onChange}>
+                            <Input id="handle" 
+                            name="handle" 
+                            placeholder="Name within email"
+                            value={myHandle}
+                            readOnly
+                            >
                             </Input>
                         </FormControl>
                         <FormControl margin="normal" required>
@@ -139,6 +145,7 @@ CreateProfile.propTypes = {
 const mapStateToProps = state => ({
     profile: state.profile,
     errors: state.errors,
+    auth: state.auth
 
 })
 
