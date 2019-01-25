@@ -5,36 +5,9 @@ import PropTypes from 'prop-types';
 import ProgressSpinner from '../common/ProgressSpinner';
 import ProfileAbout from './ProfileAbout';
 
-// MUI imports
-import { withStyles } from '@material-ui/core/styles';
-
 // Redux imports
 import { getProfileByHandle } from '../../redux/actions/profileActions';
 import { connect } from 'react-redux';
-
-
-const styles = theme => ({
-    layout: {
-        width: 'auto',
-        marginLeft: theme.spacing.unit * 3,
-        marginRight: theme.spacing.unit * 3,
-        [theme.breakpoints.up(1100 + theme.spacing.unit * 3 * 2)]: {
-          width: 1100,
-          marginLeft: 'auto',
-          marginRight: 'auto',
-        },
-    },
-    header: {
-        color: theme.palette.common.white,
-        marginBottom: theme.spacing.unit * 4,
-    },
-    profileFeatured: {
-        padding: `${theme.spacing.unit * 6}px`,
-        [theme.breakpoints.up('md')]: {
-          paddingRight: 0,
-        },
-      },
-})
 
 class Profile extends Component {
 
@@ -76,4 +49,4 @@ const mapStateToProps = state => ({
     profile: state.profile
 });
 
-export default connect(mapStateToProps, { getProfileByHandle })(withStyles(styles)(Profile));
+export default connect(mapStateToProps, { getProfileByHandle })(Profile);

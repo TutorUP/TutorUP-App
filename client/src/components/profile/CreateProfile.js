@@ -4,7 +4,6 @@ import { createProfile } from '../../redux/actions/profileActions';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -12,21 +11,6 @@ import { FormControl, Input, InputLabel } from '@material-ui/core';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
-
-const styles = theme => ({
-    root: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-    selectEmpty: {
-        marginTop: theme.spacing.unit * 2,
-    },
-    paper: {
-        padding: theme.spacing.unit * 2,
-        textAlign: 'center',
-        color: theme.palette.text.secondary,
-    },
-});
 
 class CreateProfile extends Component {
  state = {
@@ -74,7 +58,7 @@ render() {
                     <Typography variant="subtitle1" gutterBottom>
                         Add some information to make you stand out
                     </Typography>
-                    <form className={classes.root} onSubmit={this.onSubmit}>
+                    <form onSubmit={this.onSubmit}>
                         <FormControl margin="normal" required>
                             <InputLabel htmlFor="handle">Profile Handle</InputLabel>
                             <Input id="handle" 
@@ -149,4 +133,4 @@ const mapStateToProps = state => ({
 
 })
 
-export default connect(mapStateToProps, { createProfile })(withRouter(withStyles(styles)(CreateProfile)));
+export default connect(mapStateToProps, { createProfile })(withRouter(CreateProfile));
