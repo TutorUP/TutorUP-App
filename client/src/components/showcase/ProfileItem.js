@@ -34,6 +34,7 @@ const ProfileItem = props => {
                     {profile.handle} : 
                     <Chip className={classes.chip} color="primary" variant="outlined" label={profile.user.email}/>
                     <Chip className={classes.chip} color="primary" variant="outlined" label={profile.status}/>
+                    <Chip className={classes.chip} color="primary" variant="outlined" label={profile.major}/>
                 </Typography>
                 <Typography variant="subtitle1">
                     Classes
