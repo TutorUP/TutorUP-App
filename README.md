@@ -20,6 +20,12 @@
 3. View/Update/Delete profiles
 4. Search available tutors
 
+## Profile Info
+- Handle (user's email without @domain.com suffix)
+- Classes (classes user is available to tutor for)
+- Status (grade level: Freshman, Sophomore, Junior, Senior)
+- More? TBD
+
 ## Enhancements
 1. Chatroom setup
 2. Serverless backend

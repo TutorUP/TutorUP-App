@@ -15,6 +15,14 @@
 * Snippet to deploy frontend after it is built for production
 
 ### /routes/api : Folder contains all routes we are using for our REST API
-#### profile ROUTE
 #### users ROUTE
+- Register User
+- Login User
+- Get Current User
+#### profile ROUTE
+- Get All Profiles
+- Get Profile by Handle
+- Get A Profile for the current logged in user
+- Create/Edit current user's profile
+- Delete current user's profile
 #### posts ROUTE
