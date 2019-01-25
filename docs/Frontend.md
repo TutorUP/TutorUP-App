@@ -70,7 +70,8 @@ class MyClass extends Component {
 export default MyClass;
 ```
 
-It is preferred using React functions for components instead of classes:
+It is preferred using React functions for components instead of classes. Functional components have no state related to them.
+### React function component
 ```javascript
 import React from 'react';
 
@@ -83,6 +84,8 @@ const myFunc = () => (
 export default myFunc;
 ```
 
+Why functions are preferred? Learn about state and its cons here.
+
 ## STATE
 State is defined as the data that drives a web application. This includes data entered from form fields, popups to show or not, errors that appear after attempting to submit invalid input, etc. Think of state as the local variables to a React component, because that component needs that data.
 
@@ -90,17 +93,11 @@ State is modified with this snippet:
 ```javascript
 this.setState({ myslice: mySetting });
 ```
-And yes, you can send state data as props to a child component but please avoid doing this.
+Basically the more local state you introduce to an app, the more bugs you could introduce because you have to juggle all that data, and it discourages code reuse. 
 
-```javascript
-import React, { Component } from 'react';
+Best use cases:
+- State is very good for forms, which is why each form of the web app has to be a class component with state.
+- Send data as props to the right components
 
-class MyComponent extends Component {
-    render() {
-        <div>
-        </div>
-    }
-}
-```
 
 
