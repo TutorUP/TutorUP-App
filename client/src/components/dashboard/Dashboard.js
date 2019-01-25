@@ -35,7 +35,7 @@ class Dashboard extends Component {
             dashboardContent = Object.keys(profile).length > 0 ? (
                 <Grid container>
                     <Typography variant="h2" gutterBottom>Welcome 
-                        <Link to={`/profile/${profile.handle}`}> {user.name}</Link>
+                        <Link to={`/profile/${profile.handle}`}> {user.firstname}</Link>
                     </Typography>
                     <ProfileOptions />
                     <br />
@@ -49,7 +49,7 @@ class Dashboard extends Component {
 
             ) : (
                 <Grid>
-                    <Typography variant="h2" gutterBottom>Welcome {user.name}</Typography>
+                    <Typography variant="h2" gutterBottom>Welcome {user.firstname}</Typography>
                     <Typography variant="subtitle1" gutterBottom>You have not yet setup a profile, please add some info</Typography>
                     <Link to="/create-profile" className="btn btn-lg btn-info">
                         Create Profile

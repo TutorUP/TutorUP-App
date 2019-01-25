@@ -16,6 +16,12 @@ class ProfileAbout extends Component {
     render() {
         const { profile } = this.props;
 
+        // Create initials and short version of name for use on card
+        const firstname = profile.user.firstname;
+        const lastname = profile.user.lastname;
+        const initials =  (firstname && lastname) ? firstname.charAt(0) + lastname.charAt(0) : '';
+        const shortname = (firstname && lastname) ? firstname + " " + lastname.charAt(0) + '.' : '';
+
         // Skill List
         const classes = profile.classes.map((myClass, index) => (
             <Chip key={index} label={myClass} className="chip" variant="outlined" />
@@ -27,10 +33,10 @@ class ProfileAbout extends Component {
                   className="cardHeader"
                   avatar={
                     <Avatar>
-                      AB
+                      {initials}
                     </Avatar>
                   }
-                  title={profile.user.email}
+                  title={shortname}
                   subheader={profile.major}
                 />
                 <CardContent>

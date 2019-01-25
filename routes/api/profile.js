@@ -15,7 +15,7 @@ const validateProfileInput = require('../../validation/profileValidation');
 router.get('/all', async (req, res) => {
     const errors = {};
     try {
-        const profiles = await Profile.find().populate('user', ['name', 'avatar', 'email']);
+        const profiles = await Profile.find().populate('user', ['firstname', 'lastname', 'avatar', 'email']);
         if (!profiles) {
             errors.noprofile = 'This user has not created a profile';
             return res.status(404).json();
@@ -34,7 +34,7 @@ router.get('/handle/:handle', async (req, res) => {
     const errors = {};
     try {
         const profile = await Profile.findOne({ handle: req.params.handle })
-            .populate('user', ['name', 'avatar', 'email']);
+            .populate('user', ['firstname', 'lastname', 'avatar', 'email']);
         if (!profile) {
             errors.noprofile = 'There is no profile for this user';
             res.status(404).json(errors);
@@ -69,7 +69,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
 // @desc    Get profiles by major
 router.get('/searchMajor', (req, res) => {
     Profile.find({ major: 'Computer Science'})
-        .populate('user', ['name', 'avatar', 'email'])
+        .populate('user', ['firstname', 'lastname', 'avatar', 'email'])
         .then(profile => {
             if (!profile) {
                 errors.noprofile = 'There is no profile found';
@@ -86,7 +86,7 @@ router.get('/searchMajor', (req, res) => {
 // @access  Private
 router.get('/searchSubject', (req, res) => {
     Profile.find({ classes: 'CS734'})
-        .populate('user', ['name', 'avatar', 'email'])
+        .populate('user', ['firstname', 'lastname', 'avatar', 'email'])
         .then(profile => {
             if (!profile) {
                 errors.noprofile = 'There is no profile found';

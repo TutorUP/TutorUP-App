@@ -64,7 +64,8 @@ const styles = theme => ({
   });
 class Register extends Component {
     state = {
-        name: '',
+        firstname: '',
+        lastname: '',
         email: '',
         password: '',
         password2: '',
@@ -74,9 +75,10 @@ class Register extends Component {
     onSubmit = e => {
         e.preventDefault();
         
-        const { name, email, password, password2 } = this.state;
+        const { firstname, lastname, email, password, password2 } = this.state;
         const newUser = {
-            name: name,
+            firstname: firstname,
+            lastname: lastname,
             email: email,
             password: password,
             password2: password2
@@ -110,8 +112,12 @@ class Register extends Component {
                 </Typography>
                 <form className={classes.container} autoComplete="off" onSubmit={this.onSubmit}>
                   <FormControl margin="normal" required fullWidth>
-                    <InputLabel htmlFor="name">Name</InputLabel>
-                    <Input id="name" name="name" onChange={this.onChange}/>
+                    <InputLabel htmlFor="firstname">First Name</InputLabel>
+                    <Input id="firstname" name="firstname" onChange={this.onChange}/>
+                  </FormControl>
+                  <FormControl margin="normal" required fullWidth>
+                    <InputLabel htmlFor="lastname">Last Name</InputLabel>
+                    <Input id="lastname" name="lastname" onChange={this.onChange}/>
                   </FormControl>
                   {errors.name}
                   <FormControl margin="normal" required fullWidth>

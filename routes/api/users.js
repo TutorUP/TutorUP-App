@@ -37,7 +37,8 @@ router.post('/register', async (req, res, next) => {
             });
 
             const newUser = new User({
-                name: req.body.name,
+                firstname: req.body.firstname,
+                lastname: req.body.lastname,
                 email: req.body.email,
                 password: req.body.password,
                 avatar
@@ -86,7 +87,8 @@ router.post('/login', async (req, res) => {
             if (isMatch) {
                 // User Matched
                 const payload = { id: user.id, 
-                                name: user.name, 
+                                firstname: user.firstname,
+                                lastname: user.lastname,
                                 avatar: user.avatar,
                                 email: user.email
                             }; // Create JWT Payload
@@ -123,7 +125,8 @@ router.post('/login', async (req, res) => {
 router.get('/current', passport.authenticate('jwt', { session: false }), (req, res) => {
    res.json({
        id: req.user.id,
-       name: req.user.name,
+       firstname: req.user.firstname,
+       lastname: req.user.lastname,
        email: req.user.email
    }); 
 });

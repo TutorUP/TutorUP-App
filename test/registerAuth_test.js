@@ -5,7 +5,8 @@ const validateRegisterInput = require('../validation/registerAuth');
 describe('Register with valid input', () => {
     it('Should register properly', done => {
         const registerData = {
-            name: 'Miles Morales',
+            firstname: 'Miles',
+            lastname: 'Morales',
             email: 'miles@up.edu',
             password: 'miles1234',
             password2: 'miles1234'
@@ -21,7 +22,8 @@ describe('Register with valid input', () => {
 describe('Register with invalid password2 (non matching)', () => {
     it('Should return error', done => {
         const registerData = {
-            name: 'Miles Morales',
+            firstname: 'Miles',
+            lastname: 'Morales',
             email: 'miles@up.edu',
             password: 'miles1234',
             password2: 'miles124'
@@ -37,7 +39,8 @@ describe('Register with invalid password2 (non matching)', () => {
 describe('Register with invalid password (empty passwords)', () => {
     it('Should return error', done => {
         const registerData = {
-            name: 'Miles Morales',
+            firstname: 'Miles',
+            lastname: 'Morales',
             email: 'miles@up.edu',
             password: '',
             password2: ''
@@ -56,7 +59,8 @@ describe('Register with invalid password (empty passwords)', () => {
 describe('Register with invalid password (non matching password2)', () => {
     it('Should return error', done => {
         const registerData = {
-            name: 'Miles Morales',
+            firstname: 'Miles',
+            lastname: 'Morales',
             email: 'miles@up.edu',
             password: 'miles1242',
             password2: 'miles124'
@@ -72,7 +76,8 @@ describe('Register with invalid password (non matching password2)', () => {
 describe('Register with invalid password (non-proper length)', () => {
     it('Should return error', done => {
         const registerData = {
-            name: 'Miles Morales',
+            firstname: 'Miles',
+            lastname: 'Morales',
             email: 'miles@up.edu',
             password: 'miles',
             password2: 'miles'
@@ -88,7 +93,8 @@ describe('Register with invalid password (non-proper length)', () => {
 describe('Register with empty form', () => {
     it('Should return error', done => {
         const registerData = {
-            name: '',
+            firstname: '',
+            lastname: '',
             email: '',
             password: '',
             password2: ''
@@ -97,7 +103,8 @@ describe('Register with empty form', () => {
         const { errors, isValid } = validateRegisterInput(registerData);
         expect(isValid).to.be.false;
         expect(errors).to.deep.equal({
-            name: "Name field is required",
+            firstname: "Firstname field is required",
+            lastname: "Lastname field is required",
             email: "Email is invalid",
             password: "Password must be at least 6 characters",
             password2: "Confirm Password field is required"
