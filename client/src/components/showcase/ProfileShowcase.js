@@ -63,37 +63,41 @@ class ProfilesShowcase extends Component {
           array[randomIndex] = temporaryValue;
         }
         return array;
-      }
-      //an attempt to create a smart search bar
-    updateProfilesDisplay(searchedProfiles){
-        console.log(searchedProfiles);
-        if(searchedProfiles.length > 0){
-            this.setState(state => ({
-                data: searchedProfiles,
-                searching: true
-            }));
-        }
     }
 
+    //To be Continued...
     handleSearch = text => event => {   
         this.setState({
             [text]: event.target.searchText
         });
         let search_text = event.target.value;
         let profileList = this.props.profile.profiles;
-        //generates list based on current search text and profile handles
-        let searchList = [];
-        for(var prof in profileList){
-            let profile = profileList[prof];
-            if (profile.handle.length >= search_text.length){
-                let c = profile.handle.substring(0, search_text.length).toLowerCase();
-                if(c.includes(search_text.toLowerCase())){
-                    searchList.push(profile);
+
+        if (search_text.length > 0){
+            //generates list based on current search text and profile handles
+            let searchList = [];
+            for(var prof in profileList){
+                let profile = profileList[prof];
+                if (profile.handle.length >= search_text.length){
+                    let c = profile.handle.substring(0, search_text.length).toLowerCase();
+                    if(c.includes(search_text.toLowerCase())){
+                        searchList.push(profile);
+                    }
                 }
             }
+            if(searchList.length > 0){
+                this.setState(state => ({
+                    data: searchList,
+                    searching: true
+                }));
+            }
         }
-        //How to set profiles displayed to searchList??
-        this.updateProfilesDisplay(searchList);
+        else
+        {
+            this.setState(state => ({
+                searching: false
+            }));
+        }
     }
 
     handleCheck = name => event => {
@@ -168,9 +172,9 @@ class ProfilesShowcase extends Component {
         }
         else {
             if(this.state.searching == true){
-                let data = this.state.data;
-                profileItems = profiles.length > 0 ?
-                profiles.map(profile => (
+                let searchData = this.state.data;
+                profileItems = searchData.length > 0 ?
+                searchData.map(profile => (
                     <ProfileItem key={profile._id} profile={profile} />
                 )) : (
                     <div>
@@ -179,6 +183,7 @@ class ProfilesShowcase extends Component {
                 );
             }
             else {
+                console.log("FALSE");
                 profileItems = profiles.length > 0 ?
                 profiles.map(profile => (
                     <ProfileItem key={profile._id} profile={profile} />
@@ -208,24 +213,6 @@ class ProfilesShowcase extends Component {
                                                 <MenuItem onClick={() => this.orderBy('major')}> By Major </MenuItem>
                                                 <MenuItem onClick={() => this.orderBy('status')}> By Class Standing </MenuItem>
                                             </Menu>
-                                            <FormControlLabel
-                                                control={
-                                                <Checkbox checked={this.state.checkedA} onChange={this.handleCheck('checkedA')} value='checkedA'></Checkbox>
-                                              }
-                                            label="by Major" 
-                                            />
-                                             <FormControlLabel
-                                                control={
-                                                <Checkbox checked={this.state.checkedB} onChange={this.handleCheck('checkedB')} value='checkedB'></Checkbox>
-                                              }
-                                            label="by Year"
-                                            />
-                                             <FormControlLabel
-                                                control={
-                                                <Checkbox checked={this.state.checkedC} onChange={this.handleCheck('checkedC')} value='checkedC'></Checkbox>
-                                              }
-                                            label="by Status" 
-                                            />
                                             <br/>
                                             <Typography align="center" variant="h2"> Tutor Profiles  </Typography>
                                         </React.Fragment>
