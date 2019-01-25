@@ -114,7 +114,6 @@ router.post('/', passport.authenticate('jwt', { session: false}), (req, res) => 
     profileFields.user = req.user.id;
     if (req.body.handle) profileFields.handle = req.body.handle;
     if (req.body.major) profileFields.major = req.body.major;
-    if (req.body.status) profileFields.status = req.body.status;
 
     // Classes - Split into array
     if (typeof req.body.classes !== 'undefined') profileFields.classes = req.body.classes.split(',').map(el => el.trim());

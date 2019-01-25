@@ -20,7 +20,6 @@ class EditProfile extends Component {
      major: '',
      bio: '',
      classes: '',
-     status: '',
      minor: '',
      availability: '',
      errors: {}
@@ -41,7 +40,6 @@ class EditProfile extends Component {
             major: profile.major,
             bio: profile.bio,
             classes: profileClasses,
-            status: profile.status,
             availability: profile.availability
         });
     }
@@ -49,7 +47,7 @@ class EditProfile extends Component {
 
  onSubmit = e => {
      e.preventDefault();
-     const { handle, bio, classes, major, minor, status, availability } = this.state;
+     const { handle, bio, classes, major, minor, availability } = this.state;
 
      const profileData = {
          handle,
@@ -57,7 +55,6 @@ class EditProfile extends Component {
          classes,
          major, 
          minor,
-         status,
          availability
      }
 
@@ -73,7 +70,7 @@ render() {
     const majors = classList.classList.majors;
     const minors = classList.classList.minors;
 
-    const { handle, bio, classes, major, status, availability } = this.state;
+    const { handle, bio, classes, major, availability } = this.state;
 
     const majorMenuItems =  majors.map((major, i) =>
             <MenuItem key={i} value={major}>{major}</MenuItem>
@@ -89,7 +86,7 @@ render() {
             </Typography>
             <form onSubmit={this.onSubmit}>    
                 <Grid container spacing={24}>
-                    <Grid item xs={12} sm={6} md={3}>
+                    <Grid item xs={12} sm={6} md={4}>
                         <FormControl margin="normal" required fullWidth>
                             <InputLabel htmlFor="major">Major(s)</InputLabel>
                             <Select value={major} onChange={this.onChange} variant="outlined" inputProps={{
@@ -101,7 +98,7 @@ render() {
                             </Select>
                         </FormControl>
                     </Grid>
-                    <Grid item xs={12} sm={6} md={3}>
+                    <Grid item xs={12} sm={6} md={4}>
                         <FormControl margin="normal" required fullWidth>
                             <InputLabel htmlFor="minor">Minor(s)</InputLabel>
                             <Select value={major} onChange={this.onChange} inputProps={{
@@ -113,22 +110,7 @@ render() {
                             </Select>
                         </FormControl>
                     </Grid>
-                    <Grid item xs={12} sm={6} md={3}>
-                        <FormControl margin="normal" required fullWidth>
-                        <InputLabel htmlFor="major">Class Standing</InputLabel>
-                            <Select value={status} onChange={this.onChange} inputProps={{
-                                name: 'status',
-                                id: 'status'
-                            }}>
-                                <MenuItem value=""></MenuItem>
-                                <MenuItem value={'Freshman'}>Freshman</MenuItem>
-                                <MenuItem value={'Sophomore'}>Sophomore</MenuItem>
-                                <MenuItem value={'Junior'}>Junior</MenuItem>
-                                <MenuItem value={'Senior'}>Senior</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={3}>
+                    <Grid item xs={12} sm={6} md={4}>
                         <FormControl margin="normal" required fullWidth>
                             <InputLabel htmlFor="classes">Classes</InputLabel>
                             <Input id="classes" name="classes" value={classes} onChange={this.onChange} placeholder="Add comma-separated classes...">

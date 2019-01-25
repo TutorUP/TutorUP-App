@@ -17,7 +17,6 @@ class CreateProfile extends Component {
      major: '',
      bio: '',
      classes: '',
-     status: '',
      minor: '',
      errors: {}
  }
@@ -25,7 +24,7 @@ class CreateProfile extends Component {
  onSubmit = e => {
      e.preventDefault();
      const handle = this.props.auth.user.email.split('@')[0];
-     const { bio, classes, major, minor, status } = this.state;
+     const { bio, classes, major, minor } = this.state;
 
      const profileData = {
          handle,
@@ -33,7 +32,6 @@ class CreateProfile extends Component {
          classes,
          major, 
          minor,
-         status
      }
 
      this.props.createProfile(profileData, this.props.history);
@@ -88,21 +86,6 @@ render() {
                             <InputLabel htmlFor="classes">Classes</InputLabel>
                             <Input id="classes" name="classes" onChange={this.onChange} placeholder="Add comma-separated classes...">
                             </Input>
-                        </FormControl>
-                        <FormControl margin="normal" required>
-                            <InputLabel htmlFor="major">Status</InputLabel>
-                            <Select value={this.state.status} onChange={this.onChange} inputProps={{
-                                name: 'status',
-                                id: 'status'
-                            }}>
-                                <MenuItem value="">
-                                <em>None</em>
-                                </MenuItem>
-                                <MenuItem value={'Freshman'}>Freshman</MenuItem>
-                                <MenuItem value={'Sophomore'}>Sophomore</MenuItem>
-                                <MenuItem value={'Junior'}>Junior</MenuItem>
-                                <MenuItem value={'Senior'}>Senior</MenuItem>
-                            </Select>
                         </FormControl>
                         <FormControl margin="normal" fullWidth variant="outlined">
                             <InputLabel htmlFor="bui">Short Bio</InputLabel>

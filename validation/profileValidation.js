@@ -16,10 +16,6 @@ module.exports = function validateProfileInput(data) {
         errors.major = 'Profile major is required';
     }
 
-    if (Validator.isEmpty(data.status)) {
-        errors.status = 'Status field is required';
-    }
-
     if (Validator.isEmpty(data.classes)) {
         errors.classes = 'Classes are required';
     }

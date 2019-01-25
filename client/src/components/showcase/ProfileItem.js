@@ -33,7 +33,6 @@ const ProfileItem = props => {
                 <Typography variant="h4" gutterBottom>
                     {profile.handle} : 
                     <Chip className={classes.chip} color="primary" variant="outlined" label={profile.user.email}/>
-                    <Chip className={classes.chip} color="primary" variant="outlined" label={profile.status}/>
                 </Typography>
                 <Typography variant="subtitle1">
                     Classes

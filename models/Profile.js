@@ -24,10 +24,6 @@ const ProfileSchema = new Schema({
         type: String,
         max: 300
     },
-    status: {
-        type: String,
-        required: true
-    },
     classes: {
         type: [String],
         required: true
