@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import LockIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -73,8 +74,9 @@ class Login extends Component {
         e.preventDefault();
         
         const { email, password } = this.state;
+        const upEmail = `${email}@up.edu`;
         const userData = {
-            email: email,
+            email: upEmail,
             password: password
         }
         this.props.loginUser(userData);
@@ -99,7 +101,13 @@ class Login extends Component {
                 <form className={classes.form} onSubmit={this.onSubmit}>
                   <FormControl margin="normal" required fullWidth>
                     <InputLabel htmlFor="email">Email Address</InputLabel>
-                    <Input id="email" name="email" autoComplete="email" autoFocus onChange={this.onChange}/>
+                    <Input id="email" 
+                    name="email" 
+                    autoComplete="email" 
+                    autoFocus 
+                    onChange={this.onChange}
+                    endAdornment={<InputAdornment position="end">@up.edu</InputAdornment>}
+                    />
                   </FormControl>
                   {errors.email}
                   <FormControl margin="normal" required fullWidth>

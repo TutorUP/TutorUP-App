@@ -12,6 +12,7 @@ import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -76,10 +77,11 @@ class Register extends Component {
         e.preventDefault();
         
         const { firstname, lastname, email, password, password2 } = this.state;
+        const upEmail = `${email}@up.edu`;
         const newUser = {
             firstname: firstname,
             lastname: lastname,
-            email: email,
+            email: upEmail,
             password: password,
             password2: password2
         }
@@ -122,7 +124,14 @@ class Register extends Component {
                   {errors.name}
                   <FormControl margin="normal" required fullWidth>
                     <InputLabel htmlFor="email">Email Address</InputLabel>
-                    <Input id="email" name="email" autoComplete="email" autoFocus onChange={this.onChange}/>
+                    <Input id="email" 
+                      name="email" 
+                      autoComplete="email" 
+                      autoFocus 
+                      onChange={this.onChange}
+                      endAdornment={<InputAdornment position="end">@up.edu</InputAdornment>}
+                    />
+
                   </FormControl>
                   {errors.email}
                   <FormControl margin="normal" required fullWidth>

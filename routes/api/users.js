@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const keys = require('../../config/keys');
 const passport = require('passport');
-const gravatar = require('gravatar');
+const toonavatar = require('cartoon-avatar');
 
 // Load Validation
 const validateRegisterInput = require('../../validation/registerAuth');
@@ -30,11 +30,7 @@ router.post('/register', async (req, res, next) => {
         }
         else {
             // Add avatar to user from email
-            const avatar = gravatar.url(req.body.email, {
-                s: '200',
-                r: 'pg',
-                d: 'mm'
-            });
+            const avatar = toonavatar.generate_avatar();
 
             const newUser = new User({
                 firstname: req.body.firstname,
