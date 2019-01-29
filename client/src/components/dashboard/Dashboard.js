@@ -16,7 +16,8 @@ import Button from '@material-ui/core/Button';
 
 class Dashboard extends Component {
     componentDidMount() {
-        this.props.getCurrentProfile();
+        const { profile } = this.props;
+        if (Object.keys(profile).length > 0 ) this.props.getCurrentProfile();
     }
 
     onDeleteClick = e => {
@@ -37,6 +38,7 @@ class Dashboard extends Component {
                     <Typography variant="h2" gutterBottom>Welcome 
                         <Link to={`/profile/${profile.handle}`}> {user.firstname}</Link>
                     </Typography>
+                    <div>
                     <ProfileOptions />
                     <br />
                     <Button 
@@ -45,17 +47,22 @@ class Dashboard extends Component {
                     onClick={this.onDeleteClick}>
                         Delete Your Account
                     </Button>
+                    </div>
                 </Grid>
 
             ) : (
                 <Grid>
                     <Typography variant="h2" gutterBottom>Welcome {user.firstname}</Typography>
-                    <Typography variant="subtitle1" gutterBottom>You have not yet setup a profile, please add some info</Typography>
-                    <Link to="/create-profile" className="btn btn-lg btn-info">
-                        Create Profile
-                    </Link>
-                </Grid>
-                
+                    <Typography variant="subtitle1" gutterBottom>You have not yet setup a profile, please add some information about yourself</Typography>
+                    <Button component={Link} 
+                    size="small" 
+                    color="primary"
+                    variant="contained"
+                    to={`/create-profile`}
+                >
+                    Create Profile
+                </Button>
+                </Grid> 
             );
         }
 

@@ -12,6 +12,9 @@
 7. Install nodemon globally (will basically need it for server development, for instant server reloading) `npm i -g nodemon`
 8. Run `npm run dev` or `yarn dev`
 
+## IMPORTANT
+- When adding new npm module best thing is to delete the package-lock.json and do npm install again. Then add your package :)
+
 
 ## About
 - University of Portland students can:

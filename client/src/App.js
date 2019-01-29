@@ -78,7 +78,7 @@ class App extends Component {
               <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
                 <Route exact path="/" component={AppLanding} />
-                <Route exact path="/search" component={AppSearch} />
+                {/* <Route exact path="/search" component={AppSearch} /> */}
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/profile/:handle" component={Profile} />

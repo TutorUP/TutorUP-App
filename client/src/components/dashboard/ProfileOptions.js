@@ -5,11 +5,9 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 
 const ProfileOptions = () => (
-    <Grid>
-        <Button size="large" color="primary" component={Link} to="/edit-profile">
+        <Button color="primary" variant="outlined" component={Link} to="/edit-profile">
             Edit Profile
         </Button>
-    </Grid>
-)
+);
 
 export default ProfileOptions;
