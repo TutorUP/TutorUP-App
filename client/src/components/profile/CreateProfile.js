@@ -42,7 +42,7 @@ class CreateProfile extends Component {
  }
 
 render() {
-    const { classes, auth } = this.props;
+    const { auth } = this.props;
     const myHandle = auth.user.email.split('@')[0];
 
     return (

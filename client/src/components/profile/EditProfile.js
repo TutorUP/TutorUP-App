@@ -22,6 +22,9 @@ class EditProfile extends Component {
      classes: '',
      minor: '',
      availability: '',
+     courseId: '',
+     courseName: '', 
+     courseNumber: null,
      errors: {}
  }
 
@@ -47,7 +50,7 @@ class EditProfile extends Component {
 
  onSubmit = e => {
      e.preventDefault();
-     const { handle, bio, classes, major, minor, availability } = this.state;
+     const { handle, bio, classes, major, minor, courseId, courseName, courseNumber, availability } = this.state;
 
      const profileData = {
          handle,
@@ -55,6 +58,9 @@ class EditProfile extends Component {
          classes,
          major, 
          minor,
+         courseId,
+         courseName, 
+         courseNumber,
          availability
      }
 
@@ -70,7 +76,7 @@ render() {
     const majors = classList.classList.majors;
     const minors = classList.classList.minors;
 
-    const { handle, bio, classes, major, availability } = this.state;
+    const { handle, bio, classes, major, minor, courseId, courseName, courseNumber, availability } = this.state;
 
     const majorMenuItems =  majors.map((major, i) =>
             <MenuItem key={i} value={major}>{major}</MenuItem>
@@ -86,7 +92,7 @@ render() {
             </Typography>
             <form onSubmit={this.onSubmit}>    
                 <Grid container spacing={24}>
-                    <Grid item xs={12} sm={6} md={4}>
+                    <Grid item xs={12} sm={6} md={6}>
                         <FormControl margin="normal" required fullWidth>
                             <InputLabel htmlFor="major">Major(s)</InputLabel>
                             <Select value={major} onChange={this.onChange} variant="outlined" inputProps={{
@@ -98,7 +104,7 @@ render() {
                             </Select>
                         </FormControl>
                     </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
+                    <Grid item xs={12} sm={6} md={6}>
                         <FormControl margin="normal" required fullWidth>
                             <InputLabel htmlFor="minor">Minor(s)</InputLabel>
                             <Select value={major} onChange={this.onChange} inputProps={{
@@ -112,8 +118,27 @@ render() {
                     </Grid>
                     <Grid item xs={12} sm={6} md={4}>
                         <FormControl margin="normal" required fullWidth>
-                            <InputLabel htmlFor="classes">Classes</InputLabel>
-                            <Input id="classes" name="classes" value={classes} onChange={this.onChange} placeholder="Add comma-separated classes...">
+                            <InputLabel htmlFor="courseId">Course Identifier</InputLabel>
+                            <Select value={courseId} onChange={this.onChange} variant="outlined" inputProps={{
+                                name: 'courseId',
+                                id: 'courseId'
+                            }}>
+                                <MenuItem value=""></MenuItem>
+                                {majorMenuItems}
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={4}>
+                        <FormControl margin="normal" required maxLength="3" minLength="3" fullWidth>
+                            <InputLabel htmlFor="courseNumber">Course Number</InputLabel>
+                            <Input id="classes" name="classes" value={classes} onChange={this.onChange} type="number">
+                            </Input>
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={4}>
+                        <FormControl margin="normal" required fullWidth>
+                            <InputLabel htmlFor="courseName">Course Name</InputLabel>
+                            <Input id="courseName" name="courseName" value={courseName} onChange={this.onChange}>
                             </Input>
                         </FormControl>
                     </Grid>

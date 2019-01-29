@@ -25,8 +25,8 @@ const ProfileSchema = new Schema({
         max: 300
     },
     classes: {
-        type: [String],
-        required: true
+        type: Schema.Types.ObjectId,
+        ref: 'courses'
     },
     isTutor: {
         type: Boolean

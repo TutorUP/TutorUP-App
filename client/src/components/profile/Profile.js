@@ -25,7 +25,6 @@ componentWillReceiveProps(nextProps) {
 
 render() {
     const { profile, loading } = this.props.profile;
-    const { classes } = this.props;
     let profileContent;
     
     profileContent = (profile === null || loading) ? <ProgressSpinner /> : (

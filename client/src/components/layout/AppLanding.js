@@ -1,5 +1,4 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
 
 import VideoBackground from '../common/VideoBackground';
 
