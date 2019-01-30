@@ -9,7 +9,7 @@ const CourseSchema = new Schema({
         required: true
     },
     number: {
-       type: number,
+       type: Number,
        required: true,
        length: 3 
     },
