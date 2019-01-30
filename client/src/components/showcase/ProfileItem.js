@@ -26,43 +26,50 @@ const styles = theme => ({
 const ProfileItem = props => {
     const { classes, profile, auth } = props;
 
+    const profileCard = profile.classes !== undefined ? (
+        <Card raised>
+        <CardContent>
+            <Typography variant="h4" gutterBottom>
+                {profile.handle} : 
+                <Chip className={classes.chip} color="primary" variant="outlined" label={profile.user.email}/>
+                <Chip className={classes.chip} color="primary" variant="outlined" label={profile.major}/>
+            </Typography>
+            <Typography variant="h1">
+                Classes
+            </Typography>
+            {profile.classes.slice(0, 5).map((myClass, index) => (
+                <Chip className={classes.chip} color="secondary" key={index} label={myClass} />
+            ))}
+        </CardContent>
+        <CardActions>
+            <Button component={Link}
+                size="small" 
+                color="inherit"
+                variant="contained"
+                to={`/profile/${profile.handle}`}
+            >
+                View Profile
+            </Button>
+            {auth.isAuthenticated && profile.user._id === auth.user.id && 
+            <Button component={Link} 
+                size="small" 
+                color="primary"
+                variant="contained"
+                to={`/edit-profile`}
+            >
+                Edit Your Profile
+            </Button>
+            }
+        </CardActions>
+    </Card>
+
+    ) : (
+        <p>{profile.user.email} does not have a profile yet</p>
+    )
+
     return (
     <React.Fragment>
-        <Card raised>
-            <CardContent>
-                <Typography variant="h4" gutterBottom>
-                    {profile.handle} : 
-                    <Chip className={classes.chip} color="primary" variant="outlined" label={profile.user.email}/>
-                    <Chip className={classes.chip} color="primary" variant="outlined" label={profile.major}/>
-                </Typography>
-                <Typography variant="h1">
-                    Classes
-                </Typography>
-                {profile.classes.slice(0, 5).map((myClass, index) => (
-                    <Chip className={classes.chip} color="secondary" key={index} label={myClass} />
-                ))}
-            </CardContent>
-            <CardActions>
-                <Button component={Link}
-                    size="small" 
-                    color="inherit"
-                    variant="contained"
-                    to={`/profile/${profile.handle}`}
-                >
-                    View Profile
-                </Button>
-                {auth.isAuthenticated && profile.user._id === auth.user.id && 
-                <Button component={Link} 
-                    size="small" 
-                    color="primary"
-                    variant="contained"
-                    to={`/edit-profile`}
-                >
-                    Edit Your Profile
-                </Button>
-                }
-            </CardActions>
-        </Card>
+        {profileCard}
     </React.Fragment>
   );
 }
