@@ -110,7 +110,10 @@ render() {
                         <InputLabel htmlFor={courseId}>Course Identifier</InputLabel>
                         <Select value={course.courseId} onChange={this.onChange} variant="outlined" name={courseId} id="courseId">
                             <MenuItem value=""></MenuItem>
-                            {majorMenuItems}
+                            <MenuItem value="CS">CS</MenuItem>
+                            <MenuItem value="HST">HST</MenuItem>
+                            <MenuItem value="MTH">MTH</MenuItem>
+                            <MenuItem value="THE">THE</MenuItem>
                         </Select>
                     </FormControl>
                     <FormControl margin="normal" required maxLength="3" fullWidth>
