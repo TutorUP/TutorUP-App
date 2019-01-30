@@ -24,3 +24,29 @@
 	padding-left: 10%;
 	padding-right: 10%;
 }
+
+.courses {
+	padding: 10px;
+}
+
+.editHeading {
+	padding-bottom: 10px;
+	border-bottom: 7px solid #1E1656;
+}
+
+.button {
+	color: #1E1656;
+	border-color: #1E1656;
+}
+
+.card {
+	background-color: rgba(0,0,0,0) !important;
+	/*padding-left: 10px;*/
+	/*border-left: 3px solid #1E1656;*/
+	padding: 5px;
+	border: 1px solid rgba(0, 0, 0, 0.23);
+}
+
+.courseId, .courseName, .courseNumber {
+	padding-top: 0px;
+}

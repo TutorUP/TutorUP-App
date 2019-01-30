@@ -133,7 +133,7 @@ export const clearCurrentProfile = () => {
 }
 
 // Create or update a course
-export const postCourse = dispatch => {
+export const postCourse = () => dispatch => {
     axios.post('/api/course')
     .then(res => {
         dispatch({

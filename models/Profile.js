@@ -10,7 +10,6 @@ const ProfileSchema = new Schema({
     },
     handle: {
        type: String,
-       required: true,
        max: 40 
     },
     major: {
@@ -23,10 +22,6 @@ const ProfileSchema = new Schema({
     bio: {
         type: String,
         max: 300
-    },
-    classes: {
-        type: Schema.Types.ObjectId,
-        ref: 'courses'
     },
     isTutor: {
         type: Boolean

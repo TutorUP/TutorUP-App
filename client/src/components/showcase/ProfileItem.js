@@ -35,7 +35,7 @@ const ProfileItem = props => {
                     <Chip className={classes.chip} color="primary" variant="outlined" label={profile.user.email}/>
                     <Chip className={classes.chip} color="primary" variant="outlined" label={profile.major}/>
                 </Typography>
-                <Typography variant="subtitle1">
+                <Typography variant="h1">
                     Classes
                 </Typography>
                 {profile.classes.slice(0, 5).map((myClass, index) => (
