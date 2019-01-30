@@ -193,7 +193,6 @@ const mapStateToProps = state => ({
     profile: state.profile,
     errors: state.errors,
     auth: state.auth
-
-})
+});
 
 export default connect(mapStateToProps, { createProfile })(withRouter(CreateProfile));

@@ -25,7 +25,7 @@ const classList = {
 		"Philosophy",
 		"Physics",
 		"Political Science",
-		"Phycology",
+		"Psychology",
 		"Secondary Education",
 		"Social Work",
 		"Sociology",
