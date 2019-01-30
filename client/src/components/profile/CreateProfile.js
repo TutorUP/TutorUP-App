@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { createProfile } from '../../redux/actions/profileActions';
+import { createProfile, postCourse } from '../../redux/actions/profileActions';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
@@ -49,7 +49,7 @@ class CreateProfile extends Component {
      }
 
      this.props.createProfile(profileData, this.props.history);
-     // this.props.postCourse(courses, this.props.history); create the course objects
+     this.props.postCourse(courses); // create the course objects
  }
 
  onChange = e => {
@@ -200,4 +200,4 @@ const mapStateToProps = state => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps, { createProfile })(withRouter(CreateProfile));
+export default connect(mapStateToProps, { createProfile, postCourse })(withRouter(CreateProfile));

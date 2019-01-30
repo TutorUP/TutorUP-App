@@ -8,7 +8,7 @@ const User = require('../../models/User');
 const Course = require('../../models/Course');
 
 // Load validation
-const validateProfileInput = require('../../validation/courseValidation');
+const validateCourseInput = require('../../validation/courseValidation');
 
 // @route   GET api/courses
 // @desc    Get all courses for current logged in user
@@ -34,6 +34,8 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
 router.post('/', passport.authenticate('jwt', { session: false}), (req, res) => {
     const { errors, isValid } = validateCourseInput(req.body);
 
+    console.log(req.body)
+
     // Check validation
     if (!isValid) {
         return res.status(400).json(errors);
@@ -46,21 +48,21 @@ router.post('/', passport.authenticate('jwt', { session: false}), (req, res) => 
     if (req.body.number) courseFields.number = req.body.number;
     if (req.body.name) courseFields.name = req.body.name;
 
-    // See if there is already a CS 203 for user id X
-    Course.findOne({ user: req.user.id }).then(course => {
-        if (course) {
-            // Course already exists for user profile
-            Course.findOneAndUpdate(
-                { user: req.user.id },
-                { $set: courseFields },
-                { new: true }
-            ).then(course => res.json(course));
-        }
-        // User does not already have course
-        else {
-            new Course(courseFields).save().then(course => res.json(course));
-        }
-    });
+    // // See if there is already a CS 203 for user id X
+    // Course.findOne({ user: req.user.id }).then(course => {
+    //     if (course) {
+    //         // Course already exists for user profile
+    //         Course.findOneAndUpdate(
+    //             { user: req.user.id },
+    //             { $set: courseFields },
+    //             { new: true }
+    //         ).then(course => res.json(course));
+    //     }
+    //     // User does not already have course
+    //     else {
+    //         new Course(courseFields).save().then(course => res.json(course));
+    //     }
+    // });
 });
 
 // @route   DELETE api/course

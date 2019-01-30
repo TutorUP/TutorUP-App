@@ -133,16 +133,13 @@ export const clearCurrentProfile = () => {
 }
 
 // Create or update a course
-export const postCourse = () => dispatch => {
-    axios.post('/api/course')
+export const postCourse = courseData => dispatch => {
+    console.log(courseData)
+    axios.post('/api/courses')
     .then(res => {
         dispatch({
             payload: res.data
         })
     })
-    .catch(err =>
-        dispatch({
-            type: GET_ERRORS,
-            payload: err.response.data
-        }))
+    .catch(err => console.log(err));
 }
