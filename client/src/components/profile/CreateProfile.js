@@ -53,6 +53,7 @@ class CreateProfile extends Component {
  }
 
  onChange = e => {
+   const name = e.target.name;
     if (name.includes("courseId") || name.includes("courseNumber") || name.includes("courseName")) {
       let courses = [...this.state.courses];
       let i = name.charAt(name.length - 1);
