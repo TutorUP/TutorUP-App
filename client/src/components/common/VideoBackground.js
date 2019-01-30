@@ -24,6 +24,12 @@ class VideoBackground extends Component {
       muted: true,
       loop: true,
     };
+    // https://www.youtube.com/embed/DihKCe4NsSk?controls=0
+    // https://www.youtube.com/watch?v=DihKCe4NsSk
+    // https://player.vimeo.com/video/313631334
+    // https://vimeo.com/313631334
+    // https://streamable.com/0nk2j
+    // https://streamable.com/s/0nk2j/xkdyz
 
     return (
         <div style={style} >
