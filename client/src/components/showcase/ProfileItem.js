@@ -26,20 +26,30 @@ const styles = theme => ({
 const ProfileItem = props => {
     const { classes, profile, auth } = props;
 
-    const profileCard = profile.classes !== undefined ? (
+    const classesCard = profile.classes !== undefined ? (
+        <React.Fragment>
+            {profile.classes.slice(0, 5).map((myClass, index) => (
+                <Chip className={classes.chip} color="secondary" key={index} label={myClass} />
+            ))}
+        </React.Fragment>
+
+    ) : (
+        <p>No classes listed</p>
+    )
+
+    return (
+    <React.Fragment>
         <Card raised>
         <CardContent>
             <Typography variant="h4" gutterBottom>
-                {profile.handle} : 
+                {profile.user.firstname} <br/>
                 <Chip className={classes.chip} color="primary" variant="outlined" label={profile.user.email}/>
                 <Chip className={classes.chip} color="primary" variant="outlined" label={profile.major}/>
             </Typography>
             <Typography variant="h1">
                 Classes
             </Typography>
-            {profile.classes.slice(0, 5).map((myClass, index) => (
-                <Chip className={classes.chip} color="secondary" key={index} label={myClass} />
-            ))}
+            {classesCard}
         </CardContent>
         <CardActions>
             <Button component={Link}
@@ -62,14 +72,6 @@ const ProfileItem = props => {
             }
         </CardActions>
     </Card>
-
-    ) : (
-        <p>{profile.user.email} does not have a profile yet</p>
-    )
-
-    return (
-    <React.Fragment>
-        {profileCard}
     </React.Fragment>
   );
 }

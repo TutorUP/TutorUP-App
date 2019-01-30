@@ -40,8 +40,10 @@ class CreateProfile extends Component {
  onSubmit = e => {
      e.preventDefault();
      const { bio, major, minor, availability, courses } = this.state;
+     const handle = this.props.auth.user.email.replace("@up.edu", "");
 
      const profileData = {
+         handle,
          bio,
          major, 
          minor,
