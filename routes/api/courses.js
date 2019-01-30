@@ -31,38 +31,40 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
 // @route   POST api/course
 // @desc    Create or edit a course on a profile
 // @access  Private
-router.post('/', passport.authenticate('jwt', { session: false}), (req, res) => {
-    const { errors, isValid } = validateCourseInput(req.body);
+router.post('/', passport.authenticate('jwt', { session: false }), (req, res) => {
+    // const { errors, isValid } = validateCourseInput(req.body);
 
-    console.log(req.body)
+    console.log('Req body')
+    console.log(req.body[0])
+
 
     // Check validation
-    if (!isValid) {
-        return res.status(400).json(errors);
-    }
+    // if (!isValid) {
+    //     return res.status(400).json(errors);
+    // }
     
     // Get fields
     const courseFields = {};
     courseFields.user = req.user.id;
-    if (req.body.id) courseFields.id = req.body.id;
-    if (req.body.number) courseFields.number = req.body.number;
-    if (req.body.name) courseFields.name = req.body.name;
+    if (req.body[0].courseId) courseFields.id = req.body[0].courseId;
+    if (req.body[0].courseNumber) courseFields.number = req.body[0].courseNumber;
+    if (req.body[0].courseName) courseFields.name = req.body[0].courseName;
 
-    // // See if there is already a CS 203 for user id X
-    // Course.findOne({ user: req.user.id }).then(course => {
-    //     if (course) {
-    //         // Course already exists for user profile
-    //         Course.findOneAndUpdate(
-    //             { user: req.user.id },
-    //             { $set: courseFields },
-    //             { new: true }
-    //         ).then(course => res.json(course));
-    //     }
-    //     // User does not already have course
-    //     else {
-    //         new Course(courseFields).save().then(course => res.json(course));
-    //     }
-    // });
+    // See if there is already a CS 203 for user id X
+    Course.findOne({ user: req.user.id }).then(course => {
+        if (course) {
+            // Course already exists for user profile
+            Course.findOneAndUpdate(
+                { user: req.user.id },
+                { $set: courseFields },
+                { new: true }
+            ).then(course => res.json(course));
+        }
+        // User does not already have course
+        else {
+            new Course(courseFields).save().then(course => res.json(course));
+        }
+    });
 });
 
 // @route   DELETE api/course

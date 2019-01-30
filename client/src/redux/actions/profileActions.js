@@ -134,12 +134,9 @@ export const clearCurrentProfile = () => {
 
 // Create or update a course
 export const postCourse = courseData => dispatch => {
-    console.log(courseData)
-    axios.post('/api/courses')
+    axios.post('/api/courses', courseData)
     .then(res => {
-        dispatch({
-            payload: res.data
-        })
+        console.log(res.data)
     })
     .catch(err => console.log(err));
 }

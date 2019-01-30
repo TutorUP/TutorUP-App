@@ -2,21 +2,15 @@ import React from 'react';
 import {
   InstantSearch,
   PoweredBy,
-  HierarchicalMenu,
   RefinementList,
   Hits,
   RangeInput,
-  Stats,
-  ClearRefinements,
-  RatingMenu,
   Highlight,
-  Panel,
+
   Configure,
   Pagination,
 
   connectSearchBox,
-  connectInfiniteHits,
-  connectStateResults,
 } from 'react-instantsearch-dom';
 
 import TextField from '@material-ui/core/TextField';
@@ -48,61 +42,11 @@ export default function AppSearch() {
   );
 }
 
-const Product = ({ hit }) => {
-  return (
-      <div>
-        <Highlight attribute="handle" hit={hit} />
-
-      </div>
-  );
-}
-
 const Header = () => (
   <header className="content-wrapper header">
     <ConnectedSearchBox />
     <br />
   </header>
-);
-
-const Facets = () => (
-  <aside>
-    <ClearRefinements
-      translations={{
-        reset: 'Clear all filters',
-      }}
-    />
-
-    <section className="facet-wrapper">
-      <div className="facet-category-title facet">Refine By</div>
-
-
-      <div className="facet-category-title facet">Show results for</div>
-      <HierarchicalMenu
-        attributes={[
-          'hierarchicalCategories.lvl0',
-          'hierarchicalCategories.lvl1',
-          'hierarchicalCategories.lvl2',
-        ]}
-      />
-
-
-      <Panel header={<h5>Type</h5>}>
-        <RefinementList attribute="type" operator="or" limit={5} />
-      </Panel>
-
-      <Panel header={<h5>Handle</h5>}>
-        <RefinementList attributesForFaceting="handle" operator="or" limit={5} searchable />
-      </Panel>
-
-      <Panel header={<h5>Rating</h5>}>
-        <RatingMenu attribute="rating" max={5} />
-      </Panel>
-
-      <Panel header={<h5>Date</h5>}>
-        <RangeInput attribute="availableFrom" />
-      </Panel>
-    </section>
-  </aside>
 );
 
 const CustomSearchBox = ({ currentRefinement, refine }) => (
@@ -133,7 +77,6 @@ const CustomHits = ({ hits, refine, hasMore }) => {
 
 
 const ConnectedSearchBox = connectSearchBox(CustomSearchBox);
-const ConnectedHits = connectInfiniteHits(CustomHits);
 
 const Hit = ({ item }) => {
   return (
@@ -159,27 +102,4 @@ const Hit = ({ item }) => {
     </article>
   );
 };
-
-const CustomResults = connectStateResults(({ searchState, searchResult }) => {
-  if (searchResult && searchResult.nbHits === 0) {
-    return (
-      <div className="results-wrapper">
-        <div className="no-results">
-          No results found matching{' '}
-          <span className="query">{searchState.query}</span>
-        </div>
-      </div>
-    );
-  } else {
-    return (
-      <div className="results-wrapper">
-        <section id="results-topbar">
-          <Stats />
-        </section>
-        <ConnectedHits />
-      </div>
-    );
-  }
-});
-
 
