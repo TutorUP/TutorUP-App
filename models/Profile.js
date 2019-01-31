@@ -23,6 +23,9 @@ const ProfileSchema = new Schema({
         type: String,
         max: 300
     },
+    courses: {
+        type: [Object],
+    },
     isTutor: {
         type: Boolean
     },

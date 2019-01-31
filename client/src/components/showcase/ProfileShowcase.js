@@ -10,9 +10,6 @@ import { connect } from 'react-redux';
 import { getProfiles } from '../../redux/actions/profileActions';
 
 //new imports
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
 import SearchIcon from '@material-ui/icons/Search';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -183,7 +180,6 @@ class ProfilesShowcase extends Component {
                 );
             }
             else {
-                console.log("FALSE");
                 profileItems = profiles.length > 0 ?
                 profiles.map(profile => (
                     <ProfileItem key={profile._id} profile={profile} />

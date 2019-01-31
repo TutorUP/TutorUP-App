@@ -26,10 +26,10 @@ const styles = theme => ({
 const ProfileItem = props => {
     const { classes, profile, auth } = props;
 
-    const classesCard = profile.classes !== undefined ? (
+    const classesCard = profile.courses !== undefined ? (
         <React.Fragment>
-            {profile.classes.slice(0, 5).map((myClass, index) => (
-                <Chip className={classes.chip} color="secondary" key={index} label={myClass} />
+            {profile.courses.slice(0, 5).map((myClass, index) => (
+                <Chip className={classes.chip} color="secondary" key={index} label={`${myClass.courseId} ${myClass.courseNumber}`} />
             ))}
         </React.Fragment>
 

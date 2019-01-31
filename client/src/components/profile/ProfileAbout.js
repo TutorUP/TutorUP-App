@@ -22,9 +22,11 @@ class ProfileAbout extends Component {
         const shortname = (firstname && lastname) ? firstname + " " + lastname.charAt(0) + '.' : '';
 
         // Skill List
-        const classes = profile.classes.map((myClass, index) => (
-            <Chip key={index} label={myClass} className="chip" variant="outlined" />
-        ));
+        const classes = profile.courses !== undefined ? profile.courses.map((myClass, index) => (
+            <Chip key={index} label={`${myClass.courseId} ${myClass.courseNumber}`} className="chip" variant="outlined" />
+        )) : (
+            <p>No classes defined yet.</p>
+        );
 
         return (
             <Card>

@@ -47,11 +47,12 @@ class CreateProfile extends Component {
          bio,
          major, 
          minor,
+         courses,
          availability
      }
 
      this.props.createProfile(profileData, this.props.history);
-     this.props.postCourse(courses); // create the course objects
+     // this.props.postCourse(courses); // create the course objects
  }
 
  onChange = e => {

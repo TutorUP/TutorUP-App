@@ -101,8 +101,9 @@ router.post('/', passport.authenticate('jwt', { session: false}), (req, res) => 
     if (req.body.handle) profileFields.handle = req.body.handle;
     if (req.body.major) profileFields.major = req.body.major;
     if (req.body.minor) profileFields.minor = req.body.minor;
-    if (req.body.status) profileFields.status = req.body.status;
+    // if (req.body.status) profileFields.status = req.body.status;
     if (req.body.bio) profileFields.bio = req.body.bio;
+    if (req.body.courses) profileFields.courses = req.body.courses;
     if (req.body.availability) profileFields.availability = req.body.availability;
 
 
