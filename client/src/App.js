@@ -87,7 +87,7 @@ class App extends Component {
                 
                 {/* For Routes protected by Auth */}
                 <Switch>
-                  <PrivateRoute exact path="/dashboard" component={Dashboard}/>
+                  <PrivateRoute exact path="/profile" component={Dashboard}/>
                 </Switch>
                 <Switch>
                   <PrivateRoute exact path="/create-profile" component={CreateProfile} />

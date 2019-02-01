@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -19,43 +18,17 @@ const ListItemLink = props => {
   return <ListItem button component="a" {...props} />;
 }
 
-export const createLink = (
+export const authLinks = (
   <React.Fragment>
-    <Link to="/create-profile" className="link">
+    <Link to="/profile" className="link">
       <ListItem button>
         <ListItemIcon>
           <PersonIcon />
-        </ListItemIcon>
-        <ListItemText primary="Create Profile" />
-      </ListItem>
-    </Link>
-  </React.Fragment>
-);
-
-export const editLink = (
-  <React.Fragment>
-    <Link to="/edit-profile" className="link">
-      <ListItem button>
-        <ListItemIcon>
-          <PersonIcon />
-        </ListItemIcon>
-        <ListItemText primary="Edit Profile" />
-      </ListItem>
-    </Link>
-  </React.Fragment>
-);
-
-export const profileLink = (
-  <React.Fragment>
-    {/*<Link to="/dashboard" className="link">
-      <ListItem button>
-        <ListItemIcon>
-          <AccountIcon />
         </ListItemIcon>
         <ListItemText primary="Profile" />
       </ListItem>
     </Link>
-     <Link to="/search" className="link">
+     {/*<Link to="/search" className="link">
       <ListItem button>
         <ListItemIcon>
           <SearchIcon />
