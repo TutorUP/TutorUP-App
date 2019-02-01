@@ -4,25 +4,21 @@ import PropTypes from 'prop-types';
 // import components
 import ProgressSpinner from '../common/ProgressSpinner';
 import ProfileItem from './ProfileItem';
+import SearchIcon from '@material-ui/icons/Search';
+import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
 
 // redux imports
 import { connect } from 'react-redux';
 import { getProfiles } from '../../redux/actions/profileActions';
 
-//new imports
-import SearchIcon from '@material-ui/icons/Search';
-import Button from '@material-ui/core/Button';
-import Checkbox from '@material-ui/core/Checkbox';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state/index';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
 
 // MUI imports
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import { Card, Input } from '@material-ui/core';
+import { Input } from '@material-ui/core';
 
 const styles = {
     card: {
