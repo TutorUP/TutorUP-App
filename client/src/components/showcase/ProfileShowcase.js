@@ -44,9 +44,8 @@ class ProfilesShowcase extends Component {
         searching: false,
         searchText: '',
         text: '',
-        checkedA: false,
-        checkedB: false,
-        checkedC: false,
+        orderDropDown: null,
+        filterDropDown: null,
       };
     }
 
@@ -68,7 +67,7 @@ class ProfilesShowcase extends Component {
         return array;
     }
 
-    //To be Continued...
+    //uses current value of search bar to find tutors with similar names    
     handleSearch = text => event => {   
         this.setState({
             [text]: event.target.searchText
@@ -77,13 +76,16 @@ class ProfilesShowcase extends Component {
         let profileList = this.props.profile.profiles;
 
         if (search_text.length > 0){
-            //generates list based on current search text and profile handles
+            //generates list based on current search text and profile First Names
             let searchList = [];
             for(var prof in profileList){
                 let profile = profileList[prof];
-                if (profile.handle.length >= search_text.length){
-                    let c = profile.handle.substring(0, search_text.length).toLowerCase();
-                    if(c.includes(search_text.toLowerCase())){
+                
+                //compare first name to search text, add to list if similar
+                let firstName = profile.user.firstname;
+                if (firstName.length >= search_text.length){
+                    let userName = firstName.substring(0, search_text.length).toLowerCase();
+                    if(userName.includes(search_text.toLowerCase())){
                         searchList.push(profile);
                     }
                 }
@@ -103,6 +105,31 @@ class ProfilesShowcase extends Component {
         }
     }
 
+      closeOrderMenu = event => {
+          this.setState({
+              orderDropDown: null,
+          })
+      } 
+
+      closeFilterMenu = event => {
+        this.setState({
+            filterDropDown: null,
+        })
+    } 
+
+
+      handleFilterBy = event => {
+        this.setState({ 
+            filterDropDown: event.currentTarget,
+        });
+      };
+
+      handleOrderBy = event => {
+        this.setState({ 
+            orderDropDown: event.currentTarget,
+        });
+      }
+
     handleCheck = name => event => {
         this.setState({
           [name]: event.target.checked,
@@ -120,13 +147,14 @@ class ProfilesShowcase extends Component {
 
         //Sort Objects by their attributes
         let nameSorted = profileList.sort(function(a,b){
-            var nameA=a.handle.toLowerCase(), nameB=b.handle.toLowerCase();
+            var nameA=a.user.firstname.toLowerCase(), nameB=b.user.firstname.toLowerCase();
             if (nameA < nameB) //sort string ascending
                 return -1 
             if (nameA > nameB)
                 return 1
             return 0
         })
+
         let majorSorted = profileList.sort(function(a,b){
             var majorA = a.major.toLowerCase(), majorB = b.major.toLowerCase()
             if (majorA < majorB) 
@@ -135,25 +163,12 @@ class ProfilesShowcase extends Component {
                 return 1
             return 0
         })
-        let statusSorted = profileList.sort(function(a,b){
-            var statusA = a.status.toLowerCase(), statusB=b.status.toLowerCase()
-            if (statusA < statusB) 
-                return -1 
-            if (statusA > statusB)
-                return 1
-            return 0
-        })
-
+       
         let filterType = orderBy;
         if (filterType = 'name')
             console.log(nameSorted);
             this.setState(state => ({
                 data: nameSorted,
-                type: filterType
-            })); 
-        if (filterType = 'status')
-            this.setState(state => ({
-                data: statusSorted,
                 type: filterType
             })); 
         if (filterType = 'major')
@@ -166,6 +181,7 @@ class ProfilesShowcase extends Component {
     render() {
         const { classes } = this.props;
         const { profiles, loading } = this.props.profile;
+        const { orderDropDown, filterDropDown} = this.state;
         let profileItems;
 
         if (profiles === null || loading) {
@@ -174,6 +190,8 @@ class ProfilesShowcase extends Component {
         )
         }
         else {
+            //if currently typing in search bar,
+            //display  search results
             if(this.state.searching == true){
                 let searchData = this.state.data;
                 profileItems = searchData.length > 0 ?
@@ -185,9 +203,11 @@ class ProfilesShowcase extends Component {
                     </div>
                 );
             }
+               //else display shuffle of all profiles
             else {
+                let shuffledProfiles = this.shuffle(profiles);
                 profileItems = profiles.length > 0 ?
-                profiles.map(profile => (
+                shuffledProfiles.map(profile => (
                     <ProfileItem key={profile._id} profile={profile} />
                 )) : (
                     <div>
@@ -203,22 +223,24 @@ class ProfilesShowcase extends Component {
                     <Grid container spacing={24}>
                         <Grid item xs={12}>
                             <Paper className={classes.padding20}>
-                                <PopupState variant="popover" popupId="demo-popup-menu">
-                                    {popupState => (
                                         <React.Fragment>
                                             <SearchIcon />
-                                            <Input id='search' placeholder="Search Tutors" value={this.state.searchText} onChange={this.handleSearch('searchText')} className={classes.marginLeft20}/>
-                                            <Button variant="contained" {...bindTrigger(popupState)} className={classes.marginLeft20}>Order by</Button>
-                                            <Button variant="contained" {...bindTrigger(popupState)} className={classes.marginLeft20}>Filter by</Button>
-                                            <Menu {...bindMenu(popupState)}>
+                                            <Input id='search' placeholder="Search Tutors" value={this.state.searchText} onChange={this.handleSearch('searchText')} className={classes.marginLeft20}/>   
+                                            <Button variant="contained" className={classes.marginLeft20} aria-haspopup="true" onClick={this.handleOrderBy} aria-owns={orderDropDown ? 'orderByMenu' : undefined}>Order by</Button>
+                                            <Menu id='orderByMenu' anchorEl={orderDropDown} open={Boolean(orderDropDown)} onClose={this.closeOrderMenu}>
                                                 <MenuItem onClick={() => this.orderBy('name')}> First Name</MenuItem>
                                                 <MenuItem onClick={() => this.orderBy('major')}> By Major </MenuItem>
-                                                <MenuItem onClick={() => this.orderBy('status')}> By Class Standing </MenuItem>
                                             </Menu>
+
+                                            <Button variant="contained" className={classes.marginLeft20} aria-haspopup="true" onClick={this.handleFilterBy} aria-owns={filterDropDown ? 'filterByMenu' : undefined}>Filter by</Button>
+                                            <Menu id='filterByMenu' anchorEl={filterDropDown} open={Boolean(filterDropDown)} onClose={this.closeFilterMenu}>
+                                                <MenuItem onClick={() => this.orderBy('name')}> First Name</MenuItem>
+                                                <MenuItem onClick={() => this.orderBy('class')}> Course Name</MenuItem>
+                                                <MenuItem onClick={() => this.orderBy('major')}> By Major </MenuItem>
+                                            </Menu>
+
                                             <br/>
                                         </React.Fragment>
-                                    )}
-                                </PopupState>
                             </Paper>
                         </Grid>
                     </Grid>
