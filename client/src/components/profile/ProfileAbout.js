@@ -7,7 +7,11 @@ import Chip from '@material-ui/core/Chip';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import MailIcon from '@material-ui/icons/Email';
+import TagIcon from '@material-ui/icons/LocalOffer';
+import CalendarIcon from '@material-ui/icons/CalendarToday';
+import InfoIcon from '@material-ui/icons/Info';
+
 import './profile.css';
 
 class ProfileAbout extends Component {
@@ -47,25 +51,25 @@ class ProfileAbout extends Component {
 
                     <Grid container wrap="nowrap" spacing={16}>
                         <Grid item>
-                            <FontAwesomeIcon icon="envelope" className="icon" />
+                            <MailIcon/>
                         </Grid>
                         <Grid item xs>
                             <Typography>{profile.user.email}</Typography>
                         </Grid>
                     </Grid>
 
-                    <Grid container wrap="nowrap" spacing={16}>
+                    {/*<Grid container wrap="nowrap" spacing={16}>
                         <Grid item>
-                            <FontAwesomeIcon icon="tag" className="icon" />
+                            <TagIcon/>
                         </Grid>
                         <Grid item xs>
                             <Typography>Tags will be listed here if we do them</Typography>
                         </Grid>
-                    </Grid>
+                    </Grid>*/}
 
                     <Grid container wrap="nowrap" spacing={16}>
                           <Grid item>
-                              <FontAwesomeIcon icon="info-circle" className="icon" />
+                              <InfoIcon/>
                           </Grid>
                           <Grid item xs>
                             <Typography>{profile.bio}</Typography>
@@ -74,7 +78,7 @@ class ProfileAbout extends Component {
 
                     <Grid container wrap="nowrap" spacing={16}>
                           <Grid item>
-                              <FontAwesomeIcon icon="calendar-check" className="icon" />
+                              <CalendarIcon/>
                           </Grid>
                           <Grid item xs>
                             <Typography>{profile.availability}</Typography>

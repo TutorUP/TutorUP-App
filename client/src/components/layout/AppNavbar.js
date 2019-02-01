@@ -5,8 +5,8 @@ import classNames from 'classnames';
 import { connect } from 'react-redux';
 
 import { logoutUser } from '../../redux/actions/authActions';
-import { clearCurrentProfile } from '../../redux/actions/profileActions';
-import { secondaryListItems, authLinks, guestLinks } from './AppNavbarLinks';
+import { clearCurrentProfile, getCurrentProfile } from '../../redux/actions/profileActions';
+import { secondaryListItems, profileLink, guestLinks, createLink, editLink } from './AppNavbarLinks';
 import './layout.css';
 
 // Material UI imports
@@ -24,6 +24,7 @@ import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import ProgressSpinner from '../common/ProgressSpinner';
 
 const drawerWidth = 240;
 
@@ -126,6 +127,11 @@ class AppNavbar extends Component {
         open: false
     };
 
+    componentDidMount() {
+        const { profile } = this.props;
+        if (Object.keys(profile).length > 0 ) this.props.getCurrentProfile();
+    }
+
     handleDrawerOpen = e => {
         this.setState({ open: true });
     };
@@ -143,7 +149,19 @@ class AppNavbar extends Component {
     render() {
         const { open } = this.state;
         const { classes } = this.props;
+        const { profile, loading } = this.props.profile;
         const { isAuthenticated } = this.props.auth;
+
+        let authLinks;
+        if (profile === null || loading) {
+            authLinks = <div><ProgressSpinner /><List>{profileLink}</List></div>;
+        }
+        else {
+          authLinks = Object.keys(profile).length > 0 ? 
+            <div><List>{editLink}</List><List>{profileLink}</List></div> : 
+            <div><List>{createLink}</List><List>{profileLink}</List></div>;
+        }
+
         return (
             <div>
                 <AppBar
@@ -205,12 +223,15 @@ class AppNavbar extends Component {
 
 AppNavbar.propTypes = {
     classes: PropTypes.object.isRequired,
+    getCurrentProfile: PropTypes.func.isRequired,
     logoutUser: PropTypes.func.isRequired,
+    profile: PropTypes.object.isRequired,
     auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  profile: state.profile
 });
 
-export default connect(mapStateToProps, { logoutUser, clearCurrentProfile })(withStyles(styles)(AppNavbar));
+export default connect(mapStateToProps, { logoutUser, getCurrentProfile, clearCurrentProfile })(withStyles(styles)(AppNavbar));

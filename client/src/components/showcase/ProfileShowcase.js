@@ -28,6 +28,12 @@ const styles = {
     card: {
         minWidth: 300,
     },
+    padding20: {
+        padding: 20,
+    },
+    marginLeft20: {
+        marginLeft: 20,
+    }
 };
 
 class ProfilesShowcase extends Component {
@@ -194,23 +200,22 @@ class ProfilesShowcase extends Component {
             <div>
             <header>
                 <div>
-                    <Grid container spacing={16}>
+                    <Grid container spacing={24}>
                         <Grid item xs={12}>
-                            <Paper className={classes.paper}>
+                            <Paper className={classes.padding20}>
                                 <PopupState variant="popover" popupId="demo-popup-menu">
                                     {popupState => (
                                         <React.Fragment>
                                             <SearchIcon />
-                                            <Input id='search' placeholder="Search Tutors" value={this.state.searchText} onChange={this.handleSearch('searchText')}/>
-                                            <Button variant="contained" {...bindTrigger(popupState)}>Order by</Button>
-                                            <Button variant="contained" {...bindTrigger(popupState)}>Filter by</Button>
+                                            <Input id='search' placeholder="Search Tutors" value={this.state.searchText} onChange={this.handleSearch('searchText')} className={classes.marginLeft20}/>
+                                            <Button variant="contained" {...bindTrigger(popupState)} className={classes.marginLeft20}>Order by</Button>
+                                            <Button variant="contained" {...bindTrigger(popupState)} className={classes.marginLeft20}>Filter by</Button>
                                             <Menu {...bindMenu(popupState)}>
                                                 <MenuItem onClick={() => this.orderBy('name')}> First Name</MenuItem>
                                                 <MenuItem onClick={() => this.orderBy('major')}> By Major </MenuItem>
                                                 <MenuItem onClick={() => this.orderBy('status')}> By Class Standing </MenuItem>
                                             </Menu>
                                             <br/>
-                                            <Typography align="center" variant="h2"> Tutor Profiles  </Typography>
                                         </React.Fragment>
                                     )}
                                 </PopupState>
@@ -220,9 +225,9 @@ class ProfilesShowcase extends Component {
                 </div>
             </header>
             <div>
-                <Card className={classes.card}>
+                <Grid container spacing={24}>
                     {profileItems}
-                </Card>
+                </Grid>
             </div>
         </div>
         );

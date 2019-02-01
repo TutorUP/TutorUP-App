@@ -6,7 +6,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
-import AccountIcon from '@material-ui/icons/AccountCircle';
+import PersonIcon from '@material-ui/icons/Person';
 import AddIcon from '@material-ui/icons/Add';
 import LockIcon from '@material-ui/icons/LockOutlined';
 import PeopleIcon from '@material-ui/icons/People';
@@ -19,9 +19,35 @@ const ListItemLink = props => {
   return <ListItem button component="a" {...props} />;
 }
 
-export const authLinks = (
+export const createLink = (
   <React.Fragment>
-    <Link to="/dashboard" className="link">
+    <Link to="/create-profile" className="link">
+      <ListItem button>
+        <ListItemIcon>
+          <PersonIcon />
+        </ListItemIcon>
+        <ListItemText primary="Create Profile" />
+      </ListItem>
+    </Link>
+  </React.Fragment>
+);
+
+export const editLink = (
+  <React.Fragment>
+    <Link to="/edit-profile" className="link">
+      <ListItem button>
+        <ListItemIcon>
+          <PersonIcon />
+        </ListItemIcon>
+        <ListItemText primary="Edit Profile" />
+      </ListItem>
+    </Link>
+  </React.Fragment>
+);
+
+export const profileLink = (
+  <React.Fragment>
+    {/*<Link to="/dashboard" className="link">
       <ListItem button>
         <ListItemIcon>
           <AccountIcon />
@@ -29,7 +55,7 @@ export const authLinks = (
         <ListItemText primary="Profile" />
       </ListItem>
     </Link>
-    {/* <Link to="/search" className="link">
+     <Link to="/search" className="link">
       <ListItem button>
         <ListItemIcon>
           <SearchIcon />
