@@ -72,10 +72,12 @@ class EditProfile extends Component {
  }
 
  onChange = e => {
-    if (["courseId", "courseNumber", "courseName"].includes(e.target.id)) {
+   const name = e.target.name;
+    if (name.includes("courseId") || name.includes("courseNumber") || name.includes("courseName")) {
       let courses = [...this.state.courses];
-      let i = e.target.name.charAt(e.target.name.length - 1);
-      courses[i][e.target.id] = e.target.value;
+      let i = name.charAt(name.length - 1);
+      let property = name.substring(0, name.length - 2);
+      courses[i][property] = e.target.value;
       this.setState({ [courses]: courses });
     }
     else {
