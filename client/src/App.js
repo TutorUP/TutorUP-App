@@ -32,12 +32,6 @@ import Profile from './components/profile/Profile';
 
 import AppSearch from './components/search/AppSearch';
 
-// icons
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCalendarCheck, faTag, faInfoCircle, faEnvelope} from '@fortawesome/free-solid-svg-icons'
-
-library.add(faCalendarCheck, faTag, faInfoCircle, faEnvelope)
-
 // Check for JWT for persistence
 if (localStorage.jwtToken) {
   const decoded = checkAuth();

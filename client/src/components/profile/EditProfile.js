@@ -40,7 +40,8 @@ class EditProfile extends Component {
             major: profile.major,
             minor: profile.minor,
             bio: profile.bio,
-            availability: profile.availability
+            availability: profile.availability,
+            courses: profile.courses
         });
     }
  }
@@ -64,6 +65,7 @@ class EditProfile extends Component {
          bio,
          major, 
          minor,
+         courses,
          availability
      }
 

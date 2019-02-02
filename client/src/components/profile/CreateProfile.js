@@ -52,7 +52,6 @@ class CreateProfile extends Component {
      }
 
      this.props.createProfile(profileData, this.props.history);
-     // this.props.postCourse(courses); // create the course objects
  }
 
  onChange = e => {
