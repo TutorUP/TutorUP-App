@@ -28,13 +28,24 @@ class CreateProfile extends Component {
 
  addCourse = (e) => {
     this.setState((prevState) => ({
-      courses: [...prevState.courses, {courseId: "", courseName: "", courseNumber: ""}],
+      courses: [...prevState.courses, {courseId: "", courseName: "", courseNumber: "", id: Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10)}],
     }));
  }
 
- removeCourse = (i) => {
-   let courses = [...this.state.courses];
-   // remove course at index i
+ removeCourse = id => {
+     console.log(id)
+    let courses = [...this.state.courses];
+    const newCourses = courses.filter(course => {
+        return course.id !== id
+    });
+
+    this.setState({
+        courses: [...newCourses]
+    });
+
+    if(newCourses.length === 0) {
+        console.log('No courses');
+    }
  }
 
  onSubmit = e => {
@@ -114,7 +125,7 @@ render() {
                     </FormControl>
                   </CardContent>
                   <CardActions>
-                    <Button size="small" onClick={this.removeCourse(i)}>Remove Course</Button>
+                    <Button size="small" onClick={(e) => this.removeCourse(course.id)}>Remove Course</Button>
                   </CardActions>
                 </Card>
              </Grid> 

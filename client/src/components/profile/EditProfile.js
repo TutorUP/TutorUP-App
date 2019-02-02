@@ -40,23 +40,42 @@ class EditProfile extends Component {
             major: profile.major,
             minor: profile.minor,
             bio: profile.bio,
-            availability: profile.availability
+            availability: profile.availability,
+            courses: profile.courses
         });
     }
  }
 
  addCourse = (e) => {
+    const newCourse = {
+        courseId: "",
+        courseName: "",
+        courseNumber: "",
+        id: Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10)
+    }
+
     this.setState((prevState) => ({
-      courses: [...prevState.courses, {courseId: "", courseName: "", courseNumber: ""}],
+      courses: [...prevState.courses, newCourse],
     }));
  }
 
- removeCourse = (i) => {
-   let courses = [...this.state.courses];
-   // remove course at index i
+ removeCourse = id => {
+    let courses = [...this.state.courses];
+    const newCourses = courses.filter(course => {
+        return course.id !== id
+    });
+
+    this.setState({
+        courses: [...newCourses]
+    });
+
+    if(newCourses.length === 0) {
+        console.log('No courses');
+    }
+
  }
 
- onSubmit = e => {
+ onSubmit = (e) => {
      e.preventDefault();
      const { bio, major, minor, availability, courses } = this.state;
 
@@ -64,11 +83,11 @@ class EditProfile extends Component {
          bio,
          major, 
          minor,
-         availability
+         availability,
+         courses
      }
 
      this.props.createProfile(profileData, this.props.history);
-     // do proper call to add courses to user
  }
 
  onChange = e => {
@@ -130,7 +149,7 @@ render() {
                     </FormControl>
                   </CardContent>
                   <CardActions>
-                    <Button size="small" onClick={this.removeCourse(i)}>Remove Course</Button>
+                    <Button size="small" onClick={(e) => this.removeCourse(course.id)}>Remove Course</Button>
                   </CardActions>
                 </Card>
              </Grid> 
