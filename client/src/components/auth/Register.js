@@ -115,7 +115,7 @@ class Register extends Component {
                 <form className={classes.container} autoComplete="off" onSubmit={this.onSubmit}>
                   <FormControl margin="normal" required fullWidth>
                     <InputLabel htmlFor="firstname">First Name</InputLabel>
-                    <Input id="firstname" name="firstname" onChange={this.onChange}/>
+                    <Input id="firstname" name="firstname" onChange={this.onChange} autoFocus/>
                   </FormControl>
                   <FormControl margin="normal" required fullWidth>
                     <InputLabel htmlFor="lastname">Last Name</InputLabel>
@@ -127,7 +127,6 @@ class Register extends Component {
                     <Input id="email" 
                       name="email" 
                       autoComplete="email" 
-                      autoFocus 
                       onChange={this.onChange}
                       endAdornment={<InputAdornment position="end">@up.edu</InputAdornment>}
                     />
