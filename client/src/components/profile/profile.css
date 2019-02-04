@@ -32,6 +32,7 @@
 .editHeading {
 	padding-bottom: 10px;
 	border-bottom: 7px solid #1E1656;
+	margin-bottom: 20px !important;
 }
 
 .button {

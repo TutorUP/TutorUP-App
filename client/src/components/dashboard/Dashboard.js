@@ -9,12 +9,8 @@ import { getCurrentProfile, deleteAccount } from '../../redux/actions/profileAct
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
@@ -62,56 +58,41 @@ class Dashboard extends Component {
                 <Grid container spacing={24} justify="center">
                     <Grid item xs={12} sm={6} md={4}>
                         <Card className={styles.card}>
-                            <CardActionArea>
+                            <CardActionArea component={Link} to={'/edit-profile'}>
                                 <CardMedia
                                   component="img"
-                                  alt="tutoring"
+                                  alt="edit profile"
                                   className={classes.media}
                                   height="140"
-                                  image="./tutor2.png"
+                                  image="./edit-profile.jpg"
                                 />
                             </CardActionArea>
-                            <CardActions>
-                                <Button component={Link} to={'/edit-profile'}>
-                                    Edit Profile
-                                </Button>
-                            </CardActions>
                         </Card>
                     </Grid>
                     <Grid item xs={12} sm={6} md={4}>
                         <Card className={styles.card}>
-                            <CardActionArea>
+                            <CardActionArea component={Link} to={`/profile/${profile.handle}`}>
                                 <CardMedia
                                   component="img"
-                                  alt="tutoring"
+                                  alt="view profile"
                                   className={classes.media}
                                   height="140"
-                                  image="./tutor1.png"
+                                  image="./view-profile.jpg"
                                 />
                             </CardActionArea>
-                            <CardActions>
-                                <Button component={Link} to={`/profile/${profile.handle}`}>
-                                    View Profile
-                                </Button>
-                            </CardActions>
-                        </Card>
+                          </Card>
                     </Grid>
                     <Grid item xs={12} sm={6} md={4}>
                         <Card className={styles.card}>
-                            <CardActionArea>
+                            <CardActionArea onClick={this.onDeleteClick}>
                                 <CardMedia
                                   component="img"
-                                  alt="tutoring"
+                                  alt="delete account"
                                   className={classes.media}
                                   height="140"
-                                  image="./tutor3.png"
+                                  image="./delete-account.jpg"
                                 />
                             </CardActionArea>
-                            <CardActions>
-                                <Button size="small" onClick={this.onDeleteClick}>
-                                    Delete Account
-                                </Button>
-                            </CardActions>
                         </Card>
                     </Grid>
                 </Grid>
@@ -119,20 +100,15 @@ class Dashboard extends Component {
                 <Grid container spacing={24} justify="center">
                     <Grid item xs={12} sm={6} md={4}>
                         <Card className={styles.card}>
-                            <CardActionArea>
+                            <CardActionArea component={Link} to={'/create-profile'}>
                                 <CardMedia
                                   component="img"
-                                  alt="tutoring"
+                                  alt="create profile"
                                   className={classes.media}
                                   height="140"
-                                  image="./tutor2.png"
+                                  image="./create-profile.jpg"
                                 />
                             </CardActionArea>
-                            <CardActions>
-                                <Button component={Link} to={'/create-profile'}>
-                                    Create Profile
-                                </Button>
-                            </CardActions>
                         </Card>
                     </Grid>
                 </Grid>
