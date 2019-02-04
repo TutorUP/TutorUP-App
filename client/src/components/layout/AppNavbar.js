@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import { logoutUser } from '../../redux/actions/authActions';
 import { clearCurrentProfile, getCurrentProfile } from '../../redux/actions/profileActions';
-import { secondaryListItems, authLinks, guestLinks } from './AppNavbarLinks';
+import { secondaryListItems, authLinks, guestLinks, adminLinks } from './AppNavbarLinks';
 import './layout.css';
 
 // Material UI imports
@@ -126,7 +126,7 @@ class AppNavbar extends Component {
     state = {
         open: false
     };
-    
+
     handleDrawerOpen = e => {
         this.setState({ open: true });
     };
@@ -196,6 +196,7 @@ class AppNavbar extends Component {
                       <ListItemText primary="Logout" />
                     </ListItem>
                     }
+                    <List>{adminLinks}</List>
                     <Divider />
                     <List>{secondaryListItems}</List>
                   </div>

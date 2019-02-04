@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import MailIcon from '@material-ui/icons/Email';
 import TagIcon from '@material-ui/icons/LocalOffer';
-import CalendarIcon from '@material-ui/icons/CalendarToday';
+import CalendarIcon from '@material-ui/icons/EventAvailable';
 import InfoIcon from '@material-ui/icons/Info';
 
 import './profile.css';

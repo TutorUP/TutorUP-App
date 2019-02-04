@@ -21,6 +21,7 @@ import Login from './components/auth/Login';
 import Dashboard from './components/dashboard/Dashboard';
 import CreateProfile from './components/profile/CreateProfile';
 import EditProfile from './components/profile/EditProfile';
+import Subjects from './components/admin/Subjects';
 
 import NotFound from './components/common/NotFound';
 
@@ -88,6 +89,9 @@ class App extends Component {
                 </Switch>
                 <Switch>
                   <PrivateRoute exact path="/edit-profile" component={EditProfile} />
+                </Switch>
+                <Switch>
+                  <PrivateRoute exact path="/subjects" component={Subjects} />
                 </Switch>
               </main>
             </div>

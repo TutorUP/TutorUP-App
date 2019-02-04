@@ -9,8 +9,9 @@ import PersonIcon from '@material-ui/icons/Person';
 import AddIcon from '@material-ui/icons/Add';
 import LockIcon from '@material-ui/icons/LockOutlined';
 import PeopleIcon from '@material-ui/icons/People';
-import SearchIcon from '@material-ui/icons/Search';
+// import SearchIcon from '@material-ui/icons/Search';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import SubjectIcon from '@material-ui/icons/LibraryBooks'
 import './layout.css';
 import CodeIcon from '@material-ui/icons/Code';
 
@@ -42,6 +43,19 @@ export const authLinks = (
           <PeopleIcon />
         </ListItemIcon>
         <ListItemText primary="Profiles" />
+      </ListItem>
+    </Link>
+  </React.Fragment>
+);
+
+export const adminLinks = (
+  <React.Fragment>
+    <Link to="/subjects" className="link">
+      <ListItem button>
+        <ListItemIcon>
+          <SubjectIcon />
+        </ListItemIcon>
+        <ListItemText primary="Subjects" />
       </ListItem>
     </Link>
   </React.Fragment>

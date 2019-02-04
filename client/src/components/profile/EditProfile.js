@@ -140,7 +140,7 @@ render() {
 
     return (
       <div className="padding20">
-            <Typography variant="h4" component="h1" align="center">
+            <Typography variant="h4" component="h1" align="center" className="editHeading">
                 Edit Profile
             </Typography>
              <form onSubmit={this.onSubmit}>    

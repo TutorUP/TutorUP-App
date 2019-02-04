@@ -18,7 +18,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
 import MailIcon from '@material-ui/icons/Email';
 import TagIcon from '@material-ui/icons/LocalOffer';
-import CalendarIcon from '@material-ui/icons/CalendarToday';
+import CalendarIcon from '@material-ui/icons/EventAvailable';
 import InfoIcon from '@material-ui/icons/Info';
 
 const styles = theme => ({
