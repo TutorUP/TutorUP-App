@@ -32,6 +32,10 @@ class ProfileAbout extends Component {
             <p>No classes defined yet.</p>
         );
 
+        const majors = profile.major.join(", ");
+        const minors = (profile.minor.length > 0) ? profile.minor.join(", ") : "";
+        const subheaderText = (minors.length > 0) ? majors + " (" + minors + ")" : majors;
+
         return (
             <Card>
                 <CardHeader
@@ -42,7 +46,7 @@ class ProfileAbout extends Component {
                     </Avatar>
                   }
                   title={shortname}
-                  subheader={profile.major}
+                  subheader={subheaderText}
                 />
                 <CardContent>
                     <div className="spaceBelow">

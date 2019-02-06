@@ -58,6 +58,10 @@ const ProfileItem = props => {
     const initials =  (firstname && lastname) ? firstname.charAt(0) + lastname.charAt(0) : '';
     const shortname = (firstname && lastname) ? firstname + " " + lastname.charAt(0) + '.' : '';
 
+    const majors = profile.major.join(", ");
+    const minors = (profile.minor.length > 0) ? profile.minor.join(", ") : "";
+    const subheaderText = (minors.length > 0) ? majors + " (" + minors + ")" : majors;
+
     return (
     <React.Fragment>
         <Grid item xs={12} sm={6} md={4}>
@@ -70,7 +74,7 @@ const ProfileItem = props => {
                     </Avatar>
                   }
                   title={shortname}
-                  subheader={profile.major}
+                  subheader={subheaderText}
                 />
                 <CardContent>
                     <div className="spaceBelow">

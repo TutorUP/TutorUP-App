@@ -13,11 +13,11 @@ const ProfileSchema = new Schema({
        max: 40 
     },
     major: {
-        type: String,
+        type: [String],
         required: true
     },
     minor: {
-        type: String
+        type: [String]
     },
     bio: {
         type: String,

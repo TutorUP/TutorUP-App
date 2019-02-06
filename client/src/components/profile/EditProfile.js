@@ -20,9 +20,9 @@ import './profile.css';
 
 class EditProfile extends Component {
  state = {
-     major: '',
+     major: [],
      bio: '',
-     minor: '',
+     minor: [],
      availability: '',
      courses: [],
      subjects: [],
@@ -173,7 +173,7 @@ render() {
                     <Grid item xs={12} sm={6} md={6}>
                         <FormControl margin="normal" required fullWidth>
                             <InputLabel htmlFor="major">Major(s)</InputLabel>
-                            <Select value={major} onChange={this.onChange} variant="outlined" inputProps={{
+                            <Select multiple value={major} onChange={this.onChange} variant="outlined" inputProps={{
                                 name: 'major',
                                 id: 'major'
                             }}>
@@ -185,7 +185,7 @@ render() {
                     <Grid item xs={12} sm={6} md={6}>
                         <FormControl margin="normal" fullWidth>
                             <InputLabel htmlFor="minor">Minor(s)</InputLabel>
-                            <Select value={minor || ''} onChange={this.onChange} inputProps={{
+                            <Select multiple value={minor || []} onChange={this.onChange} inputProps={{
                                 name: 'minor',
                                 id: 'minor'
                             }}>
