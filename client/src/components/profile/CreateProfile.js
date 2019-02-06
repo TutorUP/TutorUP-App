@@ -33,7 +33,6 @@ class CreateProfile extends Component {
  }
 
  removeCourse = id => {
-     console.log(id)
     let courses = [...this.state.courses];
     const newCourses = courses.filter(course => {
         return course.id !== id

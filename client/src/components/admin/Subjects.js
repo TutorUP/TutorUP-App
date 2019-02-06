@@ -81,12 +81,10 @@ render() {
 }
 
 Subjects.propTypes = {
-    errors: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired    
 }
 
 const mapStateToProps = state => ({
-    errors: state.errors,
 });
 
 export default connect(mapStateToProps, { createProfile, getCurrentProfile })(withRouter(withStyles(styles)(Subjects)));

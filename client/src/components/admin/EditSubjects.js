@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 
-import { createProfile, getCurrentProfile } from '../../redux/actions/profileActions';
+import { createSubjects, getSubjects, removeSubject } from '../../redux/actions/subjectActions';
 
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -18,6 +18,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
+import _ from 'lodash';
 
 const styles = theme => ({
     card: {
@@ -42,19 +43,19 @@ const styles = theme => ({
 
 class EditSubjects extends Component {
  state = {
-     subjects: []
+     subjects: [],
+     errors: {}
  }
 
  componentDidMount() {
-     // this.props.getAllSubjects();
-     this.setState(this.state);
+     this.props.getSubjects();
  }
 
  componentWillReceiveProps(nextProps) {
     if (nextProps.errors) this.setState({ errors: nextProps.errors });
-    if (nextProps.subjects) {
+    if (nextProps.subjects.subjects) {
         this.setState({
-            subjects: nextProps.subjects
+            subjects: _.sortBy(nextProps.subjects.subjects, ['id', 'name'])
         });
     }
  }
@@ -65,13 +66,25 @@ class EditSubjects extends Component {
     }));
  }
 
- removeSubject = (i) => {
-   // remove subject
+ removeSubject = id => {
+    let subjects = [...this.state.subjects];
+    const newSubjects = _.remove(subjects, subject => { return subject.id !== id; });
+
+    this.setState({
+        subjects: [...newSubjects]
+    });
+
+    this.props.removeSubject(id, this.props.history);
  }
 
- onSubmit = e => {
+ onSubmit = (e) => {
      e.preventDefault();
-     this.props.createSubjects(this.state.subjects, this.props.history);
+
+     const subjectData = {
+       subjects: this.state.subjects,
+     };
+
+     this.props.createSubjects(subjectData, this.props.history);
  }
 
  onChange = e => {
@@ -136,7 +149,7 @@ render() {
                     </Grid>
                   </CardContent>
                   <CardActions>
-                    <Button size="small" onClick={this.removeSubject(i)}>Remove Subject</Button>
+                    <Button size="small" onClick={(e) => this.removeSubject(subject.id)}>Remove Subject</Button>
                   </CardActions>
                 </Card>
              </Grid> 
@@ -157,6 +170,11 @@ render() {
                    </Button>
                    
                </Grid>
+               <Grid item>
+                   <Button aria-label="Save" type="submit" variant="outlined" onClick={this.onSubmit}>
+                      Save 
+                   </Button>
+               </Grid>
                {subjectItems}
             </Grid>  
       </div>
@@ -165,12 +183,16 @@ render() {
 }
 
 EditSubjects.propTypes = {
+    createSubjects: PropTypes.func.isRequired,
+    getSubjects: PropTypes.func.isRequired,
+    removeSubject: PropTypes.func.isRequired,
     errors: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired    
 }
 
 const mapStateToProps = state => ({
     errors: state.errors,
+    subjects: state.subjects
 });
 
-export default connect(mapStateToProps, { createProfile, getCurrentProfile })(withRouter(withStyles(styles)(EditSubjects)));
+export default connect(mapStateToProps, { createSubjects, getSubjects, removeSubject })(withRouter(withStyles(styles)(EditSubjects)));

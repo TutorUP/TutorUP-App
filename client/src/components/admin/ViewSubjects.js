@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 
-import { createProfile, getCurrentProfile } from '../../redux/actions/profileActions';
+import { getSubjects } from '../../redux/actions/subjectActions';
 
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -15,6 +15,7 @@ import TableRow from '@material-ui/core/TableRow';
 import { FormControl, Input, InputLabel } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
+import _ from 'lodash';
 
 const CustomTableCell = withStyles(theme => ({
   head: {
@@ -50,19 +51,19 @@ const styles = theme => ({
 
 class ViewSubjects extends Component {
  state = {
-     subjects: []
+     subjects: [],
+     errors: {}
  }
 
  componentDidMount() {
-     // this.props.getAllSubjects();
-     this.setState(this.state);
+     this.props.getSubjects();
  }
 
  componentWillReceiveProps(nextProps) {
     if (nextProps.errors) this.setState({ errors: nextProps.errors });
-    if (nextProps.subjects) {
+    if (nextProps.subjects.subjects) {
         this.setState({
-            subjects: nextProps.subjects
+            subjects: _.sortBy(nextProps.subjects.subjects, ['id', 'name'])
         });
     }
  }
@@ -104,12 +105,14 @@ render() {
 }
 
 ViewSubjects.propTypes = {
+    getSubjects: PropTypes.func.isRequired,
     errors: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired    
 }
 
 const mapStateToProps = state => ({
     errors: state.errors,
+    subjects: state.subjects
 });
 
-export default connect(mapStateToProps, { createProfile, getCurrentProfile })(withRouter(withStyles(styles)(ViewSubjects)));
+export default connect(mapStateToProps, { getSubjects })(withRouter(withStyles(styles)(ViewSubjects)));

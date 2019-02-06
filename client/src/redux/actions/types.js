@@ -6,6 +6,9 @@ export const PROFILE_NOT_FOUND = 'PROFILE_NOT_FOUND';
 export const CLEAR_CURRENT_PROFILE = 'CLEAR_CURRENT_PROFILE';
 export const GET_PROFILES = 'GET_PROFILES';
 export const FILTER_PROFILES = 'FILTER_PROFILES';
+export const GET_SUBJECTS = 'GET_SUBJECTS';
+export const SUBJECTS_LOADING = 'SUBJECTS_LOADING';
+export const DELETE_SUBJECTS = 'DELETE_SUBJECTS';
 
 // Possible UI action types
 export const SHOW_POPUP = 'SHOW_POPUP';
