@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createProfile, postCourse } from '../../redux/actions/profileActions';
+import { getSubjects } from '../../redux/actions/subjectActions';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
@@ -13,7 +14,7 @@ import { FormControl, Input, InputLabel } from '@material-ui/core';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
-import classList from '../common/ClassList';
+import _ from 'lodash';
 import './profile.css';
 
 class CreateProfile extends Component {
@@ -23,7 +24,21 @@ class CreateProfile extends Component {
      minor: '',
      availability: '',
      courses: [],
+     subjects: [],
      errors: {}
+ }
+
+ componentDidMount() {
+     this.props.getSubjects();
+ }
+
+ componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) this.setState({ errors: nextProps.errors });
+    if (nextProps.subjects.subjects) {
+        this.setState({
+            subjects: _.sortBy(nextProps.subjects.subjects, ['id', 'name'])
+        });
+    }
  }
 
  addCourse = (e) => {
@@ -80,16 +95,19 @@ class CreateProfile extends Component {
 
 render() {
     const { auth } = this.props;
-    const { bio, major, minor, availability, courses } = this.state;
+    const { bio, major, minor, availability, courses, subjects } = this.state;
 
-    const majors = classList.classList.majors;
-    const minors = classList.classList.minors;
+    const minors = _.filter(subjects, ['isMinor', "Yes"]);
+    const majors = _.filter(subjects, ['isMajor', "Yes"]);
 
     const majorMenuItems =  majors.map((major, i) =>
-            <MenuItem key={i} value={major}>{major}</MenuItem>
+            <MenuItem key={i} value={major.name}>{major.name}</MenuItem>
     );
     const minorMenuItems = minors.map((minor, i) =>
-            <MenuItem key={i} value={minor}>{minor}</MenuItem>
+            <MenuItem key={i} value={minor.name}>{minor.name}</MenuItem>
+    );
+    const courseMenuItems = subjects.map((subject, i) =>
+            <MenuItem key={i} value={subject.id}>{subject.id}</MenuItem>
     );
 
     const courseItems = courses.map((course, i) => {
@@ -105,10 +123,7 @@ render() {
                         <InputLabel htmlFor={courseId}>Course Identifier</InputLabel>
                         <Select value={course.courseId} onChange={this.onChange} variant="outlined" name={courseId} id="courseId">
                             <MenuItem value=""></MenuItem>
-                            <MenuItem value="CS">CS</MenuItem>
-                            <MenuItem value="HST">HST</MenuItem>
-                            <MenuItem value="MTH">MTH</MenuItem>
-                            <MenuItem value="THE">THE</MenuItem>
+                            {courseMenuItems}
                         </Select>
                     </FormControl>
                     <FormControl margin="normal" required maxLength="3" fullWidth>
@@ -208,8 +223,9 @@ CreateProfile.propTypes = {
 
 const mapStateToProps = state => ({
     profile: state.profile,
+    subjects: state.subjects,
     errors: state.errors,
     auth: state.auth
 });
 
-export default connect(mapStateToProps, { createProfile, postCourse })(withRouter(CreateProfile));
+export default connect(mapStateToProps, { createProfile, postCourse, getSubjects })(withRouter(CreateProfile));
