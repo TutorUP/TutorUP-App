@@ -33,16 +33,9 @@ const styles = theme => ({
     alignItems: 'center',
     padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
   },
-  avatar: {
-    margin: theme.spacing.unit,
-    backgroundColor: theme.palette.secondary.main,
-  },
   form: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing.unit,
-  },
-  submit: {
-    marginTop: theme.spacing.unit * 3,
   },
 });
 
@@ -92,7 +85,7 @@ class Login extends Component {
         return (
             <div className={classes.main}>
               <Paper className={classes.paper} elevation={3}>
-                <Avatar className={classes.avatar}>
+                <Avatar className="blueAvatar">
                   <LockIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
@@ -120,8 +113,7 @@ class Login extends Component {
                     type="submit"
                     fullWidth
                     variant="contained"
-                    color="primary"
-                    className={classes.submit}
+                    className="purpleSubmit"
                   >
                     Sign in
                   </Button>

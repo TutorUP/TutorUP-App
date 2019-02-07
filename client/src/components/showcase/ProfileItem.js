@@ -17,34 +17,22 @@ import Chip from '@material-ui/core/Chip';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
 import MailIcon from '@material-ui/icons/Email';
-import TagIcon from '@material-ui/icons/LocalOffer';
 import CalendarIcon from '@material-ui/icons/EventAvailable';
 import InfoIcon from '@material-ui/icons/Info';
 
 const styles = theme => ({
     card: {
       minWidth: 100,
-    },
-    chip: {
-        margin: theme.spacing.unit / 2,
-    },
-    purpleAvatar: {
-        margin: 10,
-        color: '#fff',
-        backgroundColor: '#1E1656',
-     },
-     purpleText: {
-         color: '#1E1656'
-     }
+    }
 });
 
 const ProfileItem = props => {
-    const { classes, profile, auth } = props;
+    const { profile, auth } = props;
 
     const classesCard = profile.courses !== undefined ? (
         <React.Fragment>
             {profile.courses.slice(0, 5).map((myClass, index) => (
-                <Chip className={classes.chip} key={index} label={`${myClass.courseId} ${myClass.courseNumber}`} />
+                <Chip className="chip" key={index} label={`${myClass.courseId} ${myClass.courseNumber}`} />
             ))}
         </React.Fragment>
 
@@ -69,7 +57,7 @@ const ProfileItem = props => {
                 <CardHeader
                   className="cardHeader"
                   avatar={
-                    <Avatar className={classes.purpleAvatar}>
+                    <Avatar className="purpleAvatar">
                       {initials}
                     </Avatar>
                   }
@@ -83,25 +71,15 @@ const ProfileItem = props => {
 
                     <Grid container wrap="nowrap" spacing={16}>
                         <Grid item>
-                            <MailIcon />
+                            <MailIcon className="icon"/>
                         </Grid>
                         <Grid item xs>
                             <Typography>{profile.user.email}</Typography>
                         </Grid>
                     </Grid>
-
-                    {/*<Grid container wrap="nowrap" spacing={16}>
-                        <Grid item>
-                            <TagIcon />
-                        </Grid>
-                        <Grid item xs>
-                            <Typography>Tags will be listed here if we do them</Typography>
-                        </Grid>
-                    </Grid> */}
-
                     <Grid container wrap="nowrap" spacing={16}>
                           <Grid item>
-                              <InfoIcon />
+                              <InfoIcon className="icon"/>
                           </Grid>
                           <Grid item xs>
                             <Typography>{profile.bio}</Typography>
@@ -110,7 +88,7 @@ const ProfileItem = props => {
 
                     <Grid container wrap="nowrap" spacing={16}>
                           <Grid item>
-                              <CalendarIcon />
+                              <CalendarIcon className="icon"/>
                           </Grid>
                           <Grid item xs>
                             <Typography>{profile.availability}</Typography>
@@ -129,7 +107,7 @@ const ProfileItem = props => {
                 <Button component={Link}
                     size="small"
                     to={`/edit-profile`}
-                    className={classes.purpleText}
+                    className="colorPurple"
                 >
                     Edit Profile
                 </Button>

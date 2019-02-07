@@ -1,5 +1,9 @@
 .chip {
 	margin-right: 10px;
+	border-color: #5E9CAE !important;
+	background-color: #5E9CAE !important;
+	color: #fff !important;
+	font-weight: 500 !important;
 }
 
 .cardHeader {
@@ -15,7 +19,7 @@
 }
 
 .icon {
-	color: #838383;
+	color: #838383 !important;
 	margin-left: 3px;
 	font-size: 20px;
 }
@@ -42,12 +46,44 @@
 
 .card {
 	background-color: rgba(0,0,0,0) !important;
-	/*padding-left: 10px;*/
-	/*border-left: 3px solid #1E1656;*/
 	padding: 5px;
 	border: 1px solid rgba(0, 0, 0, 0.23);
 }
 
 .courseId, .courseName, .courseNumber {
 	padding-top: 0px;
+}
+
+.purpleAvatar {
+    margin: 10px;
+    color: #ffffff !important;
+    background-color: #1E1656 !important;
+}
+
+.blueAvatar {
+    margin: 10px;
+    color: #ffffff !important;
+    background-color: #5E9CAE !important;
+}
+
+.colorPurple {
+	color: #1E1656 !important;
+}
+
+.colorBlue {
+	color: #5E9CAE !important;
+}
+
+.backgroundPurple {
+	background-color: #1E1656 !important;
+}
+
+.backgroundBlue {
+	background-color: #5E9CAE !important;
+}
+
+.purpleSubmit {
+	background-color: #1E1656 !important;
+    color: #ffffff !important;
+    margin-top: 20px !important;
 }

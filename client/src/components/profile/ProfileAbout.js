@@ -8,7 +8,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import MailIcon from '@material-ui/icons/Email';
-import TagIcon from '@material-ui/icons/LocalOffer';
 import CalendarIcon from '@material-ui/icons/EventAvailable';
 import InfoIcon from '@material-ui/icons/Info';
 
@@ -41,7 +40,7 @@ class ProfileAbout extends Component {
                 <CardHeader
                   className="cardHeader"
                   avatar={
-                    <Avatar>
+                    <Avatar className="purpleAvatar">
                       {initials}
                     </Avatar>
                   }
@@ -55,25 +54,15 @@ class ProfileAbout extends Component {
 
                     <Grid container wrap="nowrap" spacing={16}>
                         <Grid item>
-                            <MailIcon/>
+                            <MailIcon className="icon"/>
                         </Grid>
                         <Grid item xs>
                             <Typography>{profile.user.email}</Typography>
                         </Grid>
                     </Grid>
-
-                    {/*<Grid container wrap="nowrap" spacing={16}>
-                        <Grid item>
-                            <TagIcon/>
-                        </Grid>
-                        <Grid item xs>
-                            <Typography>Tags will be listed here if we do them</Typography>
-                        </Grid>
-                    </Grid>*/}
-
-                    <Grid container wrap="nowrap" spacing={16}>
+                    <Grid container wrap="nowrap" spacing={16} >
                           <Grid item>
-                              <InfoIcon/>
+                              <InfoIcon className="icon"/>
                           </Grid>
                           <Grid item xs>
                             <Typography>{profile.bio}</Typography>
@@ -82,7 +71,7 @@ class ProfileAbout extends Component {
 
                     <Grid container wrap="nowrap" spacing={16}>
                           <Grid item>
-                              <CalendarIcon/>
+                              <CalendarIcon className="icon"/>
                           </Grid>
                           <Grid item xs>
                             <Typography>{profile.availability}</Typography>
