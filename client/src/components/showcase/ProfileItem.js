@@ -77,6 +77,7 @@ const ProfileItem = props => {
                             <Typography>{profile.user.email}</Typography>
                         </Grid>
                     </Grid>
+                    {profile.bio &&
                     <Grid container wrap="nowrap" spacing={16}>
                           <Grid item>
                               <InfoIcon className="icon"/>
@@ -84,8 +85,8 @@ const ProfileItem = props => {
                           <Grid item xs>
                             <Typography>{profile.bio}</Typography>
                           </Grid>
-                    </Grid>
-
+                    </Grid>}
+                    {profile.availability &&
                     <Grid container wrap="nowrap" spacing={16}>
                           <Grid item>
                               <CalendarIcon className="icon"/>
@@ -93,7 +94,7 @@ const ProfileItem = props => {
                           <Grid item xs>
                             <Typography>{profile.availability}</Typography>
                           </Grid>
-                    </Grid>
+                    </Grid>}
                 </CardContent>
                 <CardActions>
                 <Button component={Link}

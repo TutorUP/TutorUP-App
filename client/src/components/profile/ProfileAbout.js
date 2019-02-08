@@ -60,6 +60,7 @@ class ProfileAbout extends Component {
                             <Typography>{profile.user.email}</Typography>
                         </Grid>
                     </Grid>
+                    {profile.bio &&
                     <Grid container wrap="nowrap" spacing={16} >
                           <Grid item>
                               <InfoIcon className="icon"/>
@@ -67,8 +68,8 @@ class ProfileAbout extends Component {
                           <Grid item xs>
                             <Typography>{profile.bio}</Typography>
                           </Grid>
-                    </Grid>
-
+                    </Grid>}
+                    {profile.availability &&
                     <Grid container wrap="nowrap" spacing={16}>
                           <Grid item>
                               <CalendarIcon className="icon"/>
@@ -76,7 +77,7 @@ class ProfileAbout extends Component {
                           <Grid item xs>
                             <Typography>{profile.availability}</Typography>
                           </Grid>
-                    </Grid>
+                    </Grid>}
                 </CardContent>
             </Card>
         );    
