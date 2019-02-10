@@ -48,7 +48,11 @@ const ProfileItem = props => {
 
     const majors = profile.major.join(", ");
     const minors = (profile.minor.length > 0) ? profile.minor.join(", ") : "";
+    const headerText = profile.type === "Paid" ?
+        <span>{shortname}<span className="tag">Requesting Compensation</span></span>
+        : <span>{shortname}</span>;
     const subheaderText = (minors.length > 0) ? majors + " (" + minors + ")" : majors;
+    const typeText = profile.type === "Paid" ? "Requesting Compensation" : "Volunteer";
 
     return (
     <React.Fragment>
@@ -61,14 +65,13 @@ const ProfileItem = props => {
                       {initials}
                     </Avatar>
                   }
-                  title={shortname}
+                  title={headerText}
                   subheader={subheaderText}
                 />
                 <CardContent>
                     <div className="spaceBelow">
                         {classesCard}
                     </div>
-
                     <Grid container wrap="nowrap" spacing={16}>
                         <Grid item>
                             <MailIcon className="icon"/>

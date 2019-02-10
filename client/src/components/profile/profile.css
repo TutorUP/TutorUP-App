@@ -87,3 +87,12 @@
     color: #ffffff !important;
     margin-top: 20px !important;
 }
+
+.tag {
+	background-color: #F5F5F5;
+	padding: 2px 5px;
+	border-radius: 5px;
+	color: #494949;
+	font-size: 11px;
+	margin-left: 15px;
+}

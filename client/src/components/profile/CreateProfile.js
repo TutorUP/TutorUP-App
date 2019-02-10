@@ -21,6 +21,7 @@ class CreateProfile extends Component {
  state = {
      major: [],
      bio: '',
+     type: '',
      minor: [],
      availability: '',
      courses: [],
@@ -64,12 +65,13 @@ class CreateProfile extends Component {
 
  onSubmit = e => {
      e.preventDefault();
-     const { bio, major, minor, availability, courses } = this.state;
+     const { bio, major, minor, availability, courses, type } = this.state;
      const handle = this.props.auth.user.email.replace("@up.edu", "");
 
      const profileData = {
          handle,
          bio,
+         type,
          major, 
          minor,
          courses,
@@ -95,7 +97,7 @@ class CreateProfile extends Component {
 
 render() {
     const { auth } = this.props;
-    const { bio, major, minor, availability, courses, subjects } = this.state;
+    const { bio, major, minor, availability, courses, subjects, type } = this.state;
 
     const minors = _.filter(subjects, ['isMinor', "Yes"]);
     const majors = _.filter(subjects, ['isMajor', "Yes"]);
@@ -176,7 +178,20 @@ render() {
                             </Select>
                         </FormControl>
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} sm={6}>
+                        <FormControl margin="normal" required fullWidth>
+                            <InputLabel htmlFor="type">Paid or volunteer?</InputLabel>
+                            <Select value={type || ''} onChange={this.onChange} inputProps={{
+                                name: 'type',
+                                id: 'type'
+                            }}>
+                                <MenuItem value=""></MenuItem>
+                                <MenuItem value="Paid">Paid</MenuItem>
+                                <MenuItem value="Volunteer">Volunteer</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
                         <FormControl margin="normal" fullWidth>
                           <InputLabel htmlFor="bio">Short Bio</InputLabel>
                           <Input type="text" id="bio" name="bio" value={bio} multiline fullWidth onChange={this.onChange}>
