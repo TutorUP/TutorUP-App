@@ -74,7 +74,8 @@ const ProfileItem = props => {
                             <MailIcon className="icon"/>
                         </Grid>
                         <Grid item xs>
-                            <Typography>{profile.user.email}</Typography>
+
+                            <Typography><a style={{ color: '#838383', textDecorationLine: 'none'}} href={`mailto:${profile.user.email}`}>{profile.user.email}</a></Typography>
                         </Grid>
                     </Grid>
                     <Grid container wrap="nowrap" spacing={16}>
