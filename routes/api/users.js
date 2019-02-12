@@ -6,6 +6,12 @@ const keys = require('../../config/keys');
 const passport = require('passport');
 const toonavatar = require('cartoon-avatar');
 
+// Load email confirmation functions
+const sendEmail = require('../../email/email.send');
+const msgs = require('../../email/email.msgs');
+const templates = require('../../email/email.templates');
+
+
 // Load Validation
 const validateRegisterInput = require('../../validation/registerAuth');
 const validateLoginInput = require('../../validation/loginAuth');
@@ -28,6 +34,8 @@ router.post('/register', async (req, res, next) => {
             errors.email = 'Email already exists';
             return res.status(400).json(errors);
         }
+
+        // New user
         else {
             // Add avatar to user from email
             const avatar = toonavatar.generate_avatar();
@@ -51,6 +59,8 @@ router.post('/register', async (req, res, next) => {
                         .catch(err => console.error(err));
                 });
             });
+
+            sendEmail(newUser.email, templates.confirm(newUser._id));
         }
     }
     catch (err) {
@@ -76,6 +86,11 @@ router.post('/login', async (req, res) => {
             errors.email = 'User not found';
             return res.status(404).json(errors);
         }
+
+        if (!user.confirmed) {
+            errors.email = 'User has not confirmed email address';
+            return res.status(404).json(errors);
+        }
         
         // Check password
         bcrypt.compare(password, user.password)
@@ -86,7 +101,8 @@ router.post('/login', async (req, res) => {
                                 firstname: user.firstname,
                                 lastname: user.lastname,
                                 avatar: user.avatar,
-                                email: user.email
+                                email: user.email,
+                                confirmed: user.confirmed
                             }; // Create JWT Payload
                 
                 // Sign token
@@ -107,10 +123,11 @@ router.post('/login', async (req, res) => {
                 errors.password = 'Incorrect password';
                 return res.status(404).json(errors);
             }
+
         })
         .catch(err => console.error(`Password not authenticated by bcrypt login: ${err}`));
     }
-    catch (err) {
+    catch(err) {
         console.error(err);
     }
 });
