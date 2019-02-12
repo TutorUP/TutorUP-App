@@ -12,7 +12,7 @@ module.exports = {
         click to confirm email
       </a>
     `,      
-    text: `Copy and paste this link: ${CLIENT_ORIGIN}/confirm/${id}`
+    text: `Copy and paste this link: http://localhost:3000/confirm/${id}`
   })
   
 }

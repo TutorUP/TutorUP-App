@@ -34,6 +34,7 @@ import { checkAuth } from './utils/authPersist';
 import Profile from './components/profile/Profile';
 
 import AppSearch from './components/search/AppSearch';
+import UserConfirm from './components/auth/UserConfirm';
 
 // Check for JWT for persistence
 if (localStorage.jwtToken) {
@@ -81,6 +82,7 @@ class App extends Component {
                 <Route exact path="/profile/:handle" component={Profile} />
                 <Route exact path="/profiles" component={ProfileShowcase} />
                 <Route exact path="/not-found" component={NotFound} />
+                <Route exact path='/confirm/:id' component={UserConfirm} />
                 
                 {/* For Routes protected by Auth */}
                 <Switch>

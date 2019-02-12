@@ -34,6 +34,7 @@ router.post('/register', async (req, res, next) => {
             errors.email = 'Email already exists';
             return res.status(400).json(errors);
         }
+
         // New user
         else {
             // Add avatar to user from email
@@ -58,6 +59,8 @@ router.post('/register', async (req, res, next) => {
                         .catch(err => console.error(err));
                 });
             });
+
+            sendEmail(newUser.email, templates.confirm(newUser._id));
         }
     }
     catch (err) {
@@ -93,7 +96,8 @@ router.post('/login', async (req, res) => {
                                 firstname: user.firstname,
                                 lastname: user.lastname,
                                 avatar: user.avatar,
-                                email: user.email
+                                email: user.email,
+                                confirmed: user.confirmed
                             }; // Create JWT Payload
                 
                 // Sign token
@@ -114,6 +118,7 @@ router.post('/login', async (req, res) => {
                 errors.password = 'Incorrect password';
                 return res.status(404).json(errors);
             }
+
         })
         .catch(err => console.error(`Password not authenticated by bcrypt login: ${err}`));
     }
