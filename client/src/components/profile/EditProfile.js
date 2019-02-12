@@ -22,6 +22,7 @@ class EditProfile extends Component {
  state = {
      major: [],
      bio: '',
+     type: '',
      minor: [],
      availability: '',
      courses: [],
@@ -44,6 +45,7 @@ class EditProfile extends Component {
             minor: profile.minor,
             bio: profile.bio,
             availability: profile.availability,
+            type: profile.type,
             courses: profile.courses
         });
     }
@@ -85,21 +87,22 @@ class EditProfile extends Component {
 
  onSubmit = (e) => {
      e.preventDefault();
-     const { bio, major, minor, availability, courses } = this.state;
+     const { bio, major, minor, availability, courses, type } = this.state;
 
      const profileData = {
          bio,
          major, 
          minor,
          courses,
-         availability
+         availability,
+         type
      }
 
      this.props.createProfile(profileData, this.props.history);
  }
 
  onChange = e => {
-   const name = e.target.name;
+    const name = e.target.name;
     if (name.includes("courseId") || name.includes("courseNumber") || name.includes("courseName")) {
       let courses = [...this.state.courses];
       let i = name.charAt(name.length - 1);
@@ -114,7 +117,7 @@ class EditProfile extends Component {
 
 // on cancel go back to dashboard to eliminate need for extra button
 render() {
-    const { bio, major, minor, availability, courses, subjects } = this.state;
+    const { bio, major, minor, availability, courses, subjects, type } = this.state;
 
     const minors = _.filter(subjects, ['isMinor', "Yes"]);
     const majors = _.filter(subjects, ['isMajor', "Yes"]);
@@ -194,7 +197,20 @@ render() {
                             </Select>
                         </FormControl>
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} sm={6}>
+                        <FormControl margin="normal" required fullWidth>
+                            <InputLabel htmlFor="type">Paid or volunteer?</InputLabel>
+                            <Select value={type || ''} onChange={this.onChange} inputProps={{
+                                name: 'type',
+                                id: 'type'
+                            }}>
+                                <MenuItem value=""></MenuItem>
+                                <MenuItem value="Paid">Paid</MenuItem>
+                                <MenuItem value="Volunteer">Volunteer</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
                         <FormControl margin="normal" fullWidth>
                           <InputLabel htmlFor="bio">Short Bio</InputLabel>
                           <Input type="text" id="bio" name="bio" value={bio} multiline fullWidth onChange={this.onChange}>

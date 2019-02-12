@@ -29,6 +29,10 @@ const ProfileSchema = new Schema({
     isTutor: {
         type: Boolean
     },
+    type: {
+        type: String,
+        required: true
+    },
     phone: {
         type: Number
     },

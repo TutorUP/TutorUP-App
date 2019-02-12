@@ -33,6 +33,9 @@ class ProfileAbout extends Component {
 
         const majors = profile.major.join(", ");
         const minors = (profile.minor.length > 0) ? profile.minor.join(", ") : "";
+        const headerText = profile.type === "Paid" ?
+            <span>{shortname}<span className="tag">Requesting Compensation</span></span>
+            : <span>{shortname}</span>;
         const subheaderText = (minors.length > 0) ? majors + " (" + minors + ")" : majors;
 
         return (
@@ -44,7 +47,7 @@ class ProfileAbout extends Component {
                       {initials}
                     </Avatar>
                   }
-                  title={shortname}
+                  title={headerText}
                   subheader={subheaderText}
                 />
                 <CardContent>
@@ -60,6 +63,7 @@ class ProfileAbout extends Component {
                             <Typography>{profile.user.email}</Typography>
                         </Grid>
                     </Grid>
+                    {profile.bio &&
                     <Grid container wrap="nowrap" spacing={16} >
                           <Grid item>
                               <InfoIcon className="icon"/>
@@ -67,8 +71,8 @@ class ProfileAbout extends Component {
                           <Grid item xs>
                             <Typography>{profile.bio}</Typography>
                           </Grid>
-                    </Grid>
-
+                    </Grid>}
+                    {profile.availability &&
                     <Grid container wrap="nowrap" spacing={16}>
                           <Grid item>
                               <CalendarIcon className="icon"/>
@@ -76,7 +80,7 @@ class ProfileAbout extends Component {
                           <Grid item xs>
                             <Typography>{profile.availability}</Typography>
                           </Grid>
-                    </Grid>
+                    </Grid>}
                 </CardContent>
             </Card>
         );    
