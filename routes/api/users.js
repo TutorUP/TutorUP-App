@@ -6,6 +6,12 @@ const keys = require('../../config/keys');
 const passport = require('passport');
 const toonavatar = require('cartoon-avatar');
 
+// Load email confirmation functions
+const sendEmail = require('../../email/email.send');
+const msgs = require('../../email/email.msgs');
+const templates = require('../../email/email.templates');
+
+
 // Load Validation
 const validateRegisterInput = require('../../validation/registerAuth');
 const validateLoginInput = require('../../validation/loginAuth');
@@ -28,6 +34,7 @@ router.post('/register', async (req, res, next) => {
             errors.email = 'Email already exists';
             return res.status(400).json(errors);
         }
+        // New user
         else {
             // Add avatar to user from email
             const avatar = toonavatar.generate_avatar();
