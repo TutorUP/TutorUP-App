@@ -86,6 +86,11 @@ router.post('/login', async (req, res) => {
             errors.email = 'User not found';
             return res.status(404).json(errors);
         }
+
+        if (!user.confirmed) {
+            errors.email = 'User has not confirmed email address';
+            return res.status(404).json(errors);
+        }
         
         // Check password
         bcrypt.compare(password, user.password)
@@ -122,7 +127,7 @@ router.post('/login', async (req, res) => {
         })
         .catch(err => console.error(`Password not authenticated by bcrypt login: ${err}`));
     }
-    catch (err) {
+    catch(err) {
         console.error(err);
     }
 });
