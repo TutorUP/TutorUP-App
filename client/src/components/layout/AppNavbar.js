@@ -144,7 +144,7 @@ class AppNavbar extends Component {
     render() {
         const { open } = this.state;
         const { classes } = this.props;
-        const { isAuthenticated } = this.props.auth;
+        const { isAuthenticated, user } = this.props.auth;
 
         return (
             <div>
@@ -196,8 +196,12 @@ class AppNavbar extends Component {
                       <ListItemText primary="Logout" />
                     </ListItem>
                     }
-                    <Divider />
-                    <List>{adminLinks}</List>
+                    {isAuthenticated && user.isAdmin &&
+                      <div>
+                        <Divider />
+                        <List>{adminLinks}</List>
+                      </div>
+                    }
                     <Divider />
                     <List>{secondaryListItems}</List>
                   </div>
