@@ -47,6 +47,12 @@ export const setCurrentUser = decoded => {
     }
 }
 
+// Set admin property
+export const setAdmin = (adminProps) => dispatch => {
+    axios.post('/api/users/admin', {adminProps: adminProps})
+        .catch(err => console.log(err));
+}
+
 // Log out user
 export const logoutUser = () => dispatch => {
     // Remove token from localStorage

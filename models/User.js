@@ -21,6 +21,9 @@ const UserSchema = new Schema({
     avatar: {
         type: String,
     },
+    isAdmin: {
+        type: Boolean,
+    },
     date: {
         type: Date,
         default: Date.now

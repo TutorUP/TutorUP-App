@@ -2,7 +2,6 @@ import axios from 'axios';
 import { 
     GET_SUBJECTS,
     SUBJECTS_LOADING, 
-    DELETE_SUBJECTS,
     GET_ERRORS, 
 } 
 from './types';

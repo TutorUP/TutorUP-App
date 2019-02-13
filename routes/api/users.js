@@ -36,6 +36,7 @@ router.post('/register', async (req, res, next) => {
                 firstname: req.body.firstname,
                 lastname: req.body.lastname,
                 email: req.body.email,
+                isAdmin: false,
                 password: req.body.password,
                 avatar
             });
@@ -86,6 +87,7 @@ router.post('/login', async (req, res) => {
                                 firstname: user.firstname,
                                 lastname: user.lastname,
                                 avatar: user.avatar,
+                                isAdmin: user.isAdmin,
                                 email: user.email
                             }; // Create JWT Payload
                 
@@ -123,8 +125,26 @@ router.get('/current', passport.authenticate('jwt', { session: false }), (req, r
        id: req.user.id,
        firstname: req.user.firstname,
        lastname: req.user.lastname,
-       email: req.user.email
+       email: req.user.email,
+       isAdmin: req.user.isAdmin
    }); 
 });
+
+// @route   POST api/users/admin
+// @desc    Updates the isAdmin property
+// @access  Private
+router.post('/admin', passport.authenticate('jwt', { session: false}), (req, res) => {
+    User.findOne({ _id: req.body.adminProps.id }).then(user => {
+        if (user) {
+            // Update user
+            User.findOneAndUpdate(
+                { _id: req.body.adminProps.id },
+                { $set: {isAdmin: req.body.adminProps.isAdmin} },
+                { new: true }
+            ).then(user => res.json(user));
+        }
+    });
+});
+
 
 module.exports = router;

@@ -24,6 +24,7 @@ import EditProfile from './components/profile/EditProfile';
 import Subjects from './components/admin/Subjects';
 import ViewSubjects from './components/admin/ViewSubjects';
 import EditSubjects from './components/admin/EditSubjects';
+import Users from './components/admin/Users';
 
 import NotFound from './components/common/NotFound';
 
@@ -100,6 +101,9 @@ class App extends Component {
                 </Switch>
                 <Switch>
                   <PrivateRoute exact path="/edit-subjects" component={EditSubjects} />
+                </Switch>
+                <Switch>
+                  <PrivateRoute exact path="/manage-users" component={Users} />
                 </Switch>
               </main>
             </div>

@@ -9,7 +9,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import AddIcon from '@material-ui/icons/Add';
 import LockIcon from '@material-ui/icons/LockOutlined';
 import PeopleIcon from '@material-ui/icons/People';
-// import SearchIcon from '@material-ui/icons/Search';
+import SearchIcon from '@material-ui/icons/Search';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import SubjectIcon from '@material-ui/icons/LibraryBooks'
 import './layout.css';
@@ -40,9 +40,9 @@ export const authLinks = (
     <Link to="/profiles" className="link">
       <ListItem button>
         <ListItemIcon>
-          <PeopleIcon />
+          <SearchIcon />
         </ListItemIcon>
-        <ListItemText primary="Profiles" />
+        <ListItemText primary="Find a Tutor" />
       </ListItem>
     </Link>
   </React.Fragment>
@@ -50,12 +50,21 @@ export const authLinks = (
 
 export const adminLinks = (
   <React.Fragment>
+    <ListSubheader inset>Admin Tools</ListSubheader>
     <Link to="/subjects" className="link">
       <ListItem button>
         <ListItemIcon>
           <SubjectIcon />
         </ListItemIcon>
-        <ListItemText primary="Subjects" />
+        <ListItemText primary="Manage Subjects" />
+      </ListItem>
+    </Link>
+    <Link to="/manage-users" className="link">
+      <ListItem button>
+        <ListItemIcon>
+          <PeopleIcon />
+        </ListItemIcon>
+        <ListItemText primary="Manage Users" />
       </ListItem>
     </Link>
   </React.Fragment>
@@ -82,9 +91,9 @@ export const guestLinks = (
     <Link to="/profiles" className="link">
       <ListItem button>
         <ListItemIcon>
-          <PeopleIcon />
+          <SearchIcon />
         </ListItemIcon>
-        <ListItemText primary="Profiles" />
+        <ListItemText primary="Find a Tutor" />
       </ListItem>
     </Link>
   </React.Fragment>
@@ -92,7 +101,7 @@ export const guestLinks = (
 
 export const secondaryListItems = (
   <div>
-    <ListSubheader inset>Actions</ListSubheader>
+    <ListSubheader inset>Resources</ListSubheader>
     <ListItem button>
       <ListItemIcon>
         <AssignmentIcon />

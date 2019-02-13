@@ -96,8 +96,6 @@ class EditSubjects extends Component {
 
 // on cancel go back to dashboard to eliminate need for extra button
 render() {
-    const { classes } = this.props;
-
     const subjectItems = this.state.subjects.map((subject, i) => {
             let id = "id-" + i;
             let name = "name-" + i;

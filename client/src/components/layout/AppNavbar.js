@@ -196,6 +196,7 @@ class AppNavbar extends Component {
                       <ListItemText primary="Logout" />
                     </ListItem>
                     }
+                    <Divider />
                     <List>{adminLinks}</List>
                     <Divider />
                     <List>{secondaryListItems}</List>

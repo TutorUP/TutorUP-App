@@ -15,7 +15,7 @@ const validateProfileInput = require('../../validation/profileValidation');
 router.get('/all', async (req, res) => {
     const errors = {};
     try {
-        const profiles = await Profile.find().populate('user', ['firstname', 'lastname', 'avatar', 'email']);
+        const profiles = await Profile.find().populate('user', ['firstname', 'lastname', 'avatar', 'email', 'isAdmin']);
         if (!profiles) {
             errors.noprofile = 'This user has not created a profile';
             return res.status(404).json();
@@ -34,7 +34,7 @@ router.get('/handle/:handle', async (req, res) => {
     const errors = {};
     try {
         const profile = await Profile.findOne({ handle: req.params.handle })
-            .populate('user', ['firstname', 'lastname', 'avatar', 'email']);
+            .populate('user', ['firstname', 'lastname', 'avatar', 'email', 'isAdmin']);
         if (!profile) {
             errors.noprofile = 'There is no profile for this user';
             res.status(404).json(errors);
@@ -71,7 +71,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
 // @access  Private
 router.get('/searchSubject', (req, res) => {
     Profile.find({ classes: 'CS734'})
-        .populate('user', ['firstname', 'lastname', 'avatar', 'email'])
+        .populate('user', ['firstname', 'lastname', 'avatar', 'email', 'isAdmin'])
         .then(profile => {
             if (!profile) {
                 errors.noprofile = 'There is no profile found';
@@ -131,12 +131,25 @@ router.post('/', passport.authenticate('jwt', { session: false}), (req, res) => 
 });
 
 // @route   DELETE api/profile
-// @desc    Delete user and profile
+// @desc    Delete user and profile of current logged in user
 // @access  Private
 router.delete('/', passport.authenticate('jwt', { session: false }),
     (req, res) => {
       Profile.findOneAndRemove({ user: req.user.id }).then(() => {
         User.findOneAndRemove({ _id: req.user.id }).then(() =>
+          res.json({ success: true })
+        );
+      });
+    }
+);
+
+// @route   DELETE api/profile/id
+// @desc    Delete user and profile by id (for admin)
+// @access  Private
+router.delete('/id', passport.authenticate('jwt', { session: false }),
+    (req, res) => {
+      Profile.findOneAndRemove({ _id: req.body.id.profile }).then(() => {
+        User.findOneAndRemove({ _id: req.body.id.user }).then(() =>
           res.json({ success: true })
         );
       });
