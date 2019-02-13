@@ -9,7 +9,12 @@ from './types';
 export const createSubjects = (subjectData, history) => dispatch => {
     axios.post('/api/subjects', subjectData)
         .then(res => history.push('/subjects'))
-        .catch(err => console.log(err));
+        .catch(err => 
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            })
+        );
 }
 
 // Get all subjects

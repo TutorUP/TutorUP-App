@@ -20,9 +20,12 @@ const posts = require('./routes/api/posts');
 const app = express();
 const port = process.env.PORT || 8080;
 
-app.use(cors())
+app.use(cors());
 app.use(helmet());
 // app.use(express.cookieParser());
+
+// Email confirmation
+const emailController = require('./email/email.controller');
 
 // Normal express middleware config defaults
 app.use(require('morgan')('dev'));
@@ -59,6 +62,8 @@ app.use('/api/profile', profile);
 app.use('/api/courses', courses);
 app.use('/api/subjects', subjects);
 app.use('/api/posts', posts);
+
+app.get('/email/confirm/:id', emailController.confirmEmail);
 
 if (process.env.NODE_ENV === 'production') {
     sessConfig.cookie.secure = true;
