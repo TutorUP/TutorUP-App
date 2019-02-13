@@ -97,3 +97,10 @@
 	font-size: 11px;
 	margin-left: 15px;
 }
+
+.error {
+	color: #B71234;
+	font-style: italic;
+	font-size: small;
+	font-family: 'Roboto', 'Helvetica', sans-serif;
+}
