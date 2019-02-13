@@ -77,8 +77,7 @@ const ProfileItem = props => {
                             <MailIcon className="icon"/>
                         </Grid>
                         <Grid item xs>
-
-                            <Typography><a style={{ color: '#838383', textDecorationLine: 'none'}} href={`mailto:${profile.user.email}`}>{profile.user.email}</a></Typography>
+                            <Typography>{profile.user.email}</Typography>
                         </Grid>
                     </Grid>
                     {profile.bio &&
@@ -108,6 +107,14 @@ const ProfileItem = props => {
                 >
                     View Profile
                 </Button>
+                {profile.user._id !== auth.user.id &&
+                <Button
+                    size="small"
+                    className="colorPurple"
+                    href={`mailto:${profile.user.email}`}
+                >
+                    Email Tutor
+                </Button>}
                 {auth.isAuthenticated && profile.user._id === auth.user.id &&
                 <Button component={Link}
                     size="small"
