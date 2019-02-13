@@ -95,6 +95,34 @@ class Dashboard extends Component {
                             </CardActionArea>
                         </Card>
                     </Grid>
+                    {/* show this if profile is enabled and create onClick function to disable account*/}
+                    <Grid item xs={12} sm={6} md={4}>
+                        <Card className={styles.card}>
+                            <CardActionArea>
+                                <CardMedia
+                                  component="img"
+                                  alt="disable account"
+                                  className={classes.media}
+                                  height="140"
+                                  image="./disable-profile.jpg"
+                                />
+                            </CardActionArea>
+                        </Card>
+                    </Grid>
+                    {/* show this if profile is disabled and create onClick function to enable account*/}
+                    <Grid item xs={12} sm={6} md={4}>
+                        <Card className={styles.card}>
+                            <CardActionArea>
+                                <CardMedia
+                                  component="img"
+                                  alt="enable account"
+                                  className={classes.media}
+                                  height="140"
+                                  image="./enable-profile.jpg"
+                                />
+                            </CardActionArea>
+                        </Card>
+                    </Grid>
                 </Grid>
             ) : (
                 <Grid container spacing={24} justify="center">
