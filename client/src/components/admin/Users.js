@@ -12,6 +12,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import IconButton from '@material-ui/core/IconButton';
+import Checkbox from "@material-ui/core/Checkbox";
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddAdminIcon from '@material-ui/icons/PersonAdd';
 import RemoveAdminIcon from '@material-ui/icons/PersonAddDisabled';
@@ -105,9 +106,14 @@ class Users extends Component {
      this.props.setAdmin(data);
  }
 
+ selectDisable = (e) => {
+     console.log(e.target.value)
+ }
+
 
 render() {
     const { classes, auth } = this.props;
+    const { profiles } = this.state
 
     return (
       <div className="padding20">
@@ -117,14 +123,16 @@ render() {
             <Table className={classes.table}>
               <TableHead>
                 <TableRow>
+                    <CustomTableCell>Disable</CustomTableCell>
                   <CustomTableCell>User Name</CustomTableCell>
                   <CustomTableCell>User Email</CustomTableCell>
                   <CustomTableCell></CustomTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {this.state.profiles.map(profile => (
+                {profiles.map(profile => (
                   <TableRow key={profile._id} hover={true}>
+                    <Checkbox checked />
                     <TableCell component="th" scope="row">
                       {profile.user.firstname} {profile.user.lastname} 
                       {profile.user.isAdmin && <span> (admin)</span>}
@@ -146,7 +154,8 @@ render() {
                         </IconButton>
                     </TableCell>
                   </TableRow>
-                ))}
+                ))
+                }
               </TableBody>
             </Table>
       </div>

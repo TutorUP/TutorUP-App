@@ -141,6 +141,15 @@ router.post('/login', async (req, res) => {
     }
 });
 
+// @route POST api/users/disable
+// @desc Disable multiple users
+// @access Private ADMIN
+router.get('/disable', passport.authenticate('jwt', { session: false }), (req, res) => {
+    const conditions = { disabled: true }, options = { multi: true };
+    User.update(conditions, options);
+
+})
+
 // @route   GET api/users/current
 // @desc    Return current user
 // @access  Private
