@@ -11,13 +11,14 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import Checkbox from "@material-ui/core/Checkbox";
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddAdminIcon from '@material-ui/icons/PersonAdd';
 import RemoveAdminIcon from '@material-ui/icons/PersonAddDisabled';
+import DisabledIcon from '@material-ui/icons/VisibilityOff';
+import VisibleIcon from '@material-ui/icons/Visibility';
 import TableRow from '@material-ui/core/TableRow';
+import Tooltip from '@material-ui/core/Tooltip';
 import { withStyles } from '@material-ui/core/styles';
 import _ from 'lodash';
 
@@ -132,7 +133,6 @@ render() {
             <Table className={classes.table}>
               <TableHead>
                 <TableRow>
-                    <CustomTableCell>Disable</CustomTableCell>
                   <CustomTableCell>User Name</CustomTableCell>
                   <CustomTableCell>User Email</CustomTableCell>
                   <CustomTableCell></CustomTableCell>
@@ -141,7 +141,6 @@ render() {
               <TableBody>
                 {profiles.map(profile => (
                   <TableRow key={profile._id} hover={true}>
-                    <Checkbox onChange={(e) => this.selectDisable(e, profile.user._id)} checked />
                     <TableCell component="th" scope="row">
                       {profile.user.firstname} {profile.user.lastname} 
                       {profile.user.isAdmin && <span> (admin)</span>}
@@ -149,25 +148,40 @@ render() {
                     <TableCell>{profile.user.email}</TableCell>
                     <TableCell align="right">
                         {profile.user.isAdmin &&
-                        <IconButton disabled={profile.user._id === auth.user.id}
-                            onClick={((e) => this.setAdmin(e, profile.user._id, false))}>
-                            <RemoveAdminIcon />
-                        </IconButton>}
+                        <Tooltip title="Remove Admin">
+                            <span><IconButton disabled={profile.user._id === auth.user.id}
+                                onClick={((e) => this.setAdmin(e, profile.user._id, false))}>
+                                <RemoveAdminIcon />
+                            </IconButton></span>
+                        </Tooltip>}
                         {!profile.user.isAdmin &&
-                        <IconButton onClick={((e) => this.setAdmin(e, profile.user._id, true))}>
-                            <AddAdminIcon />
-                        </IconButton>}
-                        <IconButton disabled={profile.user.isAdmin}
-                            onClick={((e) => this.deleteUser(e, profile._id, profile.user._id))}>
-                            <DeleteIcon />
-                        </IconButton>
+                        <Tooltip title="Make Admin">
+                            <IconButton onClick={((e) => this.setAdmin(e, profile.user._id, true))}>
+                                <AddAdminIcon />
+                            </IconButton>
+                        </Tooltip>}
+                        <Tooltip title="Enable Profile">
+                            <IconButton onClick={((e) => this.selectDisable(e, profile.user._id, false))}>
+                                <DisabledIcon />
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Disable Profile">
+                            <IconButton onClick={((e) => this.selectDisable(e, profile.user._id, true))}>
+                                <VisibleIcon />
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Delete User Account">
+                            <span><IconButton disabled={profile.user.isAdmin}
+                                onClick={((e) => this.deleteUser(e, profile._id, profile.user._id))}>
+                                <DeleteIcon />
+                            </IconButton></span>
+                        </Tooltip>
                     </TableCell>
                   </TableRow>
                 ))
                 }
               </TableBody>
             </Table>
-            <Button onClick={e => disableProfiles(profilesToDisable)}variant='outlined'>Disable Users</Button>
       </div>
     );
   }
