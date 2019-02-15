@@ -47,7 +47,7 @@ class ProfilesShowcase extends Component {
         majorsDropDown: null,
         subjects: [],
         major: [],
-        shuffle: false,
+        shuffled: false,
       };
     }
 
