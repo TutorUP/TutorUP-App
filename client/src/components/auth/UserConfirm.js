@@ -1,4 +1,10 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import Card from '@material-ui/core/Card';
+import CardMedia from '@material-ui/core/CardMedia';
 
 class UserConfirm extends Component {
     componentDidMount = () => {
@@ -8,15 +14,26 @@ class UserConfirm extends Component {
         .catch(err => console.error(err));
     }
 
-
     render() {
         return (
-            <div>
-                <h1>Confirmed</h1>
+            <div className="padding20">
+                <Grid container spacing={24} justify="center">
+                    <Grid item xs={12} sm={8}>
+                        <Paper>
+                        <Card component={Link} to={'/login'}>
+                                <CardMedia
+                                  component="img"
+                                  alt="account confirmed"
+                                  height="auto"
+                                  image="./confirmed-text.jpg"
+                                />
+                        </Card>
+                        </Paper>
+                    </Grid>
+                </Grid>
             </div>
         )
     }
 }
-
 
 export default UserConfirm;

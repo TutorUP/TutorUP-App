@@ -102,13 +102,13 @@ class Login extends Component {
                     endAdornment={<InputAdornment position="end">@up.edu</InputAdornment>}
                     />
                   </FormControl>
-                  {errors.email}
+                  <span className="error">{errors.email}</span>
                   <FormControl margin="normal" required fullWidth>
                     <InputLabel htmlFor="password">Password</InputLabel>
                     <Input name="password" type="password" id="password" autoComplete="current-password" 
                     onChange={this.onChange}/>
                   </FormControl>
-                  {errors.password}                 
+                  <span className="error">{errors.password}</span>      
                   <Button
                     type="submit"
                     fullWidth

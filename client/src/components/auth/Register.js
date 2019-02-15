@@ -114,7 +114,7 @@ class Register extends Component {
                     <InputLabel htmlFor="lastname">Last Name</InputLabel>
                     <Input id="lastname" name="lastname" onChange={this.onChange}/>
                   </FormControl>
-                  {errors.name}
+                  <span className="error">{errors.name}</span>
                   <FormControl margin="normal" required fullWidth>
                     <InputLabel htmlFor="email">Email Address</InputLabel>
                     <Input id="email" 
@@ -125,17 +125,17 @@ class Register extends Component {
                     />
 
                   </FormControl>
-                  {errors.email}
+                  <span className="error">{errors.email}</span>
                   <FormControl margin="normal" required fullWidth>
                     <InputLabel htmlFor="password">Password</InputLabel>
                     <Input placeholder="Password needs at least 6 characters" name="password" type="password" id="password" autoComplete="current-password" onChange={this.onChange}/>
                   </FormControl>
-                  {errors.password}
+                  <span className="error">{errors.password}</span>
                   <FormControl margin="normal" required fullWidth>
                     <InputLabel htmlFor="password2">Confirm Password</InputLabel>
                     <Input name="password2" type="password" id="password2" autoComplete="current-password" onChange={this.onChange}/>
                   </FormControl>
-                  {errors.password2}
+                  <span className="error">{errors.password2}</span>
                   <Button
                     type="submit"
                     fullWidth

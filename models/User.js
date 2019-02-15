@@ -16,6 +16,11 @@ const UserSchema = new Schema({
     },
     confirmed: {
         type: Boolean,
+        default: false,
+        required: true
+    },
+    disabled: {
+        type: Boolean,
         default: false
     },
     password: {

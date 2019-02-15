@@ -61,7 +61,7 @@ app.use('/api/users', users);
 app.use('/api/profile', profile);
 app.use('/api/courses', courses);
 app.use('/api/subjects', subjects);
-app.use('/api/posts', posts);
+// app.use('/api/posts', posts);
 
 app.get('/email/confirm/:id', emailController.confirmEmail);
 
