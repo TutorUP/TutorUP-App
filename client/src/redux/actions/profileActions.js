@@ -70,6 +70,16 @@ export const getProfiles = () => dispatch => {
     });
 }
 
+// Disable profiles by admin
+export const disableProfiles = (profileData, history) => dispatch => {
+    console.log(profileData)
+
+
+    // axios.post('/api/profile/disable', profileData)
+    //     .then(res => history.push('/profile'))
+    //     .catch(err => console.log(err));
+}
+
 export const getProfileByName = name => dispatch => {
     axios.get(`/api/profile/search/${name}`)
     .then(res => {
