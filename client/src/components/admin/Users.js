@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { getProfiles, deleteAccountByAdmin } from '../../redux/actions/profileActions';
+import { getProfiles, deleteAccountByAdmin, disableProfiles } from '../../redux/actions/profileActions';
 import { setAdmin } from '../../redux/actions/authActions';
 
 import Typography from '@material-ui/core/Typography';
@@ -11,6 +11,7 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
+import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Checkbox from "@material-ui/core/Checkbox";
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -55,6 +56,7 @@ const styles = theme => ({
 class Users extends Component {
  state = {
      profiles: [],
+     profilesToDisable: [],
      errors: {}
  }
 
@@ -106,14 +108,21 @@ class Users extends Component {
      this.props.setAdmin(data);
  }
 
- selectDisable = (e) => {
-     console.log(e.target.value)
+ selectDisable = (e, profileId) => {
+     e.preventDefault();
+    let profilesSelected = [...this.state.profilesToDisable]
+    if (profilesSelected.indexOf(profileId) === -1) profilesSelected.unshift(profileId)
+
+     this.setState({
+         profilesToDisable: profilesSelected
+     });
  }
 
 
+
 render() {
-    const { classes, auth } = this.props;
-    const { profiles } = this.state
+    const { classes, auth, disableProfiles } = this.props;
+    const { profiles, profilesToDisable } = this.state
 
     return (
       <div className="padding20">
@@ -132,7 +141,7 @@ render() {
               <TableBody>
                 {profiles.map(profile => (
                   <TableRow key={profile._id} hover={true}>
-                    <Checkbox checked />
+                    <Checkbox onChange={(e) => this.selectDisable(e, profile.user._id)} checked />
                     <TableCell component="th" scope="row">
                       {profile.user.firstname} {profile.user.lastname} 
                       {profile.user.isAdmin && <span> (admin)</span>}
@@ -158,6 +167,7 @@ render() {
                 }
               </TableBody>
             </Table>
+            <Button onClick={e => disableProfiles(profilesToDisable)}variant='outlined'>Disable Users</Button>
       </div>
     );
   }
@@ -176,4 +186,4 @@ const mapStateToProps = state => ({
     errors: state.errors
 });
 
-export default connect(mapStateToProps, { getProfiles, deleteAccountByAdmin, setAdmin })(withRouter(withStyles(styles)(Users)));
+export default connect(mapStateToProps, { getProfiles, deleteAccountByAdmin, setAdmin, disableProfiles })(withRouter(withStyles(styles)(Users)));
