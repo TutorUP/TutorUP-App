@@ -48,7 +48,11 @@ router.post('/register', async (req, res, next) => {
                 password: req.body.password,
                 avatar
             });
-            
+
+            if (process.env.NODE_ENV !== 'production') {
+                newUser.confirmed = true
+            }
+
             // Generate hashed password
             bcrypt.genSalt(parseInt(keys.saltRounds), (err, salt) => {
                 bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -61,7 +65,10 @@ router.post('/register', async (req, res, next) => {
                 });
             });
 
-            sendEmail(newUser.email, templates.confirm(newUser._id));
+            if (process.env.NODE_ENV === 'production') {
+                sendEmail(newUser.email, templates.confirm(newUser._id));
+            }
+
         }
     }
     catch (err) {

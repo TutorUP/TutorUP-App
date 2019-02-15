@@ -29,14 +29,6 @@ export const authLinks = (
         <ListItemText primary="Profile" />
       </ListItem>
     </Link>
-     {/*<Link to="/search" className="link">
-      <ListItem button>
-        <ListItemIcon>
-          <SearchIcon />
-        </ListItemIcon>
-        <ListItemText primary="Search Tutors" />
-      </ListItem>
-    </Link> */}
     <Link to="/profiles" className="link">
       <ListItem button>
         <ListItemIcon>
