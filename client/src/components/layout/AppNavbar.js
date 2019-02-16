@@ -25,6 +25,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ProgressSpinner from '../common/ProgressSpinner';
+import LogoImg from '../../images/logodark.png';
 
 const drawerWidth = 240;
 
@@ -165,7 +166,7 @@ class AppNavbar extends Component {
                             <MenuIcon />
                         </IconButton>
                         <Link to="/" className="link">
-                          <img src="./logodark.png" className="headerImg" alt="logo"></img>
+                          <img src={LogoImg} className="headerImg" alt="logo"></img>
                         </Link>
                         <div className={classes.grow} />
                     </Toolbar>
