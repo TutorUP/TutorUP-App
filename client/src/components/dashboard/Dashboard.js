@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import ProgressSpinner from '../common/ProgressSpinner';
 
 import { connect } from 'react-redux';
-import { getCurrentProfile, deleteAccount } from '../../redux/actions/profileActions';
+import { getCurrentProfile, deleteAccount, disableProfileByUser } from '../../redux/actions/profileActions';
 
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -41,7 +41,12 @@ class Dashboard extends Component {
     }
 
     onDeleteClick = e => {
+        e.preventDefault();
         this.props.deleteAccount();
+    }
+
+    onDisableProfileClick = (userId) => {
+        this.props.disableProfileByUser(userId, this.props.history);
     }
 
     render() {
@@ -98,7 +103,7 @@ class Dashboard extends Component {
                     {/* show this if profile is enabled and create onClick function to disable account*/}
                     <Grid item xs={12} sm={6} md={4}>
                         <Card className={styles.card}>
-                            <CardActionArea>
+                            <CardActionArea onClick={this.onDisableProfileClick(user)}>
                                 <CardMedia
                                   component="img"
                                   alt="disable account"
@@ -170,4 +175,4 @@ const mapStateToProps = state => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps, { getCurrentProfile, deleteAccount })(withStyles(styles)(Dashboard));
+export default connect(mapStateToProps, { getCurrentProfile, deleteAccount, disableProfileByUser })(withStyles(styles)(Dashboard));

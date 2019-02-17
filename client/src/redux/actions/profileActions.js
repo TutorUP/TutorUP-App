@@ -49,7 +49,7 @@ export const getProfileByHandle = handle => dispatch => {
 export const createProfile = (profileData, history) => dispatch => {
     axios.post('/api/profile', profileData)
         .then(res => history.push('/profile'))
-        .catch(err => console.log(err));
+        .catch(err => console.error(err));
 }
 
 // Get all profiles
@@ -68,6 +68,12 @@ export const getProfiles = () => dispatch => {
             payload: null
         })
     });
+}
+
+export const disableProfileByUser = (userId, history) => dispatch => {
+    axios.post('api/profile/disableUser', userId)
+    .then(res => history.push('/login'))
+    .catch(err => console.error(err));
 }
 
 // Disable profiles by admin
