@@ -10,6 +10,8 @@ import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardMedia from '@material-ui/core/CardMedia';
+import ViewSubjects from '../../images/view-subjects.jpg';
+import EditSubjects from '../../images/edit-subjects.jpg';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
@@ -56,7 +58,7 @@ render() {
                         alt="tutoring"
                         className={classes.media}
                         height="140"
-                        image="./view-subjects.jpg"
+                        image={ViewSubjects}
                       />
                   </CardActionArea>
               </Card>
@@ -69,7 +71,7 @@ render() {
                         alt="create and edit subjects"
                         className={classes.media}
                         height="140"
-                        image="./edit-subjects.jpg"
+                        image={EditSubjects}
                       />
                   </CardActionArea>
               </Card>
