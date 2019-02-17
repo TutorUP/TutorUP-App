@@ -44,7 +44,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
 
         const subjectFields = {};
         for (var key in subject) {
-            if (subject[key]) subjectFields[key] = subject[key];
+            if (subject[key]) subjectFields[key] = subject[key].trim();
         }
 
         // See if there is already a subject with the subject ID

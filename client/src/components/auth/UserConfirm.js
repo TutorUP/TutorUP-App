@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
+import ConfirmImg from '../../images/confirmed-text.jpg';
 
 class UserConfirm extends Component {
     componentDidMount = () => {
@@ -25,7 +26,7 @@ class UserConfirm extends Component {
                                   component="img"
                                   alt="account confirmed"
                                   height="auto"
-                                  image="./confirmed-text.jpg"
+                                  image={ConfirmImg}
                                 />
                         </Card>
                         </Paper>

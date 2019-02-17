@@ -11,6 +11,13 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardMedia from '@material-ui/core/CardMedia';
+import EditProfileImg from '../../images/edit-profile.jpg';
+import CreateProfileImg from '../../images/create-profile.jpg';
+import DeleteAccountImg from '../../images/delete-account.jpg';
+import EnableProfileImg from '../../images/enable-profile.jpg';
+import DisableProfileImg from '../../images/disable-profile.jpg';
+import ViewProfileImg from '../../images/view-profile.jpg';
+
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
@@ -69,7 +76,7 @@ class Dashboard extends Component {
                                   alt="edit profile"
                                   className={classes.media}
                                   height="140"
-                                  image="./edit-profile.jpg"
+                                  image={EditProfileImg}
                                 />
                             </CardActionArea>
                         </Card>
@@ -82,7 +89,7 @@ class Dashboard extends Component {
                                   alt="view profile"
                                   className={classes.media}
                                   height="140"
-                                  image="./view-profile.jpg"
+                                  image={ViewProfileImg}
                                 />
                             </CardActionArea>
                           </Card>
@@ -95,7 +102,7 @@ class Dashboard extends Component {
                                   alt="delete account"
                                   className={classes.media}
                                   height="140"
-                                  image="./delete-account.jpg"
+                                  image={DeleteAccountImg}
                                 />
                             </CardActionArea>
                         </Card>
@@ -109,7 +116,7 @@ class Dashboard extends Component {
                                   alt="disable account"
                                   className={classes.media}
                                   height="140"
-                                  image="./disable-profile.jpg"
+                                  image={DisableProfileImg}
                                 />
                             </CardActionArea>
                         </Card>
@@ -123,7 +130,7 @@ class Dashboard extends Component {
                                   alt="enable account"
                                   className={classes.media}
                                   height="140"
-                                  image="./enable-profile.jpg"
+                                  image={EnableProfileImg}
                                 />
                             </CardActionArea>
                         </Card>
@@ -139,7 +146,7 @@ class Dashboard extends Component {
                                   alt="create profile"
                                   className={classes.media}
                                   height="140"
-                                  image="./create-profile.jpg"
+                                  image={CreateProfileImg}
                                 />
                             </CardActionArea>
                         </Card>

@@ -135,16 +135,13 @@ export const deleteAccount = () => dispatch => {
 }
 
 export const deleteAccountByAdmin = (id) => dispatch => {
-    if (window.confirm('Are you sure? This cannot be undone!')) {
-      axios
-        .delete('/api/profile/id', {data: { id: id }})
-        .catch(err =>
-          dispatch({
-            type: GET_ERRORS,
-            payload: err.response.data
-          })
-        );
-    }
+    axios.delete('/api/profile/id', {data: { id: id }})
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
 }
 
 // Profile loading

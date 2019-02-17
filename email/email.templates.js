@@ -9,9 +9,9 @@ module.exports = {
     subject: 'TutorUP Email Confirmation',
     html: `
       <style>
-      	p, a {
+      	a {
       		text-decoration: none;
-      		color: #FFFFFF;
+      		color: #FFFFFF !important;
       		background-color: #5E9CAE;
             border-radius: 10px;
             border: 3px solid #5E9CAE;
@@ -20,10 +20,11 @@ module.exports = {
       		margin: auto;
             text-transform: uppercase;
             text-align: center;
+      		display: block;
             font-family: "Roboto", Helvetica, Veranda, sans-serif;
 
       	}
-        p:hover, a:hover {
+        a:hover {
         	background-color: #97bece;
             border: 3px solid #97bece;
         }
@@ -36,17 +37,14 @@ module.exports = {
         }
         div {
         	margin: auto;
-  			width: 75%;
   			padding: 10px;
 		}        
       </style>
       <div>
 			<h1>Welcome to TutorUP!</h1>
-			<p>
 		    	<a href='http://localhost:3000/confirm/${id}'>
 		        	click to confirm email
 		    	</a>
-			</p>
 	  </div>
     `,      
     text: `Copy and paste this link: http://localhost:3000/confirm/${id}`
