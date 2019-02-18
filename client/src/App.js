@@ -13,6 +13,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 // components
+import AdminRoute from './components/common/AdminRoute';
 import PrivateRoute from './components/common/PrivateRoute';
 import AppNavbar from './components/layout/AppNavbar';
 import AppLanding from './components/layout/AppLanding';
@@ -66,6 +67,7 @@ const styles = theme => ({
 });
 
 class App extends Component {
+
   render() {
     const { classes } = this.props;
     return (
@@ -96,16 +98,16 @@ class App extends Component {
                   <PrivateRoute exact path="/edit-profile" component={EditProfile} />
                 </Switch>
                 <Switch>
-                  <PrivateRoute exact path="/subjects" component={Subjects} />
+                  <AdminRoute exact path="/subjects" component={Subjects} />
                 </Switch>
                 <Switch>
-                  <PrivateRoute exact path="/view-subjects" component={ViewSubjects} />
+                  <AdminRoute exact path="/view-subjects" component={ViewSubjects} />
                 </Switch>
                 <Switch>
-                  <PrivateRoute exact path="/edit-subjects" component={EditSubjects} />
+                  <AdminRoute exact path="/edit-subjects" component={EditSubjects} />
                 </Switch>
                 <Switch>
-                  <PrivateRoute exact path="/manage-users" component={Users} />
+                  <AdminRoute exact path="/manage-users" component={Users} />
                 </Switch>
               </main>
             </div>

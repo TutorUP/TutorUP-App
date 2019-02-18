@@ -2,6 +2,10 @@ const Validator = require('validator');
 const isEmpty = require('./is-empty');
 
 module.exports = function validateRegisterInput(data) {
+    data.firstname = data.firstname.trim();
+    data.lastname = data.lastname.trim();
+    data.email = data.email.trim().toLowerCase();
+
     let errors = {};
     
     data.firstname = !isEmpty(data.firstname) ? data.firstname : '';

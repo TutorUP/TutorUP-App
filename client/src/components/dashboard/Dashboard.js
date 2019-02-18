@@ -52,7 +52,11 @@ class Dashboard extends Component {
         this.props.deleteAccount();
     }
 
-    onDisableProfileClick = (userId) => {
+    onDisableProfileClick = e => {
+        e.preventDefault();
+        const { auth } = this.props;
+        const userId = auth.user.id;
+
         this.props.disableProfileByUser(userId, this.props.history);
     }
 
@@ -110,7 +114,7 @@ class Dashboard extends Component {
                     {/* show this if profile is enabled and create onClick function to disable account*/}
                     <Grid item xs={12} sm={6} md={4}>
                         <Card className={styles.card}>
-                            <CardActionArea onClick={this.onDisableProfileClick(user)}>
+                            <CardActionArea onClick={this.onDisableProfileClick}>
                                 <CardMedia
                                   component="img"
                                   alt="disable account"

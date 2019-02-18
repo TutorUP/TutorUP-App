@@ -66,23 +66,6 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
 });
 
 
-// @route   GET api/profile/search/class
-// @desc    Get profiles by subject
-// @access  Private
-router.get('/searchSubject', (req, res) => {
-    Profile.find({ classes: 'CS734'})
-        .populate('user', ['firstname', 'lastname', 'avatar', 'email', 'isAdmin'])
-        .then(profile => {
-            if (!profile) {
-                errors.noprofile = 'There is no profile found';
-                return res.status(404).json(errors);
-            }
-            res.json(profile);
-        })
-        .catch(err => res.status(404).json(err));
-});
-
-
 // @route   POST api/profile
 // @desc    Create or edit user profile
 // @access  Private
@@ -119,11 +102,6 @@ router.post('/', passport.authenticate('jwt', { session: false}), (req, res) => 
         // Profile not found
         else {
             Profile.findOne({ handle: profileFields.handle }).then(profile => {
-                // if (profile) {
-                //     errors.handle = 'That handle already exists';
-                //     res.status(400).json(errors);
-                // }
-
                 new Profile(profileFields).save().then(profile => res.json(profile));
             });
         }
