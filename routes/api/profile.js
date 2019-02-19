@@ -19,13 +19,9 @@ router.get('/all', async (req, res) => {
             { disabled: false }
         ).populate({
             path: 'user',
-            select: ['firstname', 'lastname', 'email', 'avatar']
+            select: ['firstname', 'lastname', 'email', 'avatar', 'isAdmin']
         });
 
-        console.log(profiles)
-
-
-        // const profiles = await Profile.find().populate('user', ['firstname', 'lastname', 'avatar', 'email', 'isAdmin']);
         if (!profiles) {
             errors.noprofile = 'This user has not created a profile';
             return res.status(404).json();
