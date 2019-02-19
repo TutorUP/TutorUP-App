@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { getProfiles, deleteAccountByAdmin, disableProfiles } from '../../redux/actions/profileActions';
+import { getProfiles, deleteAccountByAdmin, disableProfiles, getAllProfilesByAdmin } from '../../redux/actions/profileActions';
 import { setAdmin } from '../../redux/actions/authActions';
 
 import Typography from '@material-ui/core/Typography';
@@ -62,7 +62,7 @@ class Users extends Component {
  }
 
  componentDidMount() {
-     this.props.getProfiles();
+     this.props.getAllProfilesByAdmin();
 }
 
  componentWillReceiveProps(nextProps) {
@@ -188,7 +188,7 @@ render() {
 }
 
 Users.propTypes = {
-    getProfiles: PropTypes.func.isRequired,
+    getAllProfilesByAdmin: PropTypes.func.isRequired,
     deleteAccountByAdmin: PropTypes.func.isRequired,
     setAdmin: PropTypes.func.isRequired,
     errors: PropTypes.object.isRequired
@@ -200,4 +200,4 @@ const mapStateToProps = state => ({
     errors: state.errors
 });
 
-export default connect(mapStateToProps, { getProfiles, deleteAccountByAdmin, setAdmin, disableProfiles })(withRouter(withStyles(styles)(Users)));
+export default connect(mapStateToProps, { getAllProfilesByAdmin, deleteAccountByAdmin, setAdmin, disableProfiles })(withRouter(withStyles(styles)(Users)));

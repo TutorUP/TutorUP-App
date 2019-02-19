@@ -33,6 +33,27 @@ router.get('/all', async (req, res) => {
     }
 });
 
+// @desc    Get all users' profiles
+// @access  Admin
+router.get('/allUsers', async (req, res) => {
+    const errors = {};
+    try {
+        const profiles = await Profile.find().populate({
+            path: 'user',
+            select: ['firstname', 'lastname', 'email', 'avatar', 'isAdmin']
+        });
+
+        if (!profiles) {
+            errors.noprofile = 'This user has not created a profile';
+            return res.status(404).json();
+        }
+        res.json(profiles);
+    }
+    catch (err) {
+        res.status(404).json({ profile: 'Error retrieving profile' });
+    }
+});
+
 // @route   GET api/profile/handle/:handle
 // @desc    Get profile by handle
 // @access  Public

@@ -27,7 +27,6 @@ export const getCurrentProfile = () => dispatch => {
         );
 }
 
-
 export const getProfileByHandle = handle => dispatch => {
     dispatch(setProfileLoading());
     axios
@@ -52,7 +51,7 @@ export const createProfile = (profileData, history) => dispatch => {
         .catch(err => console.error(err));
 }
 
-// Get all profiles
+// Get all profiles (only enabled profiles)
 export const getProfiles = () => dispatch => {
     dispatch(setProfileLoading());
     axios.get('/api/profile/all')
@@ -164,7 +163,25 @@ export const clearCurrentProfile = () => {
     };
 }
 
-// Create or update a course
+// ADMIN: Get all enabled and disabled profiles
+export const getAllProfilesByAdmin = () => dispatch => {
+    dispatch(setProfileLoading());
+    axios.get('/api/profile/allUsers')
+    .then(res => {
+        dispatch({
+            type: GET_PROFILES,
+            payload: res.data
+        })
+    })
+    .catch(err => {
+        dispatch({
+            type: GET_ERRORS,
+            payload: null
+        })
+    });
+}
+
+// ADMIN: Create or update a course
 export const postCourse = courseData => dispatch => {
     axios.post('/api/courses', courseData)
     .then(res => {
