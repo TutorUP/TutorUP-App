@@ -33,8 +33,9 @@ const ProfileSchema = new Schema({
         type: String,
         required: true
     },
-    phone: {
-        type: Number
+    disabled: {
+        type: Boolean,
+        default: false
     },
     availability: {
         type: String

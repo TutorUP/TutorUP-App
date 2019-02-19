@@ -70,9 +70,15 @@ export const getProfiles = () => dispatch => {
     });
 }
 
-export const disableProfileByUser = (userId, history) => dispatch => {
-    axios.post('api/users/disableUser', { userId: userId })
+export const disableProfileByUser = (profileId, history) => dispatch => {
+    axios.post('api/profile/disableProfile', { profileId: profileId })
     .then(res => history.push('/login'))
+    .catch(err => console.error(err));
+}
+
+export const enableProfileByUser = (profileId, history) => dispatch => {
+    axios.post('api/profile/enableProfile', { profileId: profileId })
+    .then(res => history.push('/profiles'))
     .catch(err => console.error(err));
 }
 

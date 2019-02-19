@@ -15,7 +15,17 @@ const validateProfileInput = require('../../validation/profileValidation');
 router.get('/all', async (req, res) => {
     const errors = {};
     try {
-        const profiles = await Profile.find().populate('user', ['firstname', 'lastname', 'avatar', 'email', 'isAdmin']);
+        const profiles = await Profile.find(
+            { disabled: false }
+        ).populate({
+            path: 'user',
+            select: ['firstname', 'lastname', 'email', 'avatar']
+        });
+
+        console.log(profiles)
+
+
+        // const profiles = await Profile.find().populate('user', ['firstname', 'lastname', 'avatar', 'email', 'isAdmin']);
         if (!profiles) {
             errors.noprofile = 'This user has not created a profile';
             return res.status(404).json();
@@ -106,6 +116,31 @@ router.post('/', passport.authenticate('jwt', { session: false}), (req, res) => 
             });
         }
     });
+});
+
+router.post('/disableProfile', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    try {
+        const profile = await Profile.findOneAndUpdate(
+            { _id: req.body.profileId},
+            { $set: { disabled: true }}
+        ).then(profile => res.json(profile));
+    }
+    catch (err) {
+        console.error(err);
+
+    }
+});
+
+router.post('/enableProfile', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    try {
+        const profile = await Profile.findOneAndUpdate(
+            { _id: req.body.profileId},
+            { $set: { disabled: false }}
+        ).then(profile => res.json(profile));
+    }
+    catch (err) {
+        console.error(err);
+    }
 });
 
 // @route   DELETE api/profile

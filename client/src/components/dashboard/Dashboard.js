@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import ProgressSpinner from '../common/ProgressSpinner';
 
 import { connect } from 'react-redux';
-import { getCurrentProfile, deleteAccount, disableProfileByUser } from '../../redux/actions/profileActions';
+import { getCurrentProfile, deleteAccount, disableProfileByUser, enableProfileByUser } from '../../redux/actions/profileActions';
 
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -54,10 +54,18 @@ class Dashboard extends Component {
 
     onDisableProfileClick = e => {
         e.preventDefault();
-        const { auth } = this.props;
-        const userId = auth.user.id;
+        const { profile } = this.props;
+        const profileId = profile.profile._id;
 
-        this.props.disableProfileByUser(userId, this.props.history);
+        this.props.disableProfileByUser(profileId, this.props.history);
+    }
+
+    onEnableProfileClick = e => {
+        e.preventDefault();
+        const { profile } = this.props;
+        const profileId = profile.profile._id;
+
+        this.props.enableProfileByUser(profileId, this.props.history);
     }
 
     render() {
@@ -128,7 +136,7 @@ class Dashboard extends Component {
                     {/* show this if profile is disabled and create onClick function to enable account*/}
                     <Grid item xs={12} sm={6} md={4}>
                         <Card className={styles.card}>
-                            <CardActionArea>
+                            <CardActionArea onClick={this.onEnableProfileClick}>
                                 <CardMedia
                                   component="img"
                                   alt="enable account"
@@ -186,4 +194,4 @@ const mapStateToProps = state => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps, { getCurrentProfile, deleteAccount, disableProfileByUser })(withStyles(styles)(Dashboard));
+export default connect(mapStateToProps, { getCurrentProfile, deleteAccount, disableProfileByUser, enableProfileByUser })(withStyles(styles)(Dashboard));

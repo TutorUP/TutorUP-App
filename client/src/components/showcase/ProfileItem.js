@@ -41,10 +41,12 @@ const ProfileItem = props => {
     )
 
     // Create initials and short version of name for use on card
-    const firstname = profile.user.firstname;
-    const lastname = profile.user.lastname;
+    const firstname = profile.user.firstname === null ? 'NA' : profile.user.firstname;
+    const lastname = profile.user.lastname === null ? 'NA' : profile.user.lastname;
     const initials =  (firstname && lastname) ? firstname.charAt(0) + lastname.charAt(0) : '';
     const shortname = (firstname && lastname) ? firstname + " " + lastname.charAt(0) + '.' : '';
+
+    const profileEmail = profile.user.email === null ? 'hi@gmail.com' : profile.user.email;
 
     const majors = profile.major.join(", ");
     const minors = (profile.minor.length > 0) ? profile.minor.join(", ") : "";
@@ -77,7 +79,7 @@ const ProfileItem = props => {
                             <MailIcon className="icon"/>
                         </Grid>
                         <Grid item xs>
-                            <Typography>{profile.user.email}</Typography>
+                            <Typography>{profileEmail}</Typography>
                         </Grid>
                     </Grid>
                     {profile.bio &&

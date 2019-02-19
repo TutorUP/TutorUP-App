@@ -141,17 +141,6 @@ router.post('/login', async (req, res) => {
     }
 });
 
-router.post('/disableUser', passport.authenticate('jwt', { session: false }), async (req, res) => {
-    const user = await User.findOne({ _id: req.body.userId })
-    if (user) {
-        // Update user
-        User.findOneAndUpdate(
-            { _id: req.body.userId },
-            { $set: {disabled: true }}
-        ).then(user => res.json(user));
-    }
-});
-
 // @route POST api/users/disable
 // @desc Disable multiple users
 // @access Private ADMIN

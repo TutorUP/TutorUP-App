@@ -15,7 +15,6 @@ const users = require('./routes/api/users');
 const profile = require('./routes/api/profile');
 const courses = require('./routes/api/courses');
 const subjects = require('./routes/api/subjects');
-const posts = require('./routes/api/posts');
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -35,7 +34,7 @@ app.use(bodyParser.json());
 
 // Connect to DB
 mongoose
-    .connect(keys.mongoURI, { useNewUrlParser: true })
+    .connect(keys.mongoURI, { useNewUrlParser: true, useCreateIndex: true })
     .then(() => console.info('MongoDB Connected'))
     .catch(err => console.error(err));
 
@@ -61,7 +60,6 @@ app.use('/api/users', users);
 app.use('/api/profile', profile);
 app.use('/api/courses', courses);
 app.use('/api/subjects', subjects);
-// app.use('/api/posts', posts);
 
 app.get('/email/confirm/:id', emailController.confirmEmail);
 
