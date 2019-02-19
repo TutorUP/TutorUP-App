@@ -52,20 +52,13 @@ class Dashboard extends Component {
         this.props.deleteAccount();
     }
 
-    onDisableProfileClick = e => {
+    onProfileSettingClick = (e, setting) => {
         e.preventDefault();
         const { profile } = this.props;
         const profileId = profile.profile._id;
 
-        this.props.disableProfileByUser(profileId, this.props.history);
-    }
-
-    onEnableProfileClick = e => {
-        e.preventDefault();
-        const { profile } = this.props;
-        const profileId = profile.profile._id;
-
-        this.props.enableProfileByUser(profileId, this.props.history);
+        if (setting === 'enable') this.props.enableProfileByUser(profileId, this.props.history);
+        else if (setting === 'disable') this.props.disableProfileByUser(profileId, this.props.history);
     }
 
     render() {
@@ -119,34 +112,37 @@ class Dashboard extends Component {
                             </CardActionArea>
                         </Card>
                     </Grid>
-                    {/* show this if profile is enabled and create onClick function to disable account*/}
-                    <Grid item xs={12} sm={6} md={4}>
-                        <Card className={styles.card}>
-                            <CardActionArea onClick={this.onDisableProfileClick}>
-                                <CardMedia
-                                  component="img"
-                                  alt="disable account"
-                                  className={classes.media}
-                                  height="140"
-                                  image={DisableProfileImg}
-                                />
-                            </CardActionArea>
-                        </Card>
-                    </Grid>
-                    {/* show this if profile is disabled and create onClick function to enable account*/}
-                    <Grid item xs={12} sm={6} md={4}>
-                        <Card className={styles.card}>
-                            <CardActionArea onClick={this.onEnableProfileClick}>
-                                <CardMedia
-                                  component="img"
-                                  alt="enable account"
-                                  className={classes.media}
-                                  height="140"
-                                  image={EnableProfileImg}
-                                />
-                            </CardActionArea>
-                        </Card>
-                    </Grid>
+                    {/* show this if profile is dis/en -abled */}
+                    {profile.disabled ? (
+                        <Grid item xs={12} sm={6} md={4}>
+                            <Card className={styles.card}>
+                                <CardActionArea onClick={e => this.onProfileSettingClick(e, 'enable')}>
+                                    <CardMedia
+                                    component="img"
+                                    alt="enable account"
+                                    className={classes.media}
+                                    height="140"
+                                    image={EnableProfileImg}
+                                    />
+                                </CardActionArea>
+                            </Card>
+                        </Grid>
+                    ) : (
+                        <Grid item xs={12} sm={6} md={4}>
+                            <Card className={styles.card}>
+                                <CardActionArea onClick={e => this.onProfileSettingClick(e, 'disable')}>
+                                    <CardMedia
+                                        component="img"
+                                        alt="disable account"
+                                        className={classes.media}
+                                        height="140"
+                                        image={DisableProfileImg}
+                                    />
+                                </CardActionArea>
+                            </Card>
+                        </Grid>
+                        )
+                    }
                 </Grid>
             ) : (
                 <Grid container spacing={24} justify="center">

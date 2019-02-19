@@ -78,7 +78,7 @@ export const disableProfileByUser = (profileId, history) => dispatch => {
 
 export const enableProfileByUser = (profileId, history) => dispatch => {
     axios.post('api/profile/enableProfile', { profileId: profileId })
-    .then(res => history.push('/profiles'))
+    .then(res => history.push('/login'))
     .catch(err => console.error(err));
 }
 
