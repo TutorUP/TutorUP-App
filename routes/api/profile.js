@@ -19,7 +19,7 @@ router.get('/all', async (req, res) => {
             { disabled: false }
         ).populate({
             path: 'user',
-            select: ['firstname', 'lastname', 'email', 'avatar']
+            select: ['firstname', 'lastname', 'email', 'avatar', 'isAdmin']
         });
 
         console.log(profiles)
