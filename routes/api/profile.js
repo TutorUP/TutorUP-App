@@ -137,6 +137,7 @@ router.post('/', passport.authenticate('jwt', { session: false}), (req, res) => 
 
 router.post('/disableProfile', passport.authenticate('jwt', { session: false }), async (req, res) => {
     try {
+        console.log(req.body.profileId)
         const profile = await Profile.findOneAndUpdate(
             { _id: req.body.profileId},
             { $set: { disabled: true }}
@@ -150,6 +151,7 @@ router.post('/disableProfile', passport.authenticate('jwt', { session: false }),
 
 router.post('/enableProfile', passport.authenticate('jwt', { session: false }), async (req, res) => {
     try {
+        console.log(req.body.profileId)
         const profile = await Profile.findOneAndUpdate(
             { _id: req.body.profileId},
             { $set: { disabled: false }}
