@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { getProfiles, deleteAccountByAdmin, disableProfiles, getAllProfilesByAdmin } from '../../redux/actions/profileActions';
+import { getProfiles, deleteAccountByAdmin, disableProfileByUser,enableProfileByUser, getAllProfilesByAdmin } from '../../redux/actions/profileActions';
 import { setAdmin } from '../../redux/actions/authActions';
 
 import Typography from '@material-ui/core/Typography';
@@ -75,6 +75,7 @@ class Users extends Component {
  }
 
  deleteUser = (e, profileID, userID) => {
+    e.preventDefault();
     let profiles = [...this.state.profiles];
     const newProfiles = profiles.filter(profile => {
         return profile._id !== profileID
@@ -109,14 +110,11 @@ class Users extends Component {
      this.props.setAdmin(data);
  }
 
- selectDisable = (e, profileId) => {
+ selectDisable = (e, profileId, setting) => {
      e.preventDefault();
-    let profilesSelected = [...this.state.profilesToDisable]
-    if (profilesSelected.indexOf(profileId) === -1) profilesSelected.unshift(profileId)
+    if (setting === 'enable') this.props.enableProfileByUser(profileId, this.props.history);
+    else if (setting === 'disable') this.props.disableProfileByUser(profileId, this.props.history);
 
-     this.setState({
-         profilesToDisable: profilesSelected
-     });
  }
 
 
@@ -160,16 +158,20 @@ render() {
                                 <AddAdminIcon />
                             </IconButton>
                         </Tooltip>}
-                        <Tooltip title="Enable Profile">
-                            <IconButton onClick={((e) => this.selectDisable(e, profile.user._id, false))}>
-                                <DisabledIcon />
-                            </IconButton>
-                        </Tooltip>
-                        <Tooltip title="Disable Profile">
-                            <IconButton onClick={((e) => this.selectDisable(e, profile.user._id, true))}>
-                                <VisibleIcon />
-                            </IconButton>
-                        </Tooltip>
+                        {profile.disabled ? (
+                                <Tooltip title="Enable Profile">
+                                    <IconButton onClick={((e) => this.selectDisable(e, profile.user._id, 'enable'))}>
+                                        <VisibleIcon />
+                                    </IconButton>
+                                </Tooltip>
+                            ) : (
+                                <Tooltip title="Disable Profile">
+                                    <IconButton onClick={((e) => this.selectDisable(e, profile.user._id, 'disable'))}>
+                                        <DisabledIcon />
+                                    </IconButton>
+                                </Tooltip>
+                            )
+                        }
                         <Tooltip title="Delete User Account">
                             <span><IconButton disabled={profile.user.isAdmin}
                                 onClick={((e) => this.deleteUser(e, profile._id, profile.user._id))}>
@@ -191,6 +193,8 @@ Users.propTypes = {
     getAllProfilesByAdmin: PropTypes.func.isRequired,
     deleteAccountByAdmin: PropTypes.func.isRequired,
     setAdmin: PropTypes.func.isRequired,
+    disableProfileByUser: PropTypes.func.isRequired,
+    enableProfileByUser: PropTypes.func.isRequired,
     errors: PropTypes.object.isRequired
 }
 
@@ -200,4 +204,4 @@ const mapStateToProps = state => ({
     errors: state.errors
 });
 
-export default connect(mapStateToProps, { getAllProfilesByAdmin, deleteAccountByAdmin, setAdmin, disableProfiles })(withRouter(withStyles(styles)(Users)));
+export default connect(mapStateToProps, { getAllProfilesByAdmin, deleteAccountByAdmin, setAdmin, disableProfileByUser, enableProfileByUser })(withRouter(withStyles(styles)(Users)));
