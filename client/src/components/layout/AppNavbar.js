@@ -120,6 +120,12 @@ const styles = theme => ({
   },
   grow: {
     flexGrow: 1
+  },
+  pb0: {
+    paddingBottom: 0,
+  },
+  pb8: {
+    paddingBottom: 8,
   }
 });
 
@@ -187,8 +193,8 @@ class AppNavbar extends Component {
                           <ChevronLeftIcon />
                         </IconButton>
                     </div>
-                    {isAuthenticated ? <List>{authLinks}</List> : 
-                      <List>{guestLinks}</List>}
+                    {isAuthenticated ? <List className={classes.pb0}>{authLinks}</List> :
+                      <List className={classes.pb0}>{guestLinks}</List>}
                     {isAuthenticated && 
                     <ListItem button onClick={this.onLogoutClick}>
                       <ListItemIcon>

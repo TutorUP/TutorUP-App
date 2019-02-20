@@ -10,6 +10,7 @@ import AddIcon from '@material-ui/icons/Add';
 import LockIcon from '@material-ui/icons/LockOutlined';
 import PeopleIcon from '@material-ui/icons/People';
 import SearchIcon from '@material-ui/icons/Search';
+import InfoIcon from '@material-ui/icons/Info';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import SubjectIcon from '@material-ui/icons/LibraryBooks'
 import './layout.css';
@@ -94,29 +95,26 @@ export const guestLinks = (
 export const secondaryListItems = (
   <div>
     <ListSubheader inset>Resources</ListSubheader>
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemLink href="#">
-            <ListItemText primary="About" />
-      </ListItemLink>
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemLink href="https://engineering.projects.up.edu/nguyenda18/">
-            <ListItemText primary="Capstone Page" />
-      </ListItemLink>
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <CodeIcon />
-      </ListItemIcon>
-      <ListItemLink href="https://github.com/TutorUP/TutorUP-App">
-            <ListItemText primary="GitHub" />
-      </ListItemLink>
-    </ListItem>
+      
+    <ListItemLink href="#">
+        <ListItemIcon>
+          <InfoIcon />
+        </ListItemIcon>
+        <ListItemText primary="About" />
+    </ListItemLink>
+
+    <ListItemLink href="https://engineering.projects.up.edu/nguyenda18/">
+          <ListItemIcon>
+            <AssignmentIcon />
+          </ListItemIcon>
+          <ListItemText primary="Capstone Page" />
+    </ListItemLink>
+    
+    <ListItemLink href="https://github.com/TutorUP/TutorUP-App">
+          <ListItemIcon>
+            <CodeIcon />
+          </ListItemIcon>
+          <ListItemText primary="GitHub" />
+    </ListItemLink>
   </div>
 );
