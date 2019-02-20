@@ -15,7 +15,7 @@ import Img5v from '../../images/background-5-v.png';
 import Img6v from '../../images/background-6-v.png';
 import Img7v from '../../images/background-7-v.png';
 import Img8v from '../../images/background-8-v.png';
-import Logo from '../../images/background-logo.svg';
+import Logo from '../../images/background-logo.png';
 import '../layout/layout.css';
 
 class VideoBackground extends Component {
