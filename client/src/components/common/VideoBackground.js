@@ -1,15 +1,22 @@
 import React, { Component } from 'react';
-import Cover from 'react-video-cover';
-
-const style = {
-  width: '100vw',
-  height: '100vh',
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  overflow: 'hidden',
-  zIndex: -1,
-};
+import Img1 from '../../images/background-1.png';
+import Img2 from '../../images/background-2.png';
+import Img3 from '../../images/background-3.png';
+import Img4 from '../../images/background-4.png';
+import Img5 from '../../images/background-5.png';
+import Img6 from '../../images/background-6.png';
+import Img7 from '../../images/background-7.png';
+import Img8 from '../../images/background-8.png';
+import Img1v from '../../images/background-1-v.png';
+import Img2v from '../../images/background-2-v.png';
+import Img3v from '../../images/background-3-v.png';
+import Img4v from '../../images/background-4-v.png';
+import Img5v from '../../images/background-5-v.png';
+import Img6v from '../../images/background-6-v.png';
+import Img7v from '../../images/background-7-v.png';
+import Img8v from '../../images/background-8-v.png';
+import Logo from '../../images/background-logo.svg';
+import '../layout/layout.css';
 
 class VideoBackground extends Component {
 
@@ -18,30 +25,23 @@ class VideoBackground extends Component {
   }
 
   render() {
-    const videoOptions = {
-      src: 'https://www.up.edu/_files/video/bestofclip2-15-sm-library-romanaggi-yoga.mp4',
-      autoPlay: true,
-      muted: true,
-      loop: true,
-    };
-    // https://www.youtube.com/embed/DihKCe4NsSk?controls=0
-    // https://www.youtube.com/watch?v=DihKCe4NsSk
-    // https://player.vimeo.com/video/313631334
-    // https://vimeo.com/313631334
-    // https://streamable.com/0nk2j
-    // https://streamable.com/s/0nk2j/xkdyz
+    // horizontal versions of images
+    const images = [Img1, Img2, Img3, Img4, Img5, Img6, Img7, Img8];
+    var image = images[Math.floor(Math.random()*images.length)];
+
+    // vertical versions of images
+    const imagesV = [Img1v, Img2v, Img3v, Img4v, Img5v, Img6v, Img7v, Img8v];
+    var imageV = imagesV[Math.floor(Math.random()*imagesV.length)];
 
     return (
-        <div style={style} >
-          <Cover
-            videoOptions={videoOptions}
-            remeasureOnWindowResize
-            getResizeNotifier={resizeNotifier => {
-              this.setState({
-                resizeNotifier,
-              });
-            }}
-          />
+        <div>
+          <div id="bg">
+            <img src={image} id="iamge-h" />
+            <img src={imageV} id="image-v" />
+          </div>
+          <div className="centered">
+            <img src={Logo} className="logo-width"/>
+          </div>
         </div>
     );
   }
