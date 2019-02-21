@@ -96,7 +96,7 @@ export const secondaryListItems = (
   <div>
     <ListSubheader inset>Resources</ListSubheader>
       
-    <ListItemLink href="#">
+    <ListItemLink href="/about">
         <ListItemIcon>
           <InfoIcon />
         </ListItemIcon>

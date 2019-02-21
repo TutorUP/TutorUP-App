@@ -73,7 +73,7 @@ class Dashboard extends Component {
         else {
             dashboardContent = Object.keys(profile).length > 0 ? (
                 <Grid container spacing={24} justify="center">
-                    <Grid item xs={12} sm={6} md={4}>
+                    <Grid item xs={12} sm={6} md={3}>
                         <Card className={styles.card}>
                             <CardActionArea component={Link} to={'/edit-profile'}>
                                 <CardMedia
@@ -86,7 +86,7 @@ class Dashboard extends Component {
                             </CardActionArea>
                         </Card>
                     </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
+                    <Grid item xs={12} sm={6} md={3}>
                         <Card className={styles.card}>
                             <CardActionArea component={Link} to={`/profile/${profile.handle}`}>
                                 <CardMedia
@@ -99,7 +99,7 @@ class Dashboard extends Component {
                             </CardActionArea>
                           </Card>
                     </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
+                    <Grid item xs={12} sm={6} md={3}>
                         <Card className={styles.card}>
                             <CardActionArea onClick={this.onDeleteClick}>
                                 <CardMedia
@@ -114,7 +114,7 @@ class Dashboard extends Component {
                     </Grid>
                     {/* show this if profile is dis/en -abled */}
                     {profile.disabled ? (
-                        <Grid item xs={12} sm={6} md={4}>
+                        <Grid item xs={12} sm={6} md={3}>
                             <Card className={styles.card}>
                                 <CardActionArea onClick={e => this.onProfileSettingClick(e, 'enable')}>
                                     <CardMedia
@@ -128,7 +128,7 @@ class Dashboard extends Component {
                             </Card>
                         </Grid>
                     ) : (
-                        <Grid item xs={12} sm={6} md={4}>
+                        <Grid item xs={12} sm={6} md={3}>
                             <Card className={styles.card}>
                                 <CardActionArea onClick={e => this.onProfileSettingClick(e, 'disable')}>
                                     <CardMedia

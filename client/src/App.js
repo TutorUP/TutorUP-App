@@ -26,6 +26,7 @@ import Subjects from './components/admin/Subjects';
 import ViewSubjects from './components/admin/ViewSubjects';
 import EditSubjects from './components/admin/EditSubjects';
 import Users from './components/admin/Users';
+import About from './components/common/About';
 
 import NotFound from './components/common/NotFound';
 
@@ -35,7 +36,6 @@ import { checkAuth } from './utils/authPersist';
 
 import Profile from './components/profile/Profile';
 
-import AppSearch from './components/search/AppSearch';
 import UserConfirm from './components/auth/UserConfirm';
 
 // Check for JWT for persistence
@@ -78,36 +78,23 @@ class App extends Component {
               <AppNavbar />
               <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
-                <Route exact path="/" component={AppLanding} />
-                {/* <Route exact path="/search" component={AppSearch} /> */}
-                <Route exact path="/register" component={Register} />
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/profile/:handle" component={Profile} />
-                <Route exact path="/profiles" component={ProfileShowcase} />
-                <Route exact path="/not-found" component={NotFound} />
-                <Route exact path='/confirm/:id' component={UserConfirm} />
-                
-                {/* For Routes protected by Auth */}
                 <Switch>
+                  <Route exact path="/" component={AppLanding} />
+                  <Route exact path="/register" component={Register} />
+                  <Route exact path="/login" component={Login} />
+                  <Route exact path="/profile/:handle" component={Profile} />
+                  <Route exact path="/profiles" component={ProfileShowcase} />
+                  <Route exact path="/not-found" component={NotFound} />
+                  <Route exact path='/confirm/:id' component={UserConfirm} />
+                  <Route exact path="/about" component={About} />
                   <PrivateRoute exact path="/profile" component={Dashboard}/>
-                </Switch>
-                <Switch>
                   <PrivateRoute exact path="/create-profile" component={CreateProfile} />
-                </Switch>
-                <Switch>
                   <PrivateRoute exact path="/edit-profile" component={EditProfile} />
-                </Switch>
-                <Switch>
                   <AdminRoute exact path="/subjects" component={Subjects} />
-                </Switch>
-                <Switch>
                   <AdminRoute exact path="/view-subjects" component={ViewSubjects} />
-                </Switch>
-                <Switch>
                   <AdminRoute exact path="/edit-subjects" component={EditSubjects} />
-                </Switch>
-                <Switch>
                   <AdminRoute exact path="/manage-users" component={Users} />
+                  <Route path="*" component={NotFound} />
                 </Switch>
               </main>
             </div>
