@@ -20,7 +20,7 @@ import { getSubjects } from '../../redux/actions/subjectActions';
 
 // MUI imports
 import { withStyles } from '@material-ui/core/styles';
-import { Input } from '@material-ui/core';
+import { FormControl, Input, InputLabel } from '@material-ui/core';
 
 const styles = {
     card: {
@@ -38,18 +38,22 @@ class ProfilesShowcase extends Component {
     constructor(){
         super();
         this.state = {
-        data: getProfiles(),
-        searching: false,
-        filtering: false,
-        searchText: '',
-        text: '',
-        orderDropDown: null,
-        filterDropDown: null,
-        majorsDropDown: null,
-        subjects: getSubjects(),
-        major: [],
-        shuffled: false,
-      };
+            data: getProfiles(),
+            searching: false,
+            searchData: [],
+            filterByPaid: false,
+            filterByVolunteer: false,
+            filtering: false,
+            searchText: '',
+            text: '',
+            orderDropDown: null,
+            filterDropDown: null,
+            majorsDropDown: null,
+            subjects: getSubjects(),
+            subjectFilters: [],
+            major: [],
+            shuffled: false,
+        };
     }
 
     //Functions then render
@@ -130,20 +134,8 @@ class ProfilesShowcase extends Component {
         });
       };
 
-
-    orderByMajor = (order) => event => {
-        let profileList = this.state.data;
-        var majorSorted = _.groupBy(profileList, 'major'); 
-    
-
-        console.log('Sorting by major...');
-        this.setState({
-            data: majorSorted,
-        }); 
-    }
-
-    // sort currently displayed profiles by name alphabetically 
-    orderByName = (order) => event => {
+      // sort currently displayed profiles by name alphabetically 
+    orderByName = name => event => {
         if(this.state.searching === false){
             var profileList = this.props.profile.profiles;
             let nameSorted = profileList.sort(function(a,b) {
@@ -175,6 +167,31 @@ class ProfilesShowcase extends Component {
             })); 
         }
     }
+    
+    // sort by Major alphabetically
+    orderByMajor = e => event => {
+        if(this.state.searching === false){
+            var profileList = this.props.profile.profiles;
+        }
+        else{
+            var profileList = this.state.data;
+        }   
+        let majorSorted = profileList.sort(function(a,b) {
+            var subA = a.major[0].toLowerCase();
+            var subB = b.major[0].toLowerCase();
+            
+            if (subA < subB) //sort string ascending
+                return -1 
+            if (subA > subB)
+                return 1
+            return 0
+        })
+
+        this.setState(state => ({
+            data: majorSorted,
+        })); 
+    }
+    
 
      //uses current value of search bar to find tutors based on name, major, or the courses they tutor   
      handleSearch = text => event => {   
@@ -183,7 +200,10 @@ class ProfilesShowcase extends Component {
         });
         let search_text = event.target.value;
         let profileList = this.props.profile.profiles;
-        console.log("Search Start!");
+        if(this.state.filtering === true){
+            profileList = this.state.data;
+        }
+        
         if (search_text.length > 0){
             let searchList = [];  //searchList will contain all the matching profiles from the search_text input
             for(var prof in profileList){
@@ -195,51 +215,31 @@ class ProfilesShowcase extends Component {
                     for(var c in courses){
                         let course = courses[c];
                         //Course Number ex: 301, 303, ...
-                        if(course.courseNumber === search_text){
-                            if(searchList.includes(profile)){
-                                console.log("profile already in list: " + firstName);
-                            }
-                            else{
-                                console.log(profile.user.firstname + " added by course #" + course.courseNumber);
-                                searchList.push(profile);
-                            }
+                        if(course.courseNumber === search_text && !searchList.includes(profile)){
+                            searchList.push(profile);
                         }
                        //Course ID ex: CS, HST, MTH...
-                        if(course.courseId.toLowerCase() === search_text.toLowerCase()){
-                            if(searchList.includes(profile)){
-                                console.log("profile already in list: " + firstName);
-                            }
-                            else{
-                                console.log(profile.user.firstname  + " added by courseId " + course.courseId);
-                                searchList.push(profile);
-                            }
+                        if(course.courseId.toLowerCase() === search_text.toLowerCase() && !searchList.includes(profile)) {
+                            searchList.push(profile);
                         }
                         //combo of the two above... ex: CS301 or CS 301
-                        if(search_text.toLowerCase() === (course.courseId + course.courseNumber).toLowerCase() 
-                            || search_text.toLowerCase() === (course.courseId + ' ' + course.courseNumber).toLowerCase()){
-                                if(searchList.includes(profile)){
-                                    console.log("profile already in list: " + firstName);
-                                }
-                                else{
-                                    console.log(profile.user.firstname  + " added by specific course " + course.courseId + ' ' + course.courseNumber);
-                                    searchList.push(profile);
-                                }
+                        if( (search_text.toLowerCase() === (course.courseId + course.courseNumber).toLowerCase() 
+                        || search_text.toLowerCase() === (course.courseId + ' ' + course.courseNumber).toLowerCase()) && !searchList.includes(profile)){
+                            searchList.push(profile);
+                        }
+                        //by full name of course
+                        let courseName = course.courseName;
+                        let courseNameSub = courseName.substring(0, search_text.length).toLowerCase();
+                        if(courseNameSub === search_text.toLowerCase() && !searchList.includes(profile)) {
+                            searchList.push(profile);
                         }
                     }
                 }
-
                 //compare first name to search text, add to list if similar
                 if (firstName.length >= search_text.length){
                     let userName = firstName.substring(0, search_text.length).toLowerCase();
-                    if(userName.includes(search_text.toLowerCase())){
-                        //check to see if profile is has already been hit
-                        if(searchList.includes(profile)){
-                            console.log("profile already in list: " + firstName);
-                        }
-                        else{
-                            searchList.push(profile);
-                            console.log(firstName + " added by name");
-                        }  
+                    if(userName.includes(search_text.toLowerCase()) && !searchList.includes(profile)){
+                        searchList.push(profile);
                     }
                 }
                 // by major
@@ -248,14 +248,19 @@ class ProfilesShowcase extends Component {
                     let major = majors[m];
                     if(major.length >= search_text.length){
                         let majorSub = major.substring(0, search_text.length).toLowerCase();
-                        if(search_text.toLowerCase() === majorSub){
-                            if(searchList.includes(profile)){
-                                console.log("profile already in list: " + firstName);
-                            }
-                            else{
-                                console.log(firstName + " added by major");
-                                searchList.push(profile);
-                            }
+                        if(search_text.toLowerCase() === majorSub && !searchList.includes(profile)){
+                            searchList.push(profile);
+                        }
+                    }
+                }
+                //by minor
+                let minors = profile.minor;
+                for(var mi in minors){
+                    let minor = minors[mi];
+                    if(minor.length >= search_text.length){
+                        let minorSub = minor.substring(0, search_text.length).toLowerCase();
+                        if(search_text.toLowerCase() === minorSub && !searchList.includes(profile)){
+                            searchList.push(profile);
                         }
                     }
                 }
@@ -264,60 +269,127 @@ class ProfilesShowcase extends Component {
             if(searchList.length > 0){
                 this.setState(state => ({
                     data: searchList,
+                    searchData: searchList,
                     searching: true
                 }));
+            }
+            else{
+                console.log("No results found from search.");
             }
         }
         else { //if there is no text in search bar, don't use search list
             this.setState(state => ({
+                //data: getProfiles(),
                 searching: false
             }));
         }
     }
 
     //Returns results from profiles relating to chosen subject
-    filterBySubject = (filterBy) => event => {
+    filterBySubject = (subject) => event => {
+        let subjectFilterList = this.state.subjectFilters;
         let profileList = this.props.profile.profiles;
-        let results = [];
-        for(var prof in profileList){
-            let profile = profileList[prof];
-            let majors = profile.major;
-            for(var m in majors){
-                let major = majors[m];
-                if(filterBy === major && !results.includes(profile)){
-                    results.push(profile);
-                }
+        
+        if(this.state.searching === true){
+            profileList = this.state.searchData;
+        }
+
+        if(subjectFilterList.length > 0){
+            if(subjectFilterList.includes(subject)){
+                subjectFilterList.pop(subject);
+            }
+            else{
+                subjectFilterList.push(subject);   
             }
         }
-        this.setState({
-            data: results,
-            filtering: true,
-        });
+        else{
+            subjectFilterList.push(subject);
+        }
+        
+        console.log("subjectFilterList");
+        console.log(subjectFilterList);
+        
+        if(subjectFilterList.length === 0){
+            this.setState({
+                data: profileList,
+                filtering: false,
+            });
+        }
+        else{
+            let results = [];
+            for(var prof in profileList){//this loop matches profiles to given subjects 
+                let profile = profileList[prof];
+                let majors = profile.major;
+                let minors = profile.minor;
+                for(var m in majors){   //add profiles by major 
+                    let major = majors[m];
+                    for(var e in subjectFilterList){
+                        let eachSubject = subjectFilterList[e];
+                        if(eachSubject === major && !results.includes(profile)){
+                            results.push(profile);
+                        }
+                    }
+                }
+                for(var mi in minors){  //add by minor
+                    let minor = minors[mi];
+                    for(var e in subjectFilterList){
+                        let eachSubject = subjectFilterList[e];
+                        if(eachSubject === minor && !results.includes(profile)){
+                            results.push(profile);
+                        }
+                    }
+                }
+            }
+            console.log(results);
+            
+            this.setState({
+                data: results,
+                filtering: true,
+            });
+        }
     }
-
+    
     filterByPaid = (paid) => event => {
         let profileList = this.props.profile.profiles;
-        let results = [];
+        let paidResults = [];
         for(var prof in profileList){
             let profile = profileList[prof];
             let type = profile.type;
-            if(type === "Paid" && !results.includes(profile)){
-                results.push(profile);
+            if(type === "Paid" && !paidResults.includes(profile)){
+                paidResults.push(profile);
             }
         }
         this.setState({
-            data: results,
-            filtering: true,
+            data: paidResults,
+            filterByPaid: true,
+            filterByVolunteer: false,
         });
+    }
+    filterByVolunteer = (paid) => event => {
+        let profileList = this.props.profile.profiles;
+        let unpaidResults = [];
+        for(var prof in profileList){
+            let profile = profileList[prof];
+            let type = profile.type;
+            if(type === "Volunteer" && !unpaidResults.includes(profile)){
+                unpaidResults.push(profile);
+            }
+        }
+        this.setState({
+            data: unpaidResults,
+            filterByVolunteer: true,
+            filterByPaid: false,
+        });   
     }
 
     render() {
         const { classes } = this.props;
         const { profiles, loading } = this.props.profile;
-        const { orderDropDown, filterDropDown, majorsDropDown, subjects} = this.state;
+        const { orderDropDown, filterDropDown, majorsDropDown} = this.state;
 
         let allSubjects = this.props.subjects.subjects;  
         let courseMenuItems = (<MenuItem value="None">None</MenuItem>);
+
         if(allSubjects){
             courseMenuItems = allSubjects.map((subject, i) =>
                 <MenuItem key={i} value={subject.name} onClick={this.filterBySubject(subject.name)}>{subject.name}</MenuItem>
@@ -330,7 +402,8 @@ class ProfilesShowcase extends Component {
             profileItems = (<ProgressSpinner />)
         }
         else {  //if text in search bar, display search results
-            if(this.state.searching === true || this.state.filtering === true || this.state.shuffled == true){
+            if(this.state.searching === true || this.state.filterByPaid === true || this.state.filterByVolunteer === true || this.state.shuffled === true || this.state.filtering === true){
+                
                 let searchData = this.state.data;
                 profileItems = searchData.length > 0 ?
                 searchData.map(profile => (
@@ -353,6 +426,7 @@ class ProfilesShowcase extends Component {
                 );
             }
         }
+
         return (
             <div>
             <header>
@@ -360,27 +434,29 @@ class ProfilesShowcase extends Component {
                     <Grid container spacing={24}>
                         <Grid item xs={12}>
                             <Paper className={classes.padding20}>
-                                        <React.Fragment>
-                                            <SearchIcon />
-                                            <Input id='search' placeholder="Name, Major, or Course" value={this.state.searchText} onChange={this.handleSearch('searchText')} className={classes.marginLeft20}/>   
-                                            <Button variant="contained" className={classes.marginLeft20} aria-haspopup="true" onClick={this.handleOrderBy} aria-owns={orderDropDown ? 'orderByMenu' : undefined}>Order by</Button>
-                                            <Menu id='orderByMenu' anchorEl={orderDropDown} open={Boolean(orderDropDown)} onClose={this.closeOrderMenu}>
-                                                <MenuItem onClick={this.orderByName()}> First Name</MenuItem>
-                                                <MenuItem onClick={this.orderByMajor()}> By Major </MenuItem>
-                                            </Menu>
+                                <React.Fragment>
+                                    <SearchIcon />
+                                    <Input id='search' placeholder="Name, Major, or Course" value={this.state.searchText} onChange={this.handleSearch('searchText')} className={classes.marginLeft20}/>  
+                                    <Button variant="contained" className={classes.marginLeft20} onClick={this.shuffle}>Shuffle</Button> 
+                                    <Button variant="contained" className={classes.marginLeft20} aria-haspopup="true" onClick={this.handleOrderBy} aria-owns={orderDropDown ? 'orderByMenu' : undefined}>Order by</Button>
+                                    <Menu id='orderByMenu' anchorEl={orderDropDown} open={Boolean(orderDropDown)} onClose={this.closeOrderMenu}>
+                                        <MenuItem onClick={this.orderByName()}> First Name</MenuItem>
+                                        <MenuItem onClick={this.orderByMajor()}> Major</MenuItem>
+                                    </Menu>
 
-                                            <Button variant="contained" className={classes.marginLeft20} aria-haspopup="true" onClick={this.handleFilterBy} aria-owns={filterDropDown ? 'filterByMenu' : undefined}>Filter by</Button>
-                                            <Menu id='filterByMenu' anchorEl={filterDropDown} open={Boolean(filterDropDown)} onClose={this.closeFilterMenu}>
-                                                <MenuItem onClick={this.filterByPaid('paid')}> Paid or Volunteer</MenuItem>
-                                                <MenuItem onClick={this.filterByPaid('class')}> Course Name</MenuItem>
-                                                <Button className={classes.marginLeft20} aria-haspopup="true" onClick={this.handleMajorsMenu} aria-owns={majorsDropDown ? 'majorsMenu' : undefined}>Majors</Button>
-                                                    <Menu id="majorsMenu" anchorEl={majorsDropDown} open={Boolean(majorsDropDown)} onClose={this.closeMajorsMenu}>
-                                                        {courseMenuItems}
-                                                    </Menu>
-                                            </Menu> 
-                                            <Button variant="contained" className={classes.marginLeft20} onClick={this.shuffle}>Shuffle</Button>
-                                            <br/>
-                                        </React.Fragment>
+                                   
+                                    <Button variant="contained" className={classes.marginLeft20} aria-haspopup="true" onClick={this.handleFilterBy} aria-owns={filterDropDown ? 'filterByMenu' : undefined}>Paid or Volunteer</Button>
+                                    <Menu id='filterByMenu' anchorEl={filterDropDown} open={Boolean(filterDropDown)} onClose={this.closeFilterMenu}>
+                                        <MenuItem value="Paid" onClick={this.filterByPaid()} variant="outlined" name="Paid"> Paid</MenuItem> 
+                                        <MenuItem value="Volunteer" onClick={this.filterByVolunteer()} variant="outlined" name="Volunteer"> Volunteer</MenuItem>  
+                                    </Menu> 
+                                    
+                                    <Button variant="contained" className={classes.marginLeft20} aria-haspopup="true" onClick={this.handleMajorsMenu} aria-owns={majorsDropDown ? 'majorsMenu' : undefined}>Subjects</Button>   
+                                    <Menu id="majorsMenu" anchorEl={majorsDropDown} open={Boolean(majorsDropDown)} onClose={this.closeMajorsMenu}>
+                                        {courseMenuItems}
+                                    </Menu>
+                                    <br/>
+                                </React.Fragment>
                             </Paper>
                         </Grid>
                     </Grid>
