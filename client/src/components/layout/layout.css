@@ -34,6 +34,21 @@
   min-height: 50%;
 }
 
+.box {
+  max-height: 250px;
+  padding: 0 !important;
+}
+
+.img-card {
+  border-radius: 0px !important;
+  box-shadow: none !important;
+}
+
+.m15 {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
 @media screen and (min-width: 300px) {
   .logo-width {
     width: 90vw;
@@ -61,5 +76,14 @@
 @media screen and (min-width: 800px) {
   .logo-width {
     width: 40vw;
+  }
+  .about-img {
+    visibility: hidden;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  .about-img {
+    visibility: visible;
   }
 }
