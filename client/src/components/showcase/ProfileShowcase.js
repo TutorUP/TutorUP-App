@@ -46,22 +46,20 @@ class ProfilesShowcase extends Component {
     constructor(){
         super();
         this.state = {
-            data: [],        // this is the current list of profiles
-            allProfiles: [], // this is the full list of profiles
-            searching: false,
-            searchData: [],
-            filterByPaid: false,
-            filterByVolunteer: false,
-            filtering: false,
-            searchText: '',
-            text: '',
-            orderDropDown: null,
-            filterDropDown: null,
-            majorsDropDown: null,
-            subjects: [],
-            subjectFilters: [],
-            major: [],
-            shuffled: true,
+            data: [],                    // this is the current list of profiles
+            allProfiles: [],             // this is the full list of profiles
+            searching: false,            // whether or not we are searching
+            searchData: [],              // results from searching through all profiles
+            filterByPaid: false,         // whether or not we are filtering by paid
+            filterByVolunteer: false,    // whether or not we are filtering by volunteer
+            filtering: false,            // whether or not we are filtering
+            searchText: '',              // the text typed in the search bar
+            orderDropDown: null,         // order by dropdown
+            filterDropDown: null,        // paid or volunteer dropdown
+            majorsDropDown: null,        // majors dropdown
+            subjects: [],                // all subjects
+            subjectFilters: [],          // currentl list of selected subjects
+            shuffled: false,             // whether or not we are shuffling
         };
     }
 
@@ -164,7 +162,8 @@ class ProfilesShowcase extends Component {
      //uses current value of search bar to find tutors based on name, major, or the courses they tutor   
      handleSearch = text => event => {   
         this.setState({
-            [text]: event.target.searchText
+            [text]: event.target.searchText,
+            searchText: event.target.value
         });
         let search_text = event.target.value;
         let profileList = this.props.profile.profiles;
@@ -233,23 +232,21 @@ class ProfilesShowcase extends Component {
                     }
                 }
             }
-            //updates displayed profiles with search list 
+            // set search data to search list, then check other filters
             if(searchList.length > 0){
                 this.setState(state => ({
-                    data: searchList,
                     searchData: searchList,
                     searching: true
-                }));
+                }), () => this.runAllFilters());
             }
             else{
                 console.log("No results found from search.");
             }
         }
-        else { //if there is no text in search bar, don't use search list
+        else { // if there is no text in search bar, just check other filters
             this.setState(state => ({
-                //data: getProfiles(),
                 searching: false
-            }));
+            }), () => this.runAllFilters());
         }
     }
 
@@ -261,9 +258,7 @@ class ProfilesShowcase extends Component {
         this.setState({
             subjectFilters: subjectFilterList,
             filtering: true,
-        });
-
-        this.runAllFilters();
+        }, () => this.runAllFilters());
     }
     
     filterByPaid = (paid) => event => {
@@ -271,7 +266,6 @@ class ProfilesShowcase extends Component {
             filterByPaid: true,
             filterByVolunteer: false,
         }, () => this.runAllFilters());
-        // this.runAllFilters();
     }
 
     filterByVolunteer = (paid) => event => {
@@ -279,73 +273,66 @@ class ProfilesShowcase extends Component {
             filterByVolunteer: true,
             filterByPaid: false,
         }, () => this.runAllFilters());
-        // this.runAllFilters(); 
     }
 
     removePaidFilter = (paid) => event => {
-        this.setState({ filterByPaid: false});
-        this.runAllFilters(); 
+        this.setState({ filterByPaid: false}, () => this.runAllFilters());
     }
 
     removeVolunteerFilter = (paid) => event => {
-        this.setState({ filterByVolunteer: false});
-        this.runAllFilters(); 
+        this.setState({ filterByVolunteer: false}, () => this.runAllFilters());
     }
 
     removeSubject = (subject, event) => {
         _.pull(this.state.subjectFilters, subject);
-        this.setState({ subjectFilters: this.state.subjectFilters });
-        this.runAllFilters(); 
+        this.setState({ subjectFilters: this.state.subjectFilters }, () => this.runAllFilters());
     }
 
     runAllFilters() {
-        let profiles = this.state.allProfiles;
-        console.log('running');
-        console.log(profiles);
-        console.log(this.state.filterByPaid);
+        // use the search data to start if there is search text, if not use the full list
+        let profiles = this.state.searchText.length > 0 ? this.state.searchData : this.state.allProfiles;
+
         // check for paid and volunteer
         if (this.state.filterByPaid) {
-            console.log('paid');
-            // profiles = _.filter(profiles, { 'type' : "Paid" });
-            console.log(profiles);
+            profiles = _.filter(profiles, { 'type' : "Paid" });
         }
 
         if (this.state.filterByVolunteer) {
-            // console.log('volunteer');
-            profiles = _.filter(profiles, { 'type' : "Volunteer "});
-            console.log(profiles);
+            profiles = _.filter(profiles, { 'type' : "Volunteer" });
         }
+
         // check subjects
-        let results = [];
         let subjectFilterList = this.state.subjectFilters;
-        //this loop matches profiles to given subjects 
-        for(var prof in profiles){
-            let profile = profiles[prof];
-            let majors = profile.major;
-            let minors = profile.minor;
-            for(var m in majors){   //add profiles by major 
-                let major = majors[m];
-                for(var e in subjectFilterList){
-                    let eachSubject = subjectFilterList[e];
-                    if(eachSubject === major && !results.includes(profile)){
-                        results.push(profile);
+        if (subjectFilterList.length > 0) {
+            let results = [];
+            //this loop matches profiles to given subjects 
+            for(var prof in profiles){
+                let profile = profiles[prof];
+                let majors = profile.major;
+                let minors = profile.minor;
+                for(var m in majors){   //add profiles by major 
+                    let major = majors[m];
+                    for(var e in subjectFilterList){
+                        let eachSubject = subjectFilterList[e];
+                        if(eachSubject === major && !results.includes(profile)){
+                            results.push(profile);
+                        }
+                    }
+                }
+                for(var mi in minors){  //add by minor
+                    let minor = minors[mi];
+                    for(var e in subjectFilterList){
+                        let eachSubject = subjectFilterList[e];
+                        if(eachSubject === minor && !results.includes(profile)){
+                            results.push(profile);
+                        }
                     }
                 }
             }
-            for(var mi in minors){  //add by minor
-                let minor = minors[mi];
-                for(var e in subjectFilterList){
-                    let eachSubject = subjectFilterList[e];
-                    if(eachSubject === minor && !results.includes(profile)){
-                        results.push(profile);
-                    }
-                }
-            }
+            profiles = results;
         }
-        profiles = results;
-        
+
         this.setState({ data: profiles });
-        // check search text
     };
 
     render() {
@@ -369,37 +356,18 @@ class ProfilesShowcase extends Component {
             profileItems = (<ProgressSpinner />)
         }
         else {  //if text in search bar, display search results
-            if(this.state.searching === true || this.state.filterByPaid === true || this.state.filterByVolunteer === true || this.state.shuffled === true || this.state.filtering === true){
-                
-                let searchData = this.state.data;
-                profileItems = searchData.length > 0 ?
-                searchData.map(profile => (
-                    <ProfileItem key={profile._id} profile={profile} />
-                )) : (
-                    <Grid item xs={12}>
-                    <div className="padding20">
-                        <Typography align="center" className="colorBlue"><WarningIcon id="warning"/> </Typography>
-                        <Typography variant="h4" align="center" gutterBottom>No profiles found.</Typography>
-                        <Typography variant="subtitle1" align="center">Try widening your search.</Typography>
-                    </div>
-                    </Grid>
-                );
-            }
-            else { 
-                let Profiles = profiles;
-                profileItems = profiles.length > 0 ?
-                Profiles.map(profile => (
-                    <ProfileItem key={profile._id} profile={profile} />
-                )) : (
-                    <Grid item xs={12}>
-                    <div className="padding20">
-                        <Typography align="center" className="colorBlue"><WarningIcon id="warning"/> </Typography>
-                        <Typography variant="h4" align="center" gutterBottom>No profiles found.</Typography>
-                        <Typography variant="subtitle1" align="center">Try widening your search.</Typography>
-                    </div>
-                    </Grid>
-                );
-            }
+            profileItems = data.length > 0 ?
+            data.map(profile => (
+                <ProfileItem key={profile._id} profile={profile} />
+            )) : (
+                <Grid item xs={12}>
+                <div className="padding20">
+                    <Typography align="center" className="colorBlue"><WarningIcon id="warning"/> </Typography>
+                    <Typography variant="h4" align="center" gutterBottom>No profiles found.</Typography>
+                    <Typography variant="subtitle1" align="center">Try widening your search.</Typography>
+                </div>
+                </Grid>
+            );
         }
 
         return (
@@ -424,16 +392,6 @@ class ProfilesShowcase extends Component {
                             </Menu>
                         </Grid>
                         <Grid item xs={3}>
-                            <Button variant="outlined" aria-haspopup="true" onClick={this.handleOrderBy} aria-owns={orderDropDown ? 'orderByMenu' : undefined} fullWidth>
-                                <div className="large">Order by</div>
-                                <div className="small"><SortIcon /></div>
-                            </Button>
-                                <Menu id='orderByMenu' anchorEl={orderDropDown} open={Boolean(orderDropDown)} onClose={this.closeOrderMenu}>
-                                    <MenuItem onClick={this.orderByName}> First Name</MenuItem>
-                                    <MenuItem onClick={this.orderByMajor}> Major</MenuItem>
-                                </Menu>
-                        </Grid>
-                        <Grid item xs={3}>
                             <Button variant="outlined" aria-haspopup="true" onClick={this.handleFilterBy} aria-owns={filterDropDown ? 'filterByMenu' : undefined} fullWidth>
                                 <div className="large">Paid or Volunteer</div>
                                 <div className="small"><PaidIcon /></div>
@@ -442,6 +400,16 @@ class ProfilesShowcase extends Component {
                                     <MenuItem value="Paid" onClick={this.filterByPaid()} variant="outlined" name="Paid"> Paid</MenuItem> 
                                     <MenuItem value="Volunteer" onClick={this.filterByVolunteer()} variant="outlined" name="Volunteer"> Volunteer</MenuItem>  
                                 </Menu> 
+                        </Grid>
+                        <Grid item xs={3}>
+                            <Button variant="outlined" aria-haspopup="true" onClick={this.handleOrderBy} aria-owns={orderDropDown ? 'orderByMenu' : undefined} fullWidth>
+                                <div className="large">Order by</div>
+                                <div className="small"><SortIcon /></div>
+                            </Button>
+                                <Menu id='orderByMenu' anchorEl={orderDropDown} open={Boolean(orderDropDown)} onClose={this.closeOrderMenu}>
+                                    <MenuItem onClick={this.orderByName}> First Name</MenuItem>
+                                    <MenuItem onClick={this.orderByMajor}> Major</MenuItem>
+                                </Menu>
                         </Grid>
                         <Grid item xs={3}>
                             <Button variant="outlined" onClick={this.shuffle} fullWidth>
