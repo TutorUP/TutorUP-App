@@ -8,6 +8,7 @@ import ProfileItem from './ProfileItem';
 import SearchIcon from '@material-ui/icons/Search';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -436,37 +437,40 @@ class ProfilesShowcase extends Component {
         return (
             <div>
             <header>
-                <div>
+                <Paper className="paddingMargin">
                     <Grid container spacing={24}>
                         <Grid item xs={12}>
-                            <Paper className={classes.padding20}>
-                                <React.Fragment>
-                                    <SearchIcon />
-                                    <Input id='search' placeholder="Name, Major, or Course" value={this.state.searchText} onChange={this.handleSearch('searchText')} className={classes.marginLeft20}/>  
-                                    <Button variant="contained" className={classes.marginLeft20} onClick={this.shuffle}>Shuffle</Button> 
-                                    <Button variant="contained" className={classes.marginLeft20} aria-haspopup="true" onClick={this.handleOrderBy} aria-owns={orderDropDown ? 'orderByMenu' : undefined}>Order by</Button>
-                                    <Menu id='orderByMenu' anchorEl={orderDropDown} open={Boolean(orderDropDown)} onClose={this.closeOrderMenu}>
-                                        <MenuItem onClick={this.orderByName()}> First Name</MenuItem>
-                                        <MenuItem onClick={this.orderByMajor()}> Major</MenuItem>
-                                    </Menu>
-
-                                   
-                                    <Button variant="contained" className={classes.marginLeft20} aria-haspopup="true" onClick={this.handleFilterBy} aria-owns={filterDropDown ? 'filterByMenu' : undefined}>Paid or Volunteer</Button>
-                                    <Menu id='filterByMenu' anchorEl={filterDropDown} open={Boolean(filterDropDown)} onClose={this.closeFilterMenu}>
-                                        <MenuItem value="Paid" onClick={this.filterByPaid()} variant="outlined" name="Paid"> Paid</MenuItem> 
-                                        <MenuItem value="Volunteer" onClick={this.filterByVolunteer()} variant="outlined" name="Volunteer"> Volunteer</MenuItem>  
-                                    </Menu> 
-                                    
-                                    <Button variant="contained" className={classes.marginLeft20} aria-haspopup="true" onClick={this.handleMajorsMenu} aria-owns={majorsDropDown ? 'majorsMenu' : undefined}>Subjects</Button>   
-                                    <Menu id="majorsMenu" anchorEl={majorsDropDown} open={Boolean(majorsDropDown)} onClose={this.closeMajorsMenu}>
-                                        {courseMenuItems}
-                                    </Menu>
-                                    <br/>
-                                </React.Fragment>
-                            </Paper>
+                            <Input id='search' placeholder="Name, Major, or Course" 
+                                    value={this.state.searchText} 
+                                    onChange={this.handleSearch('searchText')} 
+                                    startAdornment={<InputAdornment position="start"><SearchIcon/></InputAdornment>}
+                                    fullWidth/>  
+                        </Grid>
+                        <Grid item xs={12} sm={6} md={3}>
+                            <Button variant="outlined" aria-haspopup="true" onClick={this.handleMajorsMenu} aria-owns={majorsDropDown ? 'majorsMenu' : undefined} fullWidth>Subjects</Button>   
+                            <Menu id="majorsMenu" anchorEl={majorsDropDown} open={Boolean(majorsDropDown)} onClose={this.closeMajorsMenu}>
+                                {courseMenuItems}
+                            </Menu>
+                        </Grid>
+                        <Grid item xs={12} sm={6} md={3}>
+                            <Button variant="outlined" aria-haspopup="true" onClick={this.handleOrderBy} aria-owns={orderDropDown ? 'orderByMenu' : undefined} fullWidth>Order by</Button>
+                                <Menu id='orderByMenu' anchorEl={orderDropDown} open={Boolean(orderDropDown)} onClose={this.closeOrderMenu}>
+                                    <MenuItem onClick={this.orderByName()}> First Name</MenuItem>
+                                    <MenuItem onClick={this.orderByMajor()}> Major</MenuItem>
+                                </Menu>
+                        </Grid>
+                        <Grid item xs={12} sm={6} md={3}>
+                            <Button variant="outlined" aria-haspopup="true" onClick={this.handleFilterBy} aria-owns={filterDropDown ? 'filterByMenu' : undefined} fullWidth>Paid or Volunteer</Button>
+                                <Menu id='filterByMenu' anchorEl={filterDropDown} open={Boolean(filterDropDown)} onClose={this.closeFilterMenu}>
+                                    <MenuItem value="Paid" onClick={this.filterByPaid()} variant="outlined" name="Paid"> Paid</MenuItem> 
+                                    <MenuItem value="Volunteer" onClick={this.filterByVolunteer()} variant="outlined" name="Volunteer"> Volunteer</MenuItem>  
+                                </Menu> 
+                        </Grid>
+                        <Grid item xs={12} sm={6} md={3}>
+                            <Button variant="outlined" onClick={this.shuffle} fullWidth>Shuffle</Button> 
                         </Grid>
                     </Grid>
-                </div>
+                </Paper>
             </header>
             <div>
                 <Grid container spacing={24}>

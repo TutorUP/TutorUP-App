@@ -30,6 +30,11 @@
 	padding-right: 10%;
 }
 
+.paddingMargin {
+	padding: 20px;
+	margin-bottom: 40px;
+}
+
 .courses {
 	padding: 10px;
 }
