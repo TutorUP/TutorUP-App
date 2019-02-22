@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
 import Chip from '@material-ui/core/Chip';
+import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -26,7 +28,7 @@ class ProfileAbout extends Component {
 
         // Skill List
         const classes = profile.courses !== undefined ? profile.courses.map((myClass, index) => (
-            <Chip key={index} label={`${myClass.courseId} ${myClass.courseNumber}`} className="chip" variant="outlined" />
+            <Chip key={index} label={`${myClass.courseId} ${myClass.courseNumber}: ${myClass.courseName}`} className="chip" variant="outlined" />
         )) : (
             <p>No classes defined yet.</p>
         );
@@ -82,6 +84,15 @@ class ProfileAbout extends Component {
                           </Grid>
                     </Grid>}
                 </CardContent>
+                <CardActions>
+                    <Button
+                        size="small"
+                        className="colorPurple"
+                        href={`mailto:${profile.user.email}`}
+                    >
+                      Email Tutor
+                  </Button>
+                </CardActions>
             </Card>
         );    
   }

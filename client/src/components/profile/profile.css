@@ -104,3 +104,7 @@
 	font-size: small;
 	font-family: 'Roboto', 'Helvetica', sans-serif;
 }
+
+#warning {
+	font-size: 50px !important;
+}

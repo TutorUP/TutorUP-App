@@ -11,6 +11,8 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import WarningIcon from '@material-ui/icons/Warning';
 import Select from '@material-ui/core/Select';
 
 // redux imports
@@ -409,9 +411,13 @@ class ProfilesShowcase extends Component {
                 searchData.map(profile => (
                     <ProfileItem key={profile._id} profile={profile} />
                 )) : (
-                    <div>
-                        <h1>No Profiles To List</h1>
+                    <Grid item xs={12}>
+                    <div className="padding20">
+                        <Typography align="center" className="colorBlue"><WarningIcon id="warning"/> </Typography>
+                        <Typography variant="h4" align="center" gutterBottom>No profiles found.</Typography>
+                        <Typography variant="subtitle1" align="center">Try widening your search.</Typography>
                     </div>
+                    </Grid>
                 );
             }
             else { 

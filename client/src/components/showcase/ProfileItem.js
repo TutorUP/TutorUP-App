@@ -16,6 +16,7 @@ import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
+import Tooltip from '@material-ui/core/Tooltip';
 import MailIcon from '@material-ui/icons/Email';
 import CalendarIcon from '@material-ui/icons/EventAvailable';
 import InfoIcon from '@material-ui/icons/Info';
@@ -32,7 +33,9 @@ const ProfileItem = props => {
     const classesCard = profile.courses !== undefined ? (
         <React.Fragment>
             {profile.courses.slice(0, 5).map((myClass, index) => (
-                <Chip className="chip" key={index} label={`${myClass.courseId} ${myClass.courseNumber}`} />
+                <Tooltip key={index} title={myClass.courseName}>
+                    <Chip className="chip" label={`${myClass.courseId} ${myClass.courseNumber}`} />
+                </Tooltip>
             ))}
         </React.Fragment>
 
