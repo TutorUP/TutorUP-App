@@ -54,10 +54,9 @@ const ProfileItem = props => {
     const majors = profile.major.join(", ");
     const minors = (profile.minor.length > 0) ? profile.minor.join(", ") : "";
     const headerText = profile.type === "Paid" ?
-        <span>{shortname}<span className="tag">Requesting Compensation</span></span>
+        <span>{shortname}<span className="tag">$$$</span></span>
         : <span>{shortname}</span>;
     const subheaderText = (minors.length > 0) ? majors + " (" + minors + ")" : majors;
-    const typeText = profile.type === "Paid" ? "Requesting Compensation" : "Volunteer";
 
     return (
     <React.Fragment>

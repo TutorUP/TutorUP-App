@@ -7,6 +7,12 @@
 	font-weight: 500 !important;
 }
 
+.search-chip {
+	margin-right: 10px;
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+
 .cardHeader {
 	border-bottom: 1px solid rgba(0, 0, 0, 0.23);
 }

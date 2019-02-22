@@ -54,10 +54,16 @@
     width: 90vw;
   }
   #image-v {
-  	visibility: visible;
+  	display: inline;
   }
   #image-h {
-  	visibility: hidden;
+  	display: none;
+  }
+  .large {
+    display: none;
+  }
+  .small {
+    display: inline;
   }
 }
 
@@ -66,10 +72,10 @@
     width: 60vw;
   }
   #image-v {
-  	visibility: hidden;
+  	display: none;
   }
   #image-h {
-  	visibility: visible;
+  	display: inline;
   }
 }
 
@@ -78,12 +84,21 @@
     width: 40vw;
   }
   .about-img {
-    visibility: hidden;
+    display: none;
+  }
+}
+
+@media screen and (min-width: 835px) {
+ .large {
+    display: inline;
+  }
+  .small {
+    display: none;
   }
 }
 
 @media screen and (min-width: 960px) {
   .about-img {
-    visibility: visible;
+    display: inline;
   }
 }

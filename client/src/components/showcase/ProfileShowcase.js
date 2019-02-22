@@ -11,9 +11,14 @@ import Menu from '@material-ui/core/Menu';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
+import Chip from '@material-ui/core/Chip';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import WarningIcon from '@material-ui/icons/Warning';
+import SortIcon from '@material-ui/icons/SortByAlpha';
+import ShuffleIcon from '@material-ui/icons/Shuffle';
+import SubjectIcon from '@material-ui/icons/LibraryBooks';
+import PaidIcon from '@material-ui/icons/AttachMoney';
 import Select from '@material-ui/core/Select';
 
 // redux imports
@@ -52,7 +57,7 @@ class ProfilesShowcase extends Component {
             orderDropDown: null,
             filterDropDown: null,
             majorsDropDown: null,
-            subjects: getSubjects(),
+            subjects: [],
             subjectFilters: [],
             major: [],
             shuffled: false,
@@ -64,6 +69,15 @@ class ProfilesShowcase extends Component {
         this.props.getProfiles();
         this.props.getSubjects();
     }
+
+     componentWillReceiveProps(nextProps) {
+        if (nextProps.errors) this.setState({ errors: nextProps.errors });
+        if (nextProps.subjects.subjects) {
+            this.setState({
+                subjects: _.sortBy(_.map(nextProps.subjects.subjects, 'name'))
+            });
+        }
+     }
 
     //for randomizing profiles displayed
     shuffle = event => {
@@ -173,10 +187,10 @@ class ProfilesShowcase extends Component {
     
     // sort by Major alphabetically
     orderByMajor = e => event => {
-        if(this.state.searching === false){
+        if (!this.state.searching) {
             var profileList = this.props.profile.profiles;
         }
-        else{
+        else {
             var profileList = this.state.data;
         }   
         let majorSorted = profileList.sort(function(a,b) {
@@ -289,28 +303,20 @@ class ProfilesShowcase extends Component {
     }
 
     //Returns results from profiles relating to chosen subject
-    filterBySubject = (subject) => event => {
+    filterBySubject = (subject, event) => {
         let subjectFilterList = this.state.subjectFilters;
         let profileList = this.props.profile.profiles;
+        
+        // add the subject to the filter list and remove it from the subject list
+        if (subject !== null) {
+            subjectFilterList.push(subject);
+            _.pull(this.state.subjects, subject);
+            this.setState({ subjects: this.state.subjects });
+        }
         
         if(this.state.searching === true){
             profileList = this.state.searchData;
         }
-
-        if(subjectFilterList.length > 0){
-            if(subjectFilterList.includes(subject)){
-                subjectFilterList.pop(subject);
-            }
-            else{
-                subjectFilterList.push(subject);   
-            }
-        }
-        else{
-            subjectFilterList.push(subject);
-        }
-        
-        console.log("subjectFilterList");
-        console.log(subjectFilterList);
         
         if(subjectFilterList.length === 0){
             this.setState({
@@ -354,30 +360,19 @@ class ProfilesShowcase extends Component {
     
     filterByPaid = (paid) => event => {
         let profileList = this.props.profile.profiles;
-        let paidResults = [];
-        for(var prof in profileList){
-            let profile = profileList[prof];
-            let type = profile.type;
-            if(type === "Paid" && !paidResults.includes(profile)){
-                paidResults.push(profile);
-            }
-        }
+        let paidResults = _.filter(profileList, { 'type': "Paid"});
+        
         this.setState({
             data: paidResults,
             filterByPaid: true,
             filterByVolunteer: false,
         });
     }
+
     filterByVolunteer = (paid) => event => {
         let profileList = this.props.profile.profiles;
-        let unpaidResults = [];
-        for(var prof in profileList){
-            let profile = profileList[prof];
-            let type = profile.type;
-            if(type === "Volunteer" && !unpaidResults.includes(profile)){
-                unpaidResults.push(profile);
-            }
-        }
+        let unpaidResults = _.filter(profileList, { 'type': "Volunteer"});
+        
         this.setState({
             data: unpaidResults,
             filterByVolunteer: true,
@@ -385,19 +380,29 @@ class ProfilesShowcase extends Component {
         });   
     }
 
+    removePaidFilter = (paid) => event => {
+        this.setState({ data: this.props.profile.profiles, filterByPaid: false});
+    }
+
+    removeVolunteerFilter = (paid) => event => {
+        this.setState({ data: this.props.profile.profiles, filterByVolunteer: false});
+    }
+
+    removeSubject = (subject, event) => {
+        _.pull(this.state.subjectFilters, subject);
+        let subjectList = _.sortBy(_.concat(this.state.subjects, subject));
+        this.setState({subjectFilters: this.state.subjectFilters, subjects: subjectList});
+        this.filterBySubject(null, event);
+    }
+
     render() {
         const { classes } = this.props;
         const { profiles, loading } = this.props.profile;
-        const { orderDropDown, filterDropDown, majorsDropDown} = this.state;
+        const { orderDropDown, filterDropDown, majorsDropDown, subjects} = this.state;
 
-        let allSubjects = this.props.subjects.subjects;  
-        let courseMenuItems = (<MenuItem value="None">None</MenuItem>);
-
-        if(allSubjects){
-            courseMenuItems = allSubjects.map((subject, i) =>
-                <MenuItem key={i} value={subject.name} onClick={this.filterBySubject(subject.name)}>{subject.name}</MenuItem>
+        let courseMenuItems = subjects.map((subject, i) =>
+                <MenuItem key={i} value={subject} onClick={(e) => this.filterBySubject(subject)}>{subject}</MenuItem>
             );
-        }
 
         let profileItems;
 
@@ -427,12 +432,21 @@ class ProfilesShowcase extends Component {
                 Profiles.map(profile => (
                     <ProfileItem key={profile._id} profile={profile} />
                 )) : (
-                    <div>
-                        <h1>No Profiles To List</h1>
+                    <Grid item xs={12}>
+                    <div className="padding20">
+                        <Typography align="center" className="colorBlue"><WarningIcon id="warning"/> </Typography>
+                        <Typography variant="h4" align="center" gutterBottom>No profiles found.</Typography>
+                        <Typography variant="subtitle1" align="center">Try widening your search.</Typography>
                     </div>
+                    </Grid>
                 );
             }
         }
+
+        const subjectChips = this.state.subjectFilters.map((subject, index) => 
+                                <Chip className="search-chip" variant="outlined" key={index} label={subject} 
+                                    onDelete={(e) => this.removeSubject(subject)}/> 
+                            );
 
         return (
             <div>
@@ -446,29 +460,48 @@ class ProfilesShowcase extends Component {
                                     startAdornment={<InputAdornment position="start"><SearchIcon/></InputAdornment>}
                                     fullWidth/>  
                         </Grid>
-                        <Grid item xs={12} sm={6} md={3}>
-                            <Button variant="outlined" aria-haspopup="true" onClick={this.handleMajorsMenu} aria-owns={majorsDropDown ? 'majorsMenu' : undefined} fullWidth>Subjects</Button>   
+                        <Grid item xs={3}>
+                            <Button variant="outlined" aria-haspopup="true" onClick={this.handleMajorsMenu} aria-owns={majorsDropDown ? 'majorsMenu' : undefined} fullWidth>
+                                <div className="large">Subjects</div>
+                                <div className="small"><SubjectIcon /></div>
+                            </Button>   
                             <Menu id="majorsMenu" anchorEl={majorsDropDown} open={Boolean(majorsDropDown)} onClose={this.closeMajorsMenu}>
                                 {courseMenuItems}
                             </Menu>
                         </Grid>
-                        <Grid item xs={12} sm={6} md={3}>
-                            <Button variant="outlined" aria-haspopup="true" onClick={this.handleOrderBy} aria-owns={orderDropDown ? 'orderByMenu' : undefined} fullWidth>Order by</Button>
+                        <Grid item xs={3}>
+                            <Button variant="outlined" aria-haspopup="true" onClick={this.handleOrderBy} aria-owns={orderDropDown ? 'orderByMenu' : undefined} fullWidth>
+                                <div className="large">Order by</div>
+                                <div className="small"><SortIcon /></div>
+                            </Button>
                                 <Menu id='orderByMenu' anchorEl={orderDropDown} open={Boolean(orderDropDown)} onClose={this.closeOrderMenu}>
                                     <MenuItem onClick={this.orderByName()}> First Name</MenuItem>
                                     <MenuItem onClick={this.orderByMajor()}> Major</MenuItem>
                                 </Menu>
                         </Grid>
-                        <Grid item xs={12} sm={6} md={3}>
-                            <Button variant="outlined" aria-haspopup="true" onClick={this.handleFilterBy} aria-owns={filterDropDown ? 'filterByMenu' : undefined} fullWidth>Paid or Volunteer</Button>
+                        <Grid item xs={3}>
+                            <Button variant="outlined" aria-haspopup="true" onClick={this.handleFilterBy} aria-owns={filterDropDown ? 'filterByMenu' : undefined} fullWidth>
+                                <div className="large">Paid or Volunteer</div>
+                                <div className="small"><PaidIcon /></div>
+                            </Button>
                                 <Menu id='filterByMenu' anchorEl={filterDropDown} open={Boolean(filterDropDown)} onClose={this.closeFilterMenu}>
                                     <MenuItem value="Paid" onClick={this.filterByPaid()} variant="outlined" name="Paid"> Paid</MenuItem> 
                                     <MenuItem value="Volunteer" onClick={this.filterByVolunteer()} variant="outlined" name="Volunteer"> Volunteer</MenuItem>  
                                 </Menu> 
                         </Grid>
-                        <Grid item xs={12} sm={6} md={3}>
-                            <Button variant="outlined" onClick={this.shuffle} fullWidth>Shuffle</Button> 
+                        <Grid item xs={3}>
+                            <Button variant="outlined" onClick={this.shuffle} fullWidth>
+                                <div className="large">Shuffle</div>
+                                <div className="small"><ShuffleIcon /></div>
+                            </Button> 
                         </Grid>
+                    </Grid>
+                    <Grid item xs={12}>
+                        {this.state.filterByVolunteer &&
+                            <Chip className="search-chip" variant="outlined" label="Volunteer" onDelete={this.removeVolunteerFilter()}/>}
+                        {this.state.filterByPaid && 
+                            <Chip className="search-chip" variant="outlined" label="Paid" onDelete={this.removePaidFilter()}/>}
+                        {subjectChips}
                     </Grid>
                 </Paper>
             </header>
