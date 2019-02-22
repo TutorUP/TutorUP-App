@@ -46,7 +46,8 @@ class ProfilesShowcase extends Component {
     constructor(){
         super();
         this.state = {
-            data: getProfiles(),
+            data: [],        // this is the current list of profiles
+            allProfiles: [], // this is the full list of profiles
             searching: false,
             searchData: [],
             filterByPaid: false,
@@ -60,7 +61,7 @@ class ProfilesShowcase extends Component {
             subjects: [],
             subjectFilters: [],
             major: [],
-            shuffled: false,
+            shuffled: true,
         };
     }
 
@@ -70,35 +71,25 @@ class ProfilesShowcase extends Component {
         this.props.getSubjects();
     }
 
-     componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps(nextProps) {
         if (nextProps.errors) this.setState({ errors: nextProps.errors });
         if (nextProps.subjects.subjects) {
             this.setState({
                 subjects: _.sortBy(_.map(nextProps.subjects.subjects, 'name'))
             });
         }
+        if (nextProps.profile.profiles) {
+            this.setState({
+                allProfiles: nextProps.profile.profiles,
+                data: nextProps.profile.profiles
+            });
+        }
      }
 
     //for randomizing profiles displayed
     shuffle = event => {
-        if(this.state.searching === true){
-            var array = this.state.data;
-        }
-        else{
-            var array = this.props.profile.profiles;
-        }
-        var currentIndex = array.length, temporaryValue, randomIndex;
-        while (0 !== currentIndex) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-        // Randomly swap elements.
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-        }
-        console.log(array);
         this.setState({
-            data: array,
+            data: _.shuffle(this.state.data),
             shuffled: true,
         })
     }
@@ -151,58 +142,18 @@ class ProfilesShowcase extends Component {
         });
       };
 
-      // sort currently displayed profiles by name alphabetically 
-    orderByName = name => event => {
-        if(this.state.searching === false){
-            var profileList = this.props.profile.profiles;
-            let nameSorted = profileList.sort(function(a,b) {
-                var nameA=a.user.firstname.toLowerCase();
-                var nameB=b.user.firstname.toLowerCase();
-                if (nameA < nameB) //sort string ascending
-                    return -1 
-                if (nameA > nameB)
-                    return 1
-                return 0
-            })
-            this.setState(state => ({
-                data: nameSorted,
-            })); 
-        }
-        else{ 
-            var data = this.state.data;
-            let nameSorted = data.sort(function(a,b) {
-                var nameA=a.user.firstname.toLowerCase();
-                var nameB=b.user.firstname.toLowerCase();
-                if (nameA < nameB) //sort string ascending
-                    return -1 
-                if (nameA > nameB)
-                    return 1
-                return 0
-            })
-            this.setState(state => ({
-                data: nameSorted,
-            })); 
-        }
+    // sort currently displayed profiles by name alphabetically 
+    orderByName = event => {
+        let nameSorted = _.orderBy(this.state.data, 'user.firstname', 'asc');
+
+        this.setState(state => ({
+            data: nameSorted,
+        })); 
     }
     
     // sort by Major alphabetically
-    orderByMajor = e => event => {
-        if (!this.state.searching) {
-            var profileList = this.props.profile.profiles;
-        }
-        else {
-            var profileList = this.state.data;
-        }   
-        let majorSorted = profileList.sort(function(a,b) {
-            var subA = a.major[0].toLowerCase();
-            var subB = b.major[0].toLowerCase();
-            
-            if (subA < subB) //sort string ascending
-                return -1 
-            if (subA > subB)
-                return 1
-            return 0
-        })
+    orderByMajor = event => {
+        let majorSorted = _.orderBy(this.state.data, 'major[0]', 'asc');
 
         this.setState(state => ({
             data: majorSorted,
@@ -305,105 +256,113 @@ class ProfilesShowcase extends Component {
     //Returns results from profiles relating to chosen subject
     filterBySubject = (subject, event) => {
         let subjectFilterList = this.state.subjectFilters;
-        let profileList = this.props.profile.profiles;
-        
-        // add the subject to the filter list and remove it from the subject list
-        if (subject !== null) {
-            subjectFilterList.push(subject);
-            _.pull(this.state.subjects, subject);
-            this.setState({ subjects: this.state.subjects });
-        }
-        
-        if(this.state.searching === true){
-            profileList = this.state.searchData;
-        }
-        
-        if(subjectFilterList.length === 0){
-            this.setState({
-                data: profileList,
-                filtering: false,
-            });
-        }
-        else{
-            let results = [];
-            for(var prof in profileList){//this loop matches profiles to given subjects 
-                let profile = profileList[prof];
-                let majors = profile.major;
-                let minors = profile.minor;
-                for(var m in majors){   //add profiles by major 
-                    let major = majors[m];
-                    for(var e in subjectFilterList){
-                        let eachSubject = subjectFilterList[e];
-                        if(eachSubject === major && !results.includes(profile)){
-                            results.push(profile);
-                        }
-                    }
-                }
-                for(var mi in minors){  //add by minor
-                    let minor = minors[mi];
-                    for(var e in subjectFilterList){
-                        let eachSubject = subjectFilterList[e];
-                        if(eachSubject === minor && !results.includes(profile)){
-                            results.push(profile);
-                        }
-                    }
-                }
-            }
-            console.log(results);
-            
-            this.setState({
-                data: results,
-                filtering: true,
-            });
-        }
+        subjectFilterList.push(subject);
+
+        this.setState({
+            subjectFilters: subjectFilterList,
+            filtering: true,
+        });
+
+        this.runAllFilters();
     }
     
     filterByPaid = (paid) => event => {
-        let profileList = this.props.profile.profiles;
-        let paidResults = _.filter(profileList, { 'type': "Paid"});
-        
         this.setState({
-            data: paidResults,
             filterByPaid: true,
             filterByVolunteer: false,
-        });
+        }, () => this.runAllFilters());
+        // this.runAllFilters();
     }
 
     filterByVolunteer = (paid) => event => {
-        let profileList = this.props.profile.profiles;
-        let unpaidResults = _.filter(profileList, { 'type': "Volunteer"});
-        
         this.setState({
-            data: unpaidResults,
             filterByVolunteer: true,
             filterByPaid: false,
-        });   
+        }, () => this.runAllFilters());
+        // this.runAllFilters(); 
     }
 
     removePaidFilter = (paid) => event => {
-        this.setState({ data: this.props.profile.profiles, filterByPaid: false});
+        this.setState({ filterByPaid: false});
+        this.runAllFilters(); 
     }
 
     removeVolunteerFilter = (paid) => event => {
-        this.setState({ data: this.props.profile.profiles, filterByVolunteer: false});
+        this.setState({ filterByVolunteer: false});
+        this.runAllFilters(); 
     }
 
     removeSubject = (subject, event) => {
         _.pull(this.state.subjectFilters, subject);
-        let subjectList = _.sortBy(_.concat(this.state.subjects, subject));
-        this.setState({subjectFilters: this.state.subjectFilters, subjects: subjectList});
-        this.filterBySubject(null, event);
+        this.setState({ subjectFilters: this.state.subjectFilters });
+        this.runAllFilters(); 
     }
+
+    runAllFilters() {
+        let profiles = this.state.allProfiles;
+        console.log('running');
+        console.log(profiles);
+        console.log(this.state.filterByPaid);
+        // check for paid and volunteer
+        if (this.state.filterByPaid) {
+            console.log('paid');
+            // profiles = _.filter(profiles, { 'type' : "Paid" });
+            console.log(profiles);
+        }
+
+        if (this.state.filterByVolunteer) {
+            // console.log('volunteer');
+            profiles = _.filter(profiles, { 'type' : "Volunteer "});
+            console.log(profiles);
+        }
+        // check subjects
+        let results = [];
+        let subjectFilterList = this.state.subjectFilters;
+        //this loop matches profiles to given subjects 
+        for(var prof in profiles){
+            let profile = profiles[prof];
+            let majors = profile.major;
+            let minors = profile.minor;
+            for(var m in majors){   //add profiles by major 
+                let major = majors[m];
+                for(var e in subjectFilterList){
+                    let eachSubject = subjectFilterList[e];
+                    if(eachSubject === major && !results.includes(profile)){
+                        results.push(profile);
+                    }
+                }
+            }
+            for(var mi in minors){  //add by minor
+                let minor = minors[mi];
+                for(var e in subjectFilterList){
+                    let eachSubject = subjectFilterList[e];
+                    if(eachSubject === minor && !results.includes(profile)){
+                        results.push(profile);
+                    }
+                }
+            }
+        }
+        profiles = results;
+        
+        this.setState({ data: profiles });
+        // check search text
+    };
 
     render() {
         const { classes } = this.props;
         const { profiles, loading } = this.props.profile;
-        const { orderDropDown, filterDropDown, majorsDropDown, subjects} = this.state;
+        const { orderDropDown, filterDropDown, majorsDropDown, subjects, allProfiles, data} = this.state;
 
         let courseMenuItems = subjects.map((subject, i) =>
-                <MenuItem key={i} value={subject} onClick={(e) => this.filterBySubject(subject)}>{subject}</MenuItem>
+                <MenuItem key={i} value={subject} 
+                        disabled={_.includes(this.state.subjectFilters, subject)}
+                        onClick={(e) => this.filterBySubject(subject)}>{subject}</MenuItem>
             );
 
+        let subjectChips = this.state.subjectFilters.map((subject, index) => 
+                                <Chip className="search-chip" variant="outlined" key={index} label={subject} 
+                                    onDelete={(e) => this.removeSubject(subject)}/> 
+                            );
         let profileItems;
 
         if (profiles === null || loading) {
@@ -443,11 +402,6 @@ class ProfilesShowcase extends Component {
             }
         }
 
-        const subjectChips = this.state.subjectFilters.map((subject, index) => 
-                                <Chip className="search-chip" variant="outlined" key={index} label={subject} 
-                                    onDelete={(e) => this.removeSubject(subject)}/> 
-                            );
-
         return (
             <div>
             <header>
@@ -475,8 +429,8 @@ class ProfilesShowcase extends Component {
                                 <div className="small"><SortIcon /></div>
                             </Button>
                                 <Menu id='orderByMenu' anchorEl={orderDropDown} open={Boolean(orderDropDown)} onClose={this.closeOrderMenu}>
-                                    <MenuItem onClick={this.orderByName()}> First Name</MenuItem>
-                                    <MenuItem onClick={this.orderByMajor()}> Major</MenuItem>
+                                    <MenuItem onClick={this.orderByName}> First Name</MenuItem>
+                                    <MenuItem onClick={this.orderByMajor}> Major</MenuItem>
                                 </Menu>
                         </Grid>
                         <Grid item xs={3}>
