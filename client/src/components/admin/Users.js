@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { getProfiles, deleteAccountByAdmin, disableProfileByUser,enableProfileByUser, getAllProfilesByAdmin } from '../../redux/actions/profileActions';
+import { deleteAccountByAdmin, disableProfileByUser, enableProfileByUser, getAllProfilesByAdmin } from '../../redux/actions/profileActions';
 import { setAdmin } from '../../redux/actions/authActions';
 
 import Typography from '@material-ui/core/Typography';
@@ -120,8 +120,8 @@ class Users extends Component {
 
 
 render() {
-    const { classes, auth, disableProfiles } = this.props;
-    const { profiles, profilesToDisable } = this.state
+    const { classes, auth } = this.props;
+    const { profiles } = this.state
 
     return (
       <div className="padding20">

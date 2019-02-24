@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { connect } from 'react-redux';
 
 import { logoutUser } from '../../redux/actions/authActions';
-import { clearCurrentProfile, getCurrentProfile } from '../../redux/actions/profileActions';
+import { clearCurrentProfile } from '../../redux/actions/profileActions';
 import { secondaryListItems, authLinks, guestLinks, adminLinks } from './AppNavbarLinks';
 import './layout.css';
 
@@ -24,7 +24,6 @@ import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import ProgressSpinner from '../common/ProgressSpinner';
 import LogoImg from '../../images/logodark.png';
 
 const drawerWidth = 240;

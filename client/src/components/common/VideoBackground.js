@@ -36,11 +36,11 @@ class VideoBackground extends Component {
     return (
         <div>
           <div id="bg">
-            <img src={image} id="iamge-h" />
-            <img src={imageV} id="image-v" />
+            <img src={image} id="iamge-h" alt="" />
+            <img src={imageV} id="image-v" alt="" />
           </div>
           <div className="centered">
-            <img src={Logo} className="logo-width"/>
+            <img src={Logo} className="logo-width" alt="logo" />
           </div>
         </div>
     );

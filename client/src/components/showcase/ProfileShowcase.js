@@ -19,7 +19,6 @@ import SortIcon from '@material-ui/icons/SortByAlpha';
 import ShuffleIcon from '@material-ui/icons/Shuffle';
 import SubjectIcon from '@material-ui/icons/LibraryBooks';
 import PaidIcon from '@material-ui/icons/AttachMoney';
-import Select from '@material-ui/core/Select';
 
 // redux imports
 import { connect } from 'react-redux';
@@ -28,7 +27,7 @@ import { getSubjects } from '../../redux/actions/subjectActions';
 
 // MUI imports
 import { withStyles } from '@material-ui/core/styles';
-import { FormControl, Input, InputLabel } from '@material-ui/core';
+import { Input } from '@material-ui/core';
 
 const styles = {
     card: {
@@ -321,8 +320,8 @@ class ProfilesShowcase extends Component {
                 }
                 for(var mi in minors){  //add by minor
                     let minor = minors[mi];
-                    for(var e in subjectFilterList){
-                        let eachSubject = subjectFilterList[e];
+                    for(var f in subjectFilterList){
+                        let eachSubject = subjectFilterList[f];
                         if(eachSubject === minor && !results.includes(profile)){
                             results.push(profile);
                         }
@@ -336,9 +335,8 @@ class ProfilesShowcase extends Component {
     };
 
     render() {
-        const { classes } = this.props;
         const { profiles, loading } = this.props.profile;
-        const { orderDropDown, filterDropDown, majorsDropDown, subjects, allProfiles, data} = this.state;
+        const { orderDropDown, filterDropDown, majorsDropDown, subjects, data} = this.state;
 
         let courseMenuItems = subjects.map((subject, i) =>
                 <MenuItem key={i} value={subject} 

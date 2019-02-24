@@ -96,7 +96,6 @@ class CreateProfile extends Component {
  }
 
 render() {
-    const { auth } = this.props;
     const { bio, major, minor, availability, courses, subjects, type } = this.state;
 
     const minors = _.filter(subjects, ['isMinor', "Yes"]);

@@ -2,7 +2,6 @@ import {
     GET_PROFILE, 
     PROFILE_LOADING, 
     CLEAR_CURRENT_PROFILE, 
-    FILTER_PROFILES,
     GET_PROFILES 
 } from '../actions/types';
 
@@ -31,11 +30,6 @@ export default function(state = initialState, action) {
                 profiles: action.payload,
                 loading: false
             };
-        // case FILTER_PROFILES:
-        //     return {
-        //         ...state,
-        //         profiles: action.payload
-        //     }
         case CLEAR_CURRENT_PROFILE:
             return {
                 ...state,

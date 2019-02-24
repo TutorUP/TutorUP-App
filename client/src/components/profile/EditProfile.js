@@ -39,14 +39,14 @@ class EditProfile extends Component {
     if (nextProps.errors) this.setState({ errors: nextProps.errors });
     if (nextProps.profile.profile) {
         const profile = nextProps.profile.profile;
-         const courses = profile.courses.length > 0 ? profile.courses : [];
+        const courses = profile.courses.length > 0 ? profile.courses : [];
         this.setState({
             major: profile.major,
             minor: profile.minor,
             bio: profile.bio,
             availability: profile.availability,
             type: profile.type,
-            courses: profile.courses
+            courses: courses
         });
     }
     if (nextProps.subjects.subjects) {
