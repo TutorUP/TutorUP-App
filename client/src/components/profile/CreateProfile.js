@@ -44,7 +44,13 @@ class CreateProfile extends Component {
 
  addCourse = (e) => {
     this.setState((prevState) => ({
-      courses: [...prevState.courses, {courseId: "", courseName: "", courseNumber: "", id: Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10)}],
+      courses: [...prevState.courses, 
+        {  courseId: "", 
+           courseName: "", 
+           courseNumber: "", 
+           courseSubject: "", 
+           id: Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10)
+      }],
     }));
  }
 
@@ -88,6 +94,12 @@ class CreateProfile extends Component {
       let i = name.charAt(name.length - 1);
       let property = name.substring(0, name.length - 2);
       courses[i][property] = e.target.value;
+
+      // if we just set the course ID property, also set the subject name
+      if (property === "courseId") {
+        let subject = _.find(this.state.subjects, ['id', e.target.value]);
+        courses[i].courseSubject = subject.name;
+      }
       this.setState({ [courses]: courses });
     }
     else {

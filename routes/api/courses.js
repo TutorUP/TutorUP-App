@@ -49,6 +49,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
     if (req.body[0].courseId) courseFields.id = req.body[0].courseId;
     if (req.body[0].courseNumber) courseFields.number = req.body[0].courseNumber;
     if (req.body[0].courseName) courseFields.name = req.body[0].courseName;
+    if (req.body[0].subject) courseFields.subject = req.body[0].subject;
 
     // See if there is already a CS 203 for user id X
     Course.findOne({ user: req.user.id }).then(course => {
