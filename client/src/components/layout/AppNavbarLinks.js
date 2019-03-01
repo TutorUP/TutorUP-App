@@ -81,14 +81,6 @@ export const guestLinks = (
         <ListItemText primary="Register" />
       </ListItem>
     </Link>
-    <Link to="/profiles" className="link">
-      <ListItem button>
-        <ListItemIcon>
-          <SearchIcon />
-        </ListItemIcon>
-        <ListItemText primary="Find a Tutor" />
-      </ListItem>
-    </Link>
   </React.Fragment>
 );
 
