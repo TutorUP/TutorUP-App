@@ -155,6 +155,7 @@ render() {
             <Typography variant="h4" component="h1" align="center" className="editHeading">
                 Create and Edit Subjects
             </Typography>
+            {subjectItems}
             <Grid container justify="space-between" spacing={24}>
                <Grid item xs={12}>
                    <div className="courses"></div>
@@ -170,7 +171,7 @@ render() {
                       Save 
                    </Button>
                </Grid>
-               {subjectItems}
+             
             </Grid>  
       </div>
     );
