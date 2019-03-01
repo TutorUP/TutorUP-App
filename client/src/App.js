@@ -83,7 +83,7 @@ class App extends Component {
                   <Route exact path="/register" component={Register} />
                   <Route exact path="/login" component={Login} />
                   <Route exact path="/profile/:handle" component={Profile} />
-                  <Route exact path="/profiles" component={ProfileShowcase} />
+                  <PrivateRoute exact path="/profiles" component={ProfileShowcase} />
                   <Route exact path="/not-found" component={NotFound} />
                   <Route exact path='/confirm/:id' component={UserConfirm} />
                   <Route exact path="/about" component={About} />
