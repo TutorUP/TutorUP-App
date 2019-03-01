@@ -38,12 +38,55 @@ module.exports = function validateRegisterInput(data) {
         errors.email = 'Email is invalid';
     }
     
+    function hasNumber(password) {
+        if(/\d/.test(password)){
+            return "true";
+        }
+        else{
+            return "false";
+        }
+      }
+
+    function hasMixed(password) {
+       if(/[a-z]/.test(password) && /[A-Z]/.test(password)){
+           return "true";
+       }
+       else{
+           return "false";
+       }
+    }
+
+    function hasSpecial(password) {
+        if(/[!#@$%^&*)(+=._-]/.test(password)){
+            return "true";
+        }
+        else{
+            return "false";
+        }
+    }
+
+    handlePassword = e => {
+    this.setState({ [e.target.name]: e.target.value })
+    }
+  
     if (Validator.isEmpty(data.password)) {
         errors.password = 'Password field is required';
     }
     
     if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
         errors.password = 'Password must be at least 6 characters';
+    }
+
+    if(!Validator.equals( "true", hasNumber(data.password))){
+        errors.password = 'Password must have at least one number.';
+    }
+
+    if(!Validator.equals( "true", hasMixed(data.password))){
+        errors.password = 'Password must have both Upper and Lower Cased letters.';
+    }
+
+    if(!Validator.equals( "true", hasSpecial(data.password))){
+        errors.password = 'Password must have at least one special character.';
     }
     
     if (Validator.isEmpty(data.password2)) {
