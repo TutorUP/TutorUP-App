@@ -193,6 +193,16 @@ class ProfilesShowcase extends Component {
                         || search_text.toLowerCase() === (course.courseId + ' ' + course.courseNumber).toLowerCase()) && !searchList.includes(profile)){
                             searchList.push(profile);
                         }
+                       
+                        // //By Name of Subject
+                        if(course.courseSubject){
+                            let courseSubjectsub = course.courseSubject.substring(0, search_text.length).toLowerCase();
+                            if( search_text.toLowerCase() === courseSubjectsub && !searchList.includes(profile) ){
+                                searchList.push(profile);
+                            }
+                        }
+                       
+
                         //by full name of course
                         let courseName = course.courseName;
                         let courseNameSub = courseName.substring(0, search_text.length).toLowerCase();
