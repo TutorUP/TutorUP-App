@@ -19,7 +19,7 @@ bcrypt.genSalt(numRounds, (err, salt) => {
 ```javascript
 bcrypt.compare(password, user.password).then(isMatch => {
     if (isMatch) {
-        const payload = { id: user.id, name: user.name, avatar: user.avatar };
+        const payload = { id: user.id, name: user.name };
         // Sign token
         jwt.sign(payload, keys.secretOrKey, { expiresIn: 3600 }, (err, token) => {
             res.json(success: true, token: 'Bearer ' + token)

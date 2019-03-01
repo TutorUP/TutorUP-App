@@ -19,7 +19,7 @@ router.get('/all', async (req, res) => {
             { disabled: false }
         ).populate({
             path: 'user',
-            select: ['firstname', 'lastname', 'email', 'avatar', 'isAdmin']
+            select: ['firstname', 'lastname', 'email', 'isAdmin']
         });
 
         if (!profiles) {
@@ -40,7 +40,7 @@ router.get('/allUsers', async (req, res) => {
     try {
         const profiles = await Profile.find().populate({
             path: 'user',
-            select: ['firstname', 'lastname', 'email', 'avatar', 'isAdmin']
+            select: ['firstname', 'lastname', 'email', 'isAdmin']
         });
 
         if (!profiles) {
@@ -61,7 +61,7 @@ router.get('/handle/:handle', async (req, res) => {
     const errors = {};
     try {
         const profile = await Profile.findOne({ handle: req.params.handle })
-            .populate('user', ['firstname', 'lastname', 'avatar', 'email', 'isAdmin']);
+            .populate('user', ['firstname', 'lastname', 'email', 'isAdmin']);
         if (!profile) {
             errors.noprofile = 'There is no profile for this user';
             res.status(404).json(errors);

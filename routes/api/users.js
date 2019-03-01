@@ -4,7 +4,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const keys = require('../../config/keys');
 const passport = require('passport');
-const toonavatar = require('cartoon-avatar');
 
 // Load email confirmation functions
 const sendEmail = require('../../email/email.send');
@@ -37,8 +36,6 @@ router.post('/register', async (req, res, next) => {
 
         // New user
         else {
-            // Add avatar to user from email
-            const avatar = toonavatar.generate_avatar();
 
             const newUser = new User({
                 firstname: req.body.firstname,
@@ -46,7 +43,6 @@ router.post('/register', async (req, res, next) => {
                 email: req.body.email,
                 isAdmin: false,
                 password: req.body.password,
-                avatar
             });
 
             if (process.env.NODE_ENV !== 'production') {
@@ -108,7 +104,6 @@ router.post('/login', async (req, res) => {
                 const payload = { id: user.id, 
                                 firstname: user.firstname,
                                 lastname: user.lastname,
-                                avatar: user.avatar,
                                 isAdmin: user.isAdmin,
                                 email: user.email,
                                 confirmed: user.confirmed

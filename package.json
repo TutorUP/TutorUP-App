@@ -37,7 +37,6 @@
     "@sendgrid/mail": "^6.3.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
-    "cartoon-avatar": "^1.0.2",
     "concurrently": "^4.1.0",
     "cors": "^2.8.5",
     "dotenv": "^6.2.0",
