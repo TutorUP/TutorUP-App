@@ -43,10 +43,23 @@ const styles = theme => ({
 });
 
 class Dashboard extends Component {
+    state = {
+      disabled: false,
+    }
+
     componentDidMount() {
         const { profile } = this.props;
         if (Object.keys(profile).length > 0 ) this.props.getCurrentProfile();
+        this.setState({ disabled: profile.disabled });
     }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.profile.profile) {
+        this.setState({
+            disabled: nextProps.profile.profile.disabled
+        });
+    }
+ }
 
     onDeleteClick = e => {
         e.preventDefault();
@@ -57,6 +70,8 @@ class Dashboard extends Component {
         e.preventDefault();
         const { profile } = this.props;
         const profileId = profile.profile._id;
+
+        this.setState({ disabled: ((setting === 'enable') ? false : true) });
 
         if (setting === 'enable') this.props.enableProfileByUser(profileId, this.props.history);
         else if (setting === 'disable') this.props.disableProfileByUser(profileId, this.props.history);
@@ -114,7 +129,7 @@ class Dashboard extends Component {
                         </Card>
                     </Grid>
                     {/* show this if profile is dis/en -abled */}
-                    {profile.disabled ? (
+                    {this.state.disabled ? (
                         <Grid item xs={12} sm={6} md={3}>
                             <Card className={styles.card}>
                                 <CardActionArea onClick={e => this.onProfileSettingClick(e, 'enable')}>

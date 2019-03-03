@@ -136,8 +136,6 @@ class Users extends Component {
      });
  }
 
-
-
 render() {
     const { classes, auth } = this.props;
     const { profiles } = this.state
