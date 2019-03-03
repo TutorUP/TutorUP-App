@@ -69,26 +69,14 @@ export const getProfiles = () => dispatch => {
     });
 }
 
-export const disableProfileByUser = (profileId, history) => dispatch => {
+export const disableProfileByUser = (profileId) => dispatch => {
     axios.post('api/profile/disableProfile', { profileId: profileId })
-    .then(res => history.push('/login'))
     .catch(err => console.error(err));
 }
 
-export const enableProfileByUser = (profileId, history) => dispatch => {
+export const enableProfileByUser = (profileId) => dispatch => {
     axios.post('api/profile/enableProfile', { profileId: profileId })
-    .then(res => history.push('/login'))
     .catch(err => console.error(err));
-}
-
-// Disable profiles by admin
-export const disableProfiles = (profileData, history) => dispatch => {
-    console.log(profileData)
-
-
-    // axios.post('/api/profile/disable', profileData)
-    //     .then(res => history.push('/profile'))
-    //     .catch(err => console.log(err));
 }
 
 export const getProfileByName = name => dispatch => {

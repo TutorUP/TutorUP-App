@@ -119,3 +119,8 @@
 #warning {
 	font-size: 50px !important;
 }
+
+.toastIcon {
+	font-size: 20px !important;
+	margin-right: 10px !important;
+}

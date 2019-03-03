@@ -19,6 +19,10 @@ import DisabledIcon from '@material-ui/icons/VisibilityOff';
 import VisibleIcon from '@material-ui/icons/Visibility';
 import TableRow from '@material-ui/core/TableRow';
 import Tooltip from '@material-ui/core/Tooltip';
+import Snackbar from '@material-ui/core/Snackbar';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import CloseIcon from '@material-ui/icons/Close';
 import { withStyles } from '@material-ui/core/styles';
 import _ from 'lodash';
 
@@ -31,33 +35,23 @@ const CustomTableCell = withStyles(theme => ({
 }))(TableCell);
 
 const styles = theme => ({
-    card: {
-      minWidth: 300,
-      margin: 100
-    },
-    marginBottom20: {
-        marginBottom: 20,
-    },
-    purpleHeader: {
-        margin: 10,
-        color: '#fff',
+     success: {
         backgroundColor: '#1E1656',
      },
-     purpleText: {
-         color: '#1E1656'
+     message: {
+       display: 'flex',
+       alignItems: 'center',
      },
-     head: {
-         backgroundColor: '#1E1656',
-         color: '#fff',
-         fontWeight: 'bold',
-         fontSize: 16
-     }
 });
 
 class Users extends Component {
  state = {
      profiles: [],
      profilesToDisable: [],
+     adminToastOpen: false,
+     adminToastMsg: '',
+     enableToastOpen: false,
+     enableToastMsg: '',
      errors: {}
  }
 
@@ -73,6 +67,14 @@ class Users extends Component {
         });
     }
  }
+
+  handleAdminClose = () => {
+    this.setState({ adminToastOpen: false });
+  };
+
+  handleEnableClose = () => {
+    this.setState({ enableToastOpen: false });
+  };
 
  deleteUser = (e, profileID, userID) => {
     e.preventDefault();
@@ -98,8 +100,13 @@ class Users extends Component {
      let updatedProfile = _.remove(profiles, function(profile) { return profile.user._id === userID; });
      updatedProfile[0].user.isAdmin = value;
 
+     let msgType = value ? "added" : "removed";
+     let msg = `Admin privileges ${msgType} for ${updatedProfile[0].user.firstname} ${updatedProfile[0].user.lastname}.`;
+
      this.setState({
-         profiles: _.sortBy(_.concat(profiles, updatedProfile), ['user.firstname', 'user.lastname'])
+         profiles: _.sortBy(_.concat(profiles, updatedProfile), ['user.firstname', 'user.lastname']),
+         adminToastOpen: true,
+         adminToastMsg: msg
      });
 
      // create object to send to backend 
@@ -112,9 +119,21 @@ class Users extends Component {
 
  selectDisable = (e, profileId, setting) => {
      e.preventDefault();
-    if (setting === 'enable') this.props.enableProfileByUser(profileId, this.props.history);
-    else if (setting === 'disable') this.props.disableProfileByUser(profileId, this.props.history);
+    if (setting === 'enable') this.props.enableProfileByUser(profileId);
+    else if (setting === 'disable') this.props.disableProfileByUser(profileId);
 
+    let profiles = [...this.state.profiles];
+    let updatedProfile = _.remove(profiles, function(profile) { return profile._id === profileId; });
+    updatedProfile[0].disabled = (setting === 'enable') ? false : true;
+
+    let msgType = (setting === 'enable') ? "enabled" : "disabled";
+    let msg = `${updatedProfile[0].user.firstname} ${updatedProfile[0].user.lastname}'s profile has been ${msgType}.`;
+
+    this.setState({
+         profiles: _.sortBy(_.concat(profiles, updatedProfile), ['user.firstname', 'user.lastname']),
+         enableToastOpen: true,
+         enableToastMsg: msg
+     });
  }
 
 
@@ -160,13 +179,13 @@ render() {
                         </Tooltip>}
                         {profile.disabled ? (
                                 <Tooltip title="Enable Profile">
-                                    <IconButton onClick={((e) => this.selectDisable(e, profile.user._id, 'enable'))}>
+                                    <IconButton onClick={((e) => this.selectDisable(e, profile._id, 'enable'))}>
                                         <VisibleIcon />
                                     </IconButton>
                                 </Tooltip>
                             ) : (
                                 <Tooltip title="Disable Profile">
-                                    <IconButton onClick={((e) => this.selectDisable(e, profile.user._id, 'disable'))}>
+                                    <IconButton onClick={((e) => this.selectDisable(e, profile._id, 'disable'))}>
                                         <DisabledIcon />
                                     </IconButton>
                                 </Tooltip>
@@ -184,6 +203,64 @@ render() {
                 }
               </TableBody>
             </Table>
+
+            <Snackbar 
+                anchorOrigin={{vertical: 'top', horizontal: 'right',}}
+                open={this.state.adminToastOpen}
+                autoHideDuration={5000}
+                onClose={this.handleAdminClose}
+                >
+              <SnackbarContent
+                className={classes.success}
+                aria-describedby="client-snackbar"
+                message={
+                  <span id="client-snackbar" className={classes.message}>
+                    <CheckCircleIcon className="toastIcon" />
+                    {this.state.adminToastMsg}
+                  </span>
+                }
+                action={[
+                  <IconButton
+                    key="close"
+                    aria-label="Close"
+                    color="inherit"
+                    className={classes.close}
+                    onClick={this.handleAdminClose}
+                  >
+                    <CloseIcon className={classes.icon} />
+                  </IconButton>,
+                ]}
+              />
+            </Snackbar>
+
+            <Snackbar 
+                anchorOrigin={{vertical: 'top', horizontal: 'right',}}
+                open={this.state.enableToastOpen}
+                autoHideDuration={5000}
+                onClose={this.handleEnableClose}
+                >
+              <SnackbarContent
+                className={classes.success}
+                aria-describedby="client-snackbar"
+                message={
+                  <span id="client-snackbar" className={classes.message}>
+                    <CheckCircleIcon className="toastIcon" />
+                    {this.state.enableToastMsg}
+                  </span>
+                }
+                action={[
+                  <IconButton
+                    key="close"
+                    aria-label="Close"
+                    color="inherit"
+                    className={classes.close}
+                    onClick={this.handleEnableClose}
+                  >
+                    <CloseIcon className={classes.icon} />
+                  </IconButton>,
+                ]}
+              />
+            </Snackbar>
       </div>
     );
   }
