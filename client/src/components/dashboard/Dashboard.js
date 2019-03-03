@@ -17,6 +17,7 @@ import DeleteAccountImg from '../../images/delete-account.jpg';
 import EnableProfileImg from '../../images/enable-profile.jpg';
 import DisableProfileImg from '../../images/disable-profile.jpg';
 import ViewProfileImg from '../../images/view-profile.jpg';
+import FindTutorImg from '../../images/find-tutor.jpg';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -155,6 +156,19 @@ class Dashboard extends Component {
                                   className={classes.media}
                                   height="140"
                                   image={CreateProfileImg}
+                                />
+                            </CardActionArea>
+                        </Card>
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={4}>
+                        <Card className={styles.card}>
+                            <CardActionArea component={Link} to={'/profiles'}>
+                                <CardMedia
+                                  component="img"
+                                  alt="find a tutor"
+                                  className={classes.media}
+                                  height="140"
+                                  image={FindTutorImg}
                                 />
                             </CardActionArea>
                         </Card>
