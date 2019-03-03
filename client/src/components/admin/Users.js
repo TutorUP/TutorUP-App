@@ -23,6 +23,12 @@ import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import CloseIcon from '@material-ui/icons/Close';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import { withStyles } from '@material-ui/core/styles';
 import _ from 'lodash';
 
@@ -52,12 +58,16 @@ class Users extends Component {
      adminToastMsg: '',
      enableToastOpen: false,
      enableToastMsg: '',
+     deleteDialogOpen: false,
+     deleteName: '',
+     deleteProfileId: '',
+     deleteUserId: '',
      errors: {}
  }
 
  componentDidMount() {
      this.props.getAllProfilesByAdmin();
-}
+ }
 
  componentWillReceiveProps(nextProps) {
     if (nextProps.errors) this.setState({ errors: nextProps.errors });
@@ -66,7 +76,7 @@ class Users extends Component {
             profiles: _.sortBy(nextProps.profiles, ['user.firstname', 'user.lastname'])
         });
     }
- }
+  }
 
   handleAdminClose = () => {
     this.setState({ adminToastOpen: false });
@@ -76,11 +86,30 @@ class Users extends Component {
     this.setState({ enableToastOpen: false });
   };
 
- deleteUser = (e, profileID, userID) => {
-    e.preventDefault();
+  handleDeleteOpen = () => {
+    this.setState({ deleteDialogOpen: true });
+  };
+
+  handleDeleteClose = () => {
+    this.setState({ 
+        deleteDialogOpen: false,
+        deleteName: '',
+        deleteProfileId: '',
+        deleteUserId: ''
+    });
+  };
+
+  handleDeleteSuccessClose = () => {
+    this.setState({ 
+        deleteDialogOpen: false,
+        deleteName: '',
+        deleteProfileId: '',
+        deleteUserId: ''
+    });
+
     let profiles = [...this.state.profiles];
     const newProfiles = profiles.filter(profile => {
-        return profile._id !== profileID
+        return profile._id !== this.state.deleteProfileId
     });
 
     this.setState({
@@ -88,10 +117,23 @@ class Users extends Component {
     });
 
      const id = {
-         user: userID,
-         profile: profileID
+         user: this.state.deleteUserId,
+         profile: this.state.deleteProfileId
      }
      this.props.deleteAccountByAdmin(id);
+  };
+
+ deleteUser = (e, profileID, userID) => {
+    e.preventDefault();
+    let profiles = [...this.state.profiles];
+    let updatedProfile = _.remove(profiles, function(profile) { return profile.user._id === userID; });
+    let userName = updatedProfile[0].user.firstname + " " + updatedProfile[0].user.lastname;
+
+    this.setState({
+        deleteUserId: userID,
+        deleteProfileId: profileID,
+        deleteName: userName,
+    }, () => this.handleDeleteOpen());
  }
 
  setAdmin = (e, userID, value) => {
@@ -205,7 +247,7 @@ render() {
             <Snackbar 
                 anchorOrigin={{vertical: 'top', horizontal: 'right',}}
                 open={this.state.adminToastOpen}
-                autoHideDuration={5000}
+                autoHideDuration={4000}
                 onClose={this.handleAdminClose}
                 >
               <SnackbarContent
@@ -234,7 +276,7 @@ render() {
             <Snackbar 
                 anchorOrigin={{vertical: 'top', horizontal: 'right',}}
                 open={this.state.enableToastOpen}
-                autoHideDuration={5000}
+                autoHideDuration={4000}
                 onClose={this.handleEnableClose}
                 >
               <SnackbarContent
@@ -259,6 +301,28 @@ render() {
                 ]}
               />
             </Snackbar>
+
+            <Dialog
+              open={this.state.deleteDialogOpen}
+              onClose={this.handleDeleteClose}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogTitle id="alert-dialog-title">{"Delete Account for " + this.state.deleteName + "?"}</DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                    Clicking Delete Account below will delete both their tutor profile and user account.
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={this.handleDeleteClose} className="textPurple">
+                  Cancel
+                </Button>
+                <Button onClick={this.handleDeleteSuccessClose} variant="outlined" className="purpleDelete" autoFocus>
+                  Delete Account
+                </Button>
+              </DialogActions>
+            </Dialog>
       </div>
     );
   }
