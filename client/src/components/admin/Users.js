@@ -189,7 +189,7 @@ render() {
                                 </Tooltip>
                             )
                         }
-                        <Tooltip title="Delete User Account">
+                        <Tooltip title={profile.user.isAdmin ? "" : "Delete User Account"}>
                             <span><IconButton disabled={profile.user.isAdmin}
                                 onClick={((e) => this.deleteUser(e, profile._id, profile.user._id))}>
                                 <DeleteIcon />
