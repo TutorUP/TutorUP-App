@@ -118,8 +118,21 @@ class EditProfile extends Component {
       this.setState({ [courses]: courses });
     }
     else {
-     this.setState({ [e.target.name]: e.target.value });
+        const { major, minor } = this.state;
+        this.setState({ [e.target.name]: e.target.value });
+        if (e.target.name === 'major') {
+            const filtered = this.filterDuplicates(minor, e.target.value)
+            this.setState({ minor: filtered})
+        }
+        else if (e.target.name === 'minor') {
+            const filtered = this.filterDuplicates(major, e.target.value)
+            this.setState({ major: filtered})
+        }
     }
+ }
+
+ filterDuplicates = (options, selected) => {
+     return _.difference(options, selected)
  }
 
 // on cancel go back to dashboard to eliminate need for extra button

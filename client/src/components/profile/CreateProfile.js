@@ -103,9 +103,22 @@ class CreateProfile extends Component {
       this.setState({ [courses]: courses });
     }
     else {
+    const { major, minor } = this.state;
      this.setState({ [e.target.name]: e.target.value });
+     if (e.target.name === 'major') {
+        const filtered = this.filterDuplicates(minor, e.target.value)
+        this.setState({ minor: filtered})
+    }
+    else if (e.target.name === 'minor') {
+        const filtered = this.filterDuplicates(major, e.target.value)
+        this.setState({ major: filtered})
+    }
     }
  }
+
+ filterDuplicates = (options, selected) => {
+    return _.difference(options, selected)
+}
 
 render() {
     const { bio, major, minor, availability, courses, subjects, type } = this.state;

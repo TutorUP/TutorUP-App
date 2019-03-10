@@ -45,6 +45,7 @@ class EditSubjects extends Component {
  }
 
  componentDidMount() {
+     // Get all the subjects when component rendered, to prevent blank fields on reload
      this.props.getSubjects();
  }
 
@@ -85,6 +86,7 @@ class EditSubjects extends Component {
  }
 
  onChange = e => {
+
    const name = e.target.name;
    let subjects = [...this.state.subjects];
    let i = name.charAt(name.length - 1);
