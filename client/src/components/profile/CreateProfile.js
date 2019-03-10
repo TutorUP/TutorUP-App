@@ -14,8 +14,8 @@ import { FormControl, Input, InputLabel } from '@material-ui/core';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
-import _ from 'lodash';
 import './profile.css';
+import { filterArrDuplicates, sortArrByAscending, filterByOptions, findFirstMatch } from '../../utils/lodashOps';
 
 class CreateProfile extends Component {
  state = {
@@ -37,7 +37,7 @@ class CreateProfile extends Component {
     if (nextProps.errors) this.setState({ errors: nextProps.errors });
     if (nextProps.subjects.subjects) {
         this.setState({
-            subjects: _.sortBy(nextProps.subjects.subjects, ['id', 'name'])
+            subjects: sortArrByAscending(nextProps.subjects.subjects, ['id', 'name'])
         });
     }
  }
@@ -97,7 +97,7 @@ class CreateProfile extends Component {
 
       // if we just set the course ID property, also set the subject name
       if (property === "courseId") {
-        let subject = _.find(this.state.subjects, ['id', e.target.value]);
+        let subject = findFirstMatch(this.state.subjects, ['id', e.target.value]);
         courses[i].courseSubject = subject.name;
       }
       this.setState({ [courses]: courses });
@@ -106,25 +106,21 @@ class CreateProfile extends Component {
     const { major, minor } = this.state;
      this.setState({ [e.target.name]: e.target.value });
      if (e.target.name === 'major') {
-        const filtered = this.filterDuplicates(minor, e.target.value)
+        const filtered = filterArrDuplicates(minor, e.target.value)
         this.setState({ minor: filtered})
     }
     else if (e.target.name === 'minor') {
-        const filtered = this.filterDuplicates(major, e.target.value)
+        const filtered = filterArrDuplicates(major, e.target.value)
         this.setState({ major: filtered})
     }
     }
  }
 
- filterDuplicates = (options, selected) => {
-    return _.difference(options, selected)
-}
-
 render() {
     const { bio, major, minor, availability, courses, subjects, type } = this.state;
 
-    const minors = _.filter(subjects, ['isMinor', "Yes"]);
-    const majors = _.filter(subjects, ['isMajor', "Yes"]);
+    const minors = filterByOptions(subjects, ['isMinor', "Yes"]);
+    const majors = filterByOptions(subjects, ['isMajor', "Yes"]);
 
     const majorMenuItems =  majors.map((major, i) =>
             <MenuItem key={i} value={major.name}>{major.name}</MenuItem>
