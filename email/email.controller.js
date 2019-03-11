@@ -43,8 +43,7 @@ exports.collectEmail = (req, res) => {
 exports.confirmEmail = (req, res) => {
   const { id } = req.params;
 
-  console.log("CONFIRMING");
-  console.log(id)
+  process.stdout.write("CONFIRMING: " + id);
 
   User.findById(id)
     .then(user => {
