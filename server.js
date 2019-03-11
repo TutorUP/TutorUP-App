@@ -60,7 +60,6 @@ app.use('/api/users', users);
 app.use('/api/profile', profile);
 app.use('/api/courses', courses);
 app.use('/api/subjects', subjects);
-
 app.get('/email/confirm/:id', emailController.confirmEmail);
 
 if (process.env.NODE_ENV === 'production') {

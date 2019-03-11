@@ -36,7 +36,6 @@ router.post('/register', async (req, res, next) => {
 
         // New user
         else {
-
             const newUser = new User({
                 firstname: req.body.firstname,
                 lastname: req.body.lastname,
@@ -45,9 +44,9 @@ router.post('/register', async (req, res, next) => {
                 password: req.body.password,
             });
 
-            if (process.env.NODE_ENV !== 'production') {
-                newUser.confirmed = true
-            }
+            // if (process.env.NODE_ENV !== 'production') {
+            //     newUser.confirmed = true
+            // }
 
             // Generate hashed password
             bcrypt.genSalt(parseInt(keys.saltRounds), (err, salt) => {
@@ -61,10 +60,9 @@ router.post('/register', async (req, res, next) => {
                 });
             });
 
-            if (process.env.NODE_ENV === 'production') {
+            if (process.env.NODE_ENV !== 'production') {
                 sendEmail(newUser.email, templates.confirm(newUser._id));
             }
-
         }
     }
     catch (err) {
