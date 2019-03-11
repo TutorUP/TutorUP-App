@@ -41,7 +41,10 @@ exports.collectEmail = (req, res) => {
 // The callback that is invoked when the user visits the confirmation
 // url on the client and a fetch request is sent in componentDidMount.
 exports.confirmEmail = (req, res) => {
-  const { id } = req.params
+  const { id } = req.params;
+
+  console.log("CONFIRMING");
+  console.log(id);
 
   User.findById(id)
     .then(user => {

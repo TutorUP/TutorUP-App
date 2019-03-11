@@ -43,6 +43,7 @@ router.post('/register', async (req, res, next) => {
                 email: req.body.email,
                 isAdmin: false,
                 password: req.body.password,
+                confirmed: false,
             });
 
             if (process.env.NODE_ENV !== 'production') {
