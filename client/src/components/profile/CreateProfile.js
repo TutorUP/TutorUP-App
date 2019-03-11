@@ -172,7 +172,6 @@ render() {
                                 name: 'major',
                                 id: 'major'
                             }}>
-                                <MenuItem value=""></MenuItem>
                                 {majorMenuItems}
                             </Select>
                         </FormControl>
@@ -184,7 +183,6 @@ render() {
                                 name: 'minor',
                                 id: 'minor'
                             }}>
-                                <MenuItem value=""></MenuItem>
                                 {minorMenuItems}
                             </Select>
                         </FormControl>
