@@ -31,6 +31,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { withStyles } from '@material-ui/core/styles';
 import _ from 'lodash';
+import { sortArrByAscending, removeByMatch } from '../../utils/lodashOps';
 
 const CustomTableCell = withStyles(theme => ({
   head: {
@@ -73,7 +74,7 @@ class Users extends Component {
     if (nextProps.errors) this.setState({ errors: nextProps.errors });
     if (nextProps.profiles) {
         this.setState({
-            profiles: _.sortBy(nextProps.profiles, ['user.firstname', 'user.lastname'])
+            profiles: sortArrByAscending(nextProps.profiles, ['user.firstname', 'user.lastname'])
         });
     }
   }
@@ -126,7 +127,7 @@ class Users extends Component {
  deleteUser = (e, profileID, userID) => {
     e.preventDefault();
     let profiles = [...this.state.profiles];
-    let updatedProfile = _.remove(profiles, function(profile) { return profile.user._id === userID; });
+    let updatedProfile = removeByMatch(profiles, function(profile) { return profile.user._id === userID; });
     let userName = updatedProfile[0].user.firstname + " " + updatedProfile[0].user.lastname;
 
     this.setState({
@@ -139,14 +140,14 @@ class Users extends Component {
  setAdmin = (e, userID, value) => {
      // update the state with the new variable 
      let profiles = [...this.state.profiles];
-     let updatedProfile = _.remove(profiles, function(profile) { return profile.user._id === userID; });
+     let updatedProfile = removeByMatch(profiles, function(profile) { return profile.user._id === userID; });
      updatedProfile[0].user.isAdmin = value;
 
      let msgType = value ? "added" : "removed";
      let msg = `Admin privileges ${msgType} for ${updatedProfile[0].user.firstname} ${updatedProfile[0].user.lastname}.`;
 
      this.setState({
-         profiles: _.sortBy(_.concat(profiles, updatedProfile), ['user.firstname', 'user.lastname']),
+         profiles: sortArrByAscending(_.concat(profiles, updatedProfile), ['user.firstname', 'user.lastname']),
          adminToastOpen: true,
          adminToastMsg: msg
      });
@@ -165,14 +166,14 @@ class Users extends Component {
     else if (setting === 'disable') this.props.disableProfileByUser(profileId);
 
     let profiles = [...this.state.profiles];
-    let updatedProfile = _.remove(profiles, function(profile) { return profile._id === profileId; });
+    let updatedProfile = removeByMatch(profiles, function(profile) { return profile._id === profileId; });
     updatedProfile[0].disabled = (setting === 'enable') ? false : true;
 
     let msgType = (setting === 'enable') ? "enabled" : "disabled";
     let msg = `${updatedProfile[0].user.firstname} ${updatedProfile[0].user.lastname}'s profile has been ${msgType}.`;
 
     this.setState({
-         profiles: _.sortBy(_.concat(profiles, updatedProfile), ['user.firstname', 'user.lastname']),
+         profiles: sortArrByAscending(_.concat(profiles, updatedProfile), ['user.firstname', 'user.lastname']),
          enableToastOpen: true,
          enableToastMsg: msg
      });

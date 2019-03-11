@@ -15,7 +15,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
-import _ from 'lodash';
+import { sortArrByAscending, removeByMatch } from '../../utils/lodashOps';
 
 const styles = theme => ({
     card: {
@@ -45,6 +45,7 @@ class EditSubjects extends Component {
  }
 
  componentDidMount() {
+     // Get all the subjects when component rendered, to prevent blank fields on reload
      this.props.getSubjects();
  }
 
@@ -52,7 +53,7 @@ class EditSubjects extends Component {
     if (nextProps.errors) this.setState({ errors: nextProps.errors });
     if (nextProps.subjects.subjects) {
         this.setState({
-            subjects: _.sortBy(nextProps.subjects.subjects, ['id', 'name'])
+            subjects: sortArrByAscending(nextProps.subjects.subjects, ['id', 'name'])
         });
     }
  }
@@ -65,7 +66,7 @@ class EditSubjects extends Component {
 
  removeSubject = id => {
     let subjects = [...this.state.subjects];
-    const newSubjects = _.remove(subjects, subject => { return subject.id !== id; });
+    const newSubjects = removeByMatch(subjects, subject => { return subject.id !== id; });
 
     this.setState({
         subjects: [...newSubjects]
@@ -85,6 +86,7 @@ class EditSubjects extends Component {
  }
 
  onChange = e => {
+
    const name = e.target.name;
    let subjects = [...this.state.subjects];
    let i = name.charAt(name.length - 1);

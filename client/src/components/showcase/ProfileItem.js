@@ -23,9 +23,18 @@ import InfoIcon from '@material-ui/icons/Info';
 
 const styles = theme => ({
     card: {
-      minWidth: 100,
+      maxWidth: 300,
+      maxHeight: 300
     }
 });
+
+const truncateBio = bio => {
+    if (bio.length > 40) {
+        const shortBio = bio.split(" ").splice(0, 13).join(" ") + "...";
+        return shortBio;
+    }
+    return bio;
+}
 
 const ProfileItem = props => {
     const { profile, auth } = props;
@@ -90,7 +99,7 @@ const ProfileItem = props => {
                               <InfoIcon className="icon"/>
                           </Grid>
                           <Grid item xs>
-                            <Typography>{profile.bio}</Typography>
+                            <Typography>{truncateBio(profile.bio)}</Typography>
                           </Grid>
                     </Grid>}
                     {profile.availability &&
