@@ -44,10 +44,11 @@ exports.confirmEmail = (req, res) => {
   const { id } = req.params;
 
   console.log("CONFIRMING");
-  console.log(id);
+  console.log(id)
 
   User.findById(id)
     .then(user => {
+      console.log(user)
 
       // A user with that id does not exist in the DB. Perhaps some tricky 
       // user tried to go to a different url than the one provided in the 

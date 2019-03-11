@@ -4,7 +4,7 @@
 // extensible if the application needs to send different email templates
 // (eg. unsubscribe) in the future.
 
-let url = process.env.NODE_ENV === 'production' ? process.env.hostedClientURL : 'localhost:3000';
+const url = process.env.NODE_ENV === 'production' ? process.env.hostedClientURL : 'localhost:3000';
 
 module.exports = {
   confirm: id => {
