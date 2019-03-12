@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 // redux action
 import { registerUser } from '../../redux/actions/authActions';
@@ -147,6 +148,11 @@ class Register extends Component {
                   </Button>
                 </form>
               </Paper>
+              <div className="link-container">
+                <Link to="/login" className="link reg-link">
+                    Existing user? Click here to login!
+                </Link>
+              </div>
             </div>
           );
     }

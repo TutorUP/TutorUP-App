@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { loginUser } from '../../redux/actions/authActions';
+import { Link } from 'react-router-dom';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -119,6 +120,11 @@ class Login extends Component {
                   </Button>
                 </form>
               </Paper>
+              <div className="link-container">
+                <Link to="/register" className="link reg-link">
+                    New user? Click here to register!
+                </Link>
+              </div>
             </div>
           );
     }

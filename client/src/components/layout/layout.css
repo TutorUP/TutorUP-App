@@ -7,6 +7,26 @@
 	text-decoration: none;
 }
 
+.reg-link {
+  font-family: 'Roboto', 'Helvetica', sans-serif;
+  color: #1E1656 !important;
+  font-size: 15px;
+  font-style: italic;
+}
+
+.link-container {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.reg-link:hover, .reg-link:active {
+  text-decoration: underline;
+}
+
+.reg-link:active {
+  color: darken(#1E1656, 50%);
+}
+
 .centered {
   position: absolute;
   top: 50%;
