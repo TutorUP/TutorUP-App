@@ -1,5 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const hsts = require('hsts');
 dotenv.config();
 const session = require('express-session');
 const cors = require('cors');
@@ -20,6 +21,9 @@ const app = express();
 const port = process.env.PORT || 8080;
 
 app.use(cors());
+app.use(hsts({
+    maxAge: 15552000  // 180 days in seconds
+}))
 app.use(helmet());
 // app.use(express.cookieParser());
 
