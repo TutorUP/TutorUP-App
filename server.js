@@ -21,9 +21,9 @@ const app = express();
 const port = process.env.PORT || 8080;
 
 app.use(cors());
-const hstsMiddleware = hsts({
-    maxAge: 1234000
-})
+app.use(hsts({
+    maxAge: 15552000  // 180 days in seconds
+}))
 app.use(helmet());
 // app.use(express.cookieParser());
 
