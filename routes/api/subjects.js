@@ -46,13 +46,16 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
         for (var key in subject) {
             if (subject[key]) subjectFields[key] = subject[key].trim();
         }
+        subjectFields.id = subject.id ? subject.id.trim() : '';
+
+        console.log(subjectFields);
 
         // See if there is already a subject with the subject ID
-        Subject.findOne({ id: subject.id }).then(subject => {
+        Subject.findOne({ _id: subject._id }).then(subject => {
             if (subject) {
                 // Subject already exists
                 Subject.findOneAndUpdate(
-                    { id: subject.id },
+                    { _id: subject._id },
                     { $set: subjectFields },
                     { new: true }
                 ).then(subject => res.json(subject));

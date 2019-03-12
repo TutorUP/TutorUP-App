@@ -30,9 +30,9 @@ module.exports = function validateSubjectInput(data) {
         errors.name = 'Subject name field is required';
     }
 
-    // if (Validator.isEmpty(data.isCourse)) {
-    //     errors.isMinor = 'Subject isCourse field is required';
-    // }
+    if (Validator.isEmpty(data.isCourse)) {
+        errors.isMinor = 'Subject isCourse field is required';
+    }
 
     return {
         errors,
