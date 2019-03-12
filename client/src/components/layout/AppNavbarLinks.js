@@ -11,7 +11,6 @@ import LockIcon from '@material-ui/icons/LockOutlined';
 import PeopleIcon from '@material-ui/icons/People';
 import SearchIcon from '@material-ui/icons/Search';
 import InfoIcon from '@material-ui/icons/Info';
-import AssignmentIcon from '@material-ui/icons/Assignment';
 import SubjectIcon from '@material-ui/icons/LibraryBooks'
 import './layout.css';
 import CodeIcon from '@material-ui/icons/Code';
@@ -93,13 +92,6 @@ export const secondaryListItems = (
           <InfoIcon />
         </ListItemIcon>
         <ListItemText primary="About" />
-    </ListItemLink>
-
-    <ListItemLink href="https://engineering.projects.up.edu/nguyenda18/">
-          <ListItemIcon>
-            <AssignmentIcon />
-          </ListItemIcon>
-          <ListItemText primary="Capstone Page" />
     </ListItemLink>
     
     <ListItemLink href="https://github.com/TutorUP/TutorUP-App">
