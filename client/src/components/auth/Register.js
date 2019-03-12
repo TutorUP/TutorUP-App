@@ -117,7 +117,7 @@ class Register extends Component {
                   </FormControl>
                   <span className="error">{errors.name}</span>
                   <FormControl margin="normal" required fullWidth>
-                    <InputLabel htmlFor="email">Email Address</InputLabel>
+                    <InputLabel htmlFor="email">UP Username</InputLabel>
                     <Input id="email" 
                       name="email" 
                       autoComplete="email" 
