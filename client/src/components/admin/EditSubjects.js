@@ -86,11 +86,11 @@ class EditSubjects extends Component {
  }
 
  onChange = e => {
-
    const name = e.target.name;
    let subjects = [...this.state.subjects];
-   let i = name.charAt(name.length - 1);
-   let property = name.substring(0, name.length - 2);
+   let dashPos = name.indexOf('-');
+   let i = name.substring(dashPos+1);
+   let property = name.substring(0, dashPos);
 
    subjects[i][property] = e.target.value;
    this.setState({ [subjects]: subjects });
