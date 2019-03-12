@@ -60,7 +60,7 @@ class ViewSubjects extends Component {
     if (nextProps.errors) this.setState({ errors: nextProps.errors });
     if (nextProps.subjects.subjects) {
         this.setState({
-            subjects: _.sortBy(nextProps.subjects.subjects, ['id', 'name'])
+            subjects: _.sortBy(nextProps.subjects.subjects, ['name'])
         });
     }
  }
@@ -77,21 +77,23 @@ render() {
             <Table className={classes.table}>
               <TableHead>
                 <TableRow>
-                  <CustomTableCell>Subject ID</CustomTableCell>
                   <CustomTableCell>Subject Name</CustomTableCell>
                   <CustomTableCell>Is Major?</CustomTableCell>
                   <CustomTableCell>Is Minor?</CustomTableCell>
+                  <CustomTableCell>Is Course?</CustomTableCell>
+                  <CustomTableCell>Course ID</CustomTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {this.state.subjects.map(subject => (
-                  <TableRow key={subject.id} hover={true}>
+                  <TableRow key={subject.name} hover={true}>
                     <TableCell component="th" scope="row">
-                      {subject.id}
+                      {subject.name}
                     </TableCell>
-                    <TableCell>{subject.name}</TableCell>
                     <TableCell>{subject.isMajor}</TableCell>
                     <TableCell>{subject.isMinor}</TableCell>
+                    <TableCell>{subject.isCourse}</TableCell>
+                    <TableCell>{subject.id}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

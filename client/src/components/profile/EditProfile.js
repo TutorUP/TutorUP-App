@@ -137,6 +137,7 @@ render() {
 
     const minors = filterByOptions(subjects, ['isMinor', "Yes"]);
     const majors = filterByOptions(subjects, ['isMajor', "Yes"]);
+    const subjectItems = filterByOptions(subjects, ['isCourse', "Yes"]);
 
     const majorMenuItems =  majors.map((major, i) =>
             <MenuItem key={i} value={major.name}>{major.name}</MenuItem>
@@ -144,7 +145,7 @@ render() {
     const minorMenuItems = minors.map((minor, i) =>
             <MenuItem key={i} value={minor.name}>{minor.name}</MenuItem>
     );
-    const courseMenuItems = subjects.map((subject, i) =>
+    const courseMenuItems = subjectItems.map((subject, i) =>
             <MenuItem key={i} value={subject.id}>{subject.id}</MenuItem>
     );
 
@@ -160,7 +161,6 @@ render() {
                     <FormControl margin="normal" required fullWidth>
                         <InputLabel htmlFor={courseId}>Course Identifier</InputLabel>
                         <Select value={course.courseId} onChange={this.onChange} variant="outlined" name={courseId} id="courseId">
-                            <MenuItem value=""></MenuItem>
                             {courseMenuItems}
                         </Select>
                     </FormControl>

@@ -53,14 +53,14 @@ class EditSubjects extends Component {
     if (nextProps.errors) this.setState({ errors: nextProps.errors });
     if (nextProps.subjects.subjects) {
         this.setState({
-            subjects: sortArrByAscending(nextProps.subjects.subjects, ['id', 'name'])
+            subjects: sortArrByAscending(nextProps.subjects.subjects, ['name'])
         });
     }
  }
 
  addSubject = (e) => {
     this.setState((prevState) => ({
-      subjects: [...prevState.subjects, {id: "", name: "", isMajor: "", isMinor: ""}],
+      subjects: [...prevState.subjects, {id: "", name: "", isMajor: "", isMinor: "", isCourse: ""}],
     }));
  }
 
@@ -103,44 +103,52 @@ render() {
             let name = "name-" + i;
             let isMajor = "isMajor-" + i;
             let isMinor = "isMinor-" + i; 
+            let isCourse = "isCourse-" + i;
 
             return  (
               <Grid item xs={12} key={i}>
                <Card className="card" elevation={0}>
                   <CardContent>
                     <Grid container spacing={24}>
-                      <Grid item xs={12} sm={3}>
-                        <FormControl margin="normal" required fullWidth>
-                            <InputLabel htmlFor={id}>Subject ID</InputLabel>
-                            <Input type="text" id={id} name={id} value={subject.id} fullWidth onChange={this.onChange}>
-                            </Input>
-                        </FormControl>
-                      </Grid>
-                      <Grid item xs={12} sm={3}>
+                      <Grid item xs={12} sm={4}>
                         <FormControl margin="normal" required fullWidth>
                             <InputLabel htmlFor={name}>Subject Name</InputLabel>
                             <Input type="text" id={name} name={name} value={subject.name} fullWidth onChange={this.onChange}>
                             </Input>
                         </FormControl>
                       </Grid>
-                      <Grid item xs={12} sm={3}>
+                      <Grid item xs={12} sm={2}>
                           <FormControl margin="normal" required fullWidth>
                             <InputLabel htmlFor={isMajor}>Is Major?</InputLabel>
                             <Select value={subject.isMajor} onChange={this.onChange} variant="outlined" name={isMajor} id={isMajor}>
-                                <MenuItem value=""></MenuItem>
                                 <MenuItem value="Yes">Yes</MenuItem>
                                 <MenuItem value="No">No</MenuItem>
                             </Select>
                         </FormControl>
                       </Grid>
-                      <Grid item xs={12} sm={3}>
+                      <Grid item xs={12} sm={2}>
                           <FormControl margin="normal" required fullWidth>
                             <InputLabel htmlFor={isMinor}>Is Minor?</InputLabel>
                             <Select value={subject.isMinor} onChange={this.onChange} variant="outlined" name={isMinor} id={isMinor}>
-                                <MenuItem value=""></MenuItem>
                                 <MenuItem value="Yes">Yes</MenuItem>
                                 <MenuItem value="No">No</MenuItem>
                             </Select>
+                        </FormControl>
+                      </Grid>
+                      <Grid item xs={12} sm={2}>
+                          <FormControl margin="normal" required fullWidth>
+                            <InputLabel htmlFor={isCourse}>Is Course?</InputLabel>
+                            <Select value={subject.isCourse} onChange={this.onChange} variant="outlined" name={isCourse} id={isCourse}>
+                                <MenuItem value="Yes">Yes</MenuItem>
+                                <MenuItem value="No">No</MenuItem>
+                            </Select>
+                        </FormControl>
+                      </Grid>
+                      <Grid item xs={12} sm={2}>
+                        <FormControl margin="normal" fullWidth disabled={subject.isCourse !== "Yes"} required={subject.isCourse === "Yes"}>
+                            <InputLabel htmlFor={id}>Course ID</InputLabel>
+                            <Input type="text" id={id} name={id} value={subject.id} fullWidth onChange={this.onChange}>
+                            </Input>
                         </FormControl>
                       </Grid>
                     </Grid>

@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const SubjectSchema = new Schema({
     id: {
         type: String,
-        required: true,
+        required: false,
         max: 5
     },
     name: {
@@ -18,6 +18,11 @@ const SubjectSchema = new Schema({
         max: 5
     },
     isMinor: {
+        type: String,
+        required: true,
+        max: 5
+    },
+    isCourse: {
         type: String,
         required: true,
         max: 5
