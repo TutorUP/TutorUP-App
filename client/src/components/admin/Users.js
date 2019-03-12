@@ -209,25 +209,25 @@ render() {
                         <Tooltip title="Remove Admin">
                             <span><IconButton disabled={profile.user._id === auth.user.id}
                                 onClick={((e) => this.setAdmin(e, profile.user._id, false))}>
-                                <RemoveAdminIcon />
+                                <AddAdminIcon />
                             </IconButton></span>
                         </Tooltip>}
                         {!profile.user.isAdmin &&
                         <Tooltip title="Make Admin">
                             <IconButton onClick={((e) => this.setAdmin(e, profile.user._id, true))}>
-                                <AddAdminIcon />
+                                <RemoveAdminIcon />
                             </IconButton>
                         </Tooltip>}
                         {profile.disabled ? (
                                 <Tooltip title="Enable Profile">
                                     <IconButton onClick={((e) => this.selectDisable(e, profile._id, 'enable'))}>
-                                        <VisibleIcon />
+                                        <DisabledIcon />
                                     </IconButton>
                                 </Tooltip>
                             ) : (
                                 <Tooltip title="Disable Profile">
                                     <IconButton onClick={((e) => this.selectDisable(e, profile._id, 'disable'))}>
-                                        <DisabledIcon />
+                                        <VisibleIcon />
                                     </IconButton>
                                 </Tooltip>
                             )
