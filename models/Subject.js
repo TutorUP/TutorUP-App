@@ -24,7 +24,7 @@ const SubjectSchema = new Schema({
     },
     isCourse: {
         type: String,
-        required: true,
+        required: false,
         max: 5
     }
 });
