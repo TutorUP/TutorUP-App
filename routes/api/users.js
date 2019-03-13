@@ -61,9 +61,9 @@ router.post('/register', async (req, res, next) => {
                 });
             });
 
-            // if (process.env.NODE_ENV === 'production') {
-            //     sendEmail(newUser.email, templates.confirm(newUser._id));
-            // }
+            if (process.env.NODE_ENV === 'production') {
+                sendEmail(newUser.email, templates.confirm(newUser._id));
+            }
         }
     }
     catch (err) {

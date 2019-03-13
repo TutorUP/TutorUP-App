@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { API_URL } from '../../client-config';
 
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -10,7 +11,7 @@ import ConfirmImg from '../../images/confirmed-text.jpg';
 class UserConfirm extends Component {
     componentDidMount = () => {
         const { id } = this.props.match.params;
-        fetch(`http://localhost:8080/email/confirm/${id}`)
+        fetch(`${API_URL}/email/confirm/${id}`)
         .then(res => res.json())
         .catch(err => console.error(err));
     }
