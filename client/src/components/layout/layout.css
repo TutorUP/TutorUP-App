@@ -7,6 +7,10 @@
 	text-decoration: none;
 }
 
+.margin-right {
+  margin-right: 15px !important;
+}
+
 .reg-link {
   font-family: 'Roboto', 'Helvetica', sans-serif;
   color: #1E1656 !important;

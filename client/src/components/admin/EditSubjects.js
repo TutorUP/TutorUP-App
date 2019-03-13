@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 
 import { createSubjects, getSubjects, removeSubject } from '../../redux/actions/subjectActions';
 
@@ -16,6 +17,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import { sortArrByAscending, removeByMatch } from '../../utils/lodashOps';
+import _ from 'lodash';
 
 const styles = theme => ({
     card: {
@@ -59,9 +61,9 @@ class EditSubjects extends Component {
  }
 
  addSubject = (e) => {
-    this.setState((prevState) => ({
-      subjects: [...prevState.subjects, {id: "", name: "", isMajor: "", isMinor: "", isCourse: ""}],
-    }));
+    // push new subject to the top of the existing list
+    let newSubjects = _.concat([{id: "", name: "", isMajor: "", isMinor: "", isCourse: ""}], this.state.subjects);
+    this.setState((prevState) => ({ subjects: newSubjects }));
  }
 
  removeSubject = id => {
@@ -166,7 +168,6 @@ render() {
                 Create and Edit Subjects
             </Typography>
             <Grid container justify="space-between" spacing={24}>
-              {subjectItems}
                <Grid item xs={12}>
                    <div className="courses"></div>
                </Grid>
@@ -177,11 +178,14 @@ render() {
                    
                </Grid>
                <Grid item>
+                  <Button aria-label="Cancel" className="margin-right" component={Link} to="/subjects">
+                    Cancel
+                  </Button>
                    <Button aria-label="Save" type="submit" variant="outlined" onClick={this.onSubmit}>
                       Save 
                    </Button>
                </Grid>
-             
+              {subjectItems}
             </Grid>  
       </div>
     );
