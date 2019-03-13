@@ -11,6 +11,15 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardMedia from '@material-ui/core/CardMedia';
+import Snackbar from '@material-ui/core/Snackbar';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import EditProfileImg from '../../images/edit-profile.jpg';
 import CreateProfileImg from '../../images/create-profile.jpg';
 import DeleteAccountImg from '../../images/delete-account.jpg';
@@ -40,11 +49,20 @@ const styles = theme => ({
      media: {
         objectFit: 'cover',
      },
+     success: {
+         backgroundColor: '#AEA444'
+     },
+     message: {
+       display: 'flex',
+       alignItems: 'center',
+     }
 });
 
 class Dashboard extends Component {
     state = {
       disabled: false,
+      deleteDialogOpen: false,
+      deleteToast: false,
     }
 
     componentDidMount() {
@@ -55,16 +73,42 @@ class Dashboard extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.profile.profile) {
-        this.setState({
-            disabled: nextProps.profile.profile.disabled
-        });
+            this.setState({
+                disabled: nextProps.profile.profile.disabled
+            });
+        }
     }
- }
 
     onDeleteClick = e => {
         e.preventDefault();
-        this.props.deleteAccount();
+        if (this.props.profile.profile.user.isAdmin) {
+            this.handleDeleteToastOpen();
+        }
+        else {
+            this.handleDeleteOpen();
+        }
     }
+
+    handleDeleteToastOpen = () => {
+      this.setState({ deleteToast: true });
+    };
+
+    deleteToastClose = () => {
+      this.setState({ deleteToast: false });
+    };
+
+    handleDeleteOpen = () => {
+      this.setState({ deleteDialogOpen: true });
+    };
+
+    handleDeleteClose = () => {
+      this.setState({ deleteDialogOpen: false });
+    };
+
+    handleDeleteSuccessClose = () => {
+      this.setState({ deleteDialogOpen: false });
+      this.props.deleteAccount();
+    };
 
     onProfileSettingClick = (e, setting) => {
         e.preventDefault();
@@ -201,6 +245,45 @@ class Dashboard extends Component {
                     <br/>
                     {dashboardContent}
                 </div>
+                <Dialog
+                  open={this.state.deleteDialogOpen}
+                  onClose={this.handleDeleteClose}
+                  aria-labelledby="alert-dialog-title"
+                  aria-describedby="alert-dialog-description"
+                >
+                  <DialogTitle id="alert-dialog-title">{"Delete Account?"}</DialogTitle>
+                  <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        Clicking Delete Account below will delete both your tutor profile and user account.
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={this.handleDeleteClose} className="textPurple">
+                      Cancel
+                    </Button>
+                    <Button onClick={this.handleDeleteSuccessClose} variant="outlined" className="purpleDelete" autoFocus>
+                      Delete Account
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+
+                <Snackbar 
+                    anchorOrigin={{vertical: 'top', horizontal: 'right',}}
+                    open={this.state.deleteToast}
+                    autoHideDuration={8000}
+                    onClose={this.deleteToastClose}
+                    >
+                  <SnackbarContent
+                    className={classes.success}
+                    aria-describedby="client-snackbar"
+                    message={
+                      <span id="client-snackbar" className={classes.message}>
+                        <CheckCircleIcon className="toastIcon" />
+                        Admins cannot delete their accounts. Please transfer admin privileges and have that person revoke your admin status before trying again. 
+                      </span>
+                    }
+                  />
+                </Snackbar>
             </React.Fragment>
         );
     }

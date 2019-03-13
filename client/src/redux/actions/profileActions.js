@@ -109,9 +109,7 @@ export const filterProfile = filterString => dispatch => {
 
 // Delete account & profile
 export const deleteAccount = () => dispatch => {
-    if (window.confirm('Are you sure? This can NOT be undone!')) {
-      axios
-        .delete('/api/profile')
+      axios.delete('/api/profile')
         .then(res =>
           dispatch({
             type: SET_CURRENT_USER,
@@ -124,7 +122,6 @@ export const deleteAccount = () => dispatch => {
             payload: err.response.data
           })
         );
-    }
 }
 
 export const deleteAccountByAdmin = (id) => dispatch => {
