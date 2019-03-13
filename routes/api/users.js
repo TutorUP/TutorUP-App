@@ -46,7 +46,7 @@ router.post('/register', async (req, res, next) => {
                 confirmed: false,
             });
 
-            if (setting.isProduction) {
+            if (!setting.isProduction) {
                 newUser.confirmed = true
             }
 
