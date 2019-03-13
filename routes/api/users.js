@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const setting = require('../../config/checkProd');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const keys = require('../../config/keys');
@@ -45,7 +46,7 @@ router.post('/register', async (req, res, next) => {
                 confirmed: false,
             });
 
-            if (process.env.NODE_ENV !== 'production') {
+            if (setting.isProduction) {
                 newUser.confirmed = true
             }
 
@@ -61,7 +62,7 @@ router.post('/register', async (req, res, next) => {
                 });
             });
 
-            if (process.env.NODE_ENV === 'production') {
+            if (setting.isProduction) {
                 sendEmail(newUser.email, templates.confirm(newUser._id));
             }
         }

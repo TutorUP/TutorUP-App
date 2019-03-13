@@ -2,6 +2,7 @@ const User = require('../models/User');
 const sendEmail = require('./email.send')
 const msgs = require('./email.msgs')
 const templates = require('./email.templates')
+const logger = require('heroku-logger')
 
 const emailMsgs = require('./email.msgs');
 
@@ -42,15 +43,16 @@ exports.collectEmail = (req, res) => {
 // url on the client and a fetch request is sent in componentDidMount.
 exports.confirmEmail = (req, res) => {
   const { id } = req.params;
-  process.stdout.write("CONFIRMING: " + id);
 
   User.findById(id)
     .then(user => {
+      logger.info("User Id: " + user._id);
 
       // A user with that id does not exist in the DB. Perhaps some tricky 
       // user tried to go to a different url than the one provided in the 
       // confirmation email.
       if (!user) {
+        logger.error("Could not find user: " + id);
         res.json({ msg: msgs.couldNotFind })
       }
       
@@ -58,6 +60,10 @@ exports.confirmEmail = (req, res) => {
       // user and let them know their email address has been confirmed.
       else if (user && !user.confirmed) {
         User.findByIdAndUpdate(id, { confirmed: true })
+          .then(() => {
+            logger.info("Found User: " + user);
+            logger.info("Confirmed user: " + user.confirmed);
+          })
           .then(() => res.json({ msg: msgs.confirmed }))
           .catch(err => console.log(err))
       }
@@ -67,6 +73,8 @@ exports.confirmEmail = (req, res) => {
         res.json({ msg: msgs.alreadyConfirmed })
       }
 
+      logger.info(user)
+
     })
-    .catch(err => console.log(err))
+    .catch(err => logger.error("Cannot find user: " + id));
 }

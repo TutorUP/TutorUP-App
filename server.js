@@ -1,7 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
-const hsts = require('hsts');
 dotenv.config();
+const setting = require('./config/checkProd');
 const session = require('express-session');
 const cors = require('cors');
 const helmet = require('helmet');
@@ -21,9 +21,6 @@ const app = express();
 const port = process.env.PORT || 8080;
 
 app.use(cors());
-app.use(hsts({
-    maxAge: 15552000  // 180 days in seconds
-}))
 app.use(helmet());
 // app.use(express.cookieParser());
 
@@ -66,7 +63,7 @@ app.use('/api/courses', courses);
 app.use('/api/subjects', subjects);
 app.get('/email/confirm/:id', emailController.confirmEmail);
 
-if (process.env.NODE_ENV === 'production') {
+if (setting.isProduction) {
     sessConfig.cookie.secure = true;
 
     // Set static folder
@@ -77,6 +74,6 @@ if (process.env.NODE_ENV === 'production') {
     });
 }
 
-app.listen(port, () => console.info(`Server started on port ${port}`));
+app.listen(port, () => console.info(`Server started on port ${port} & Prod setting is ${setting.isProduction}`));
 
 module.exports = app;
