@@ -42,12 +42,10 @@ exports.collectEmail = (req, res) => {
 // url on the client and a fetch request is sent in componentDidMount.
 exports.confirmEmail = (req, res) => {
   const { id } = req.params;
-
   process.stdout.write("CONFIRMING: " + id);
 
   User.findById(id)
     .then(user => {
-      console.log(user)
 
       // A user with that id does not exist in the DB. Perhaps some tricky 
       // user tried to go to a different url than the one provided in the 
