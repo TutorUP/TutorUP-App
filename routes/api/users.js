@@ -45,7 +45,7 @@ router.post('/register', async (req, res, next) => {
                 confirmed: false,
             });
 
-            if (process.env.NODE_ENV === 'production') {
+            if (process.env.NODE_ENV !== 'production') {
                 newUser.confirmed = true
             }
 
