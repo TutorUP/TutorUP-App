@@ -201,8 +201,6 @@ class ProfilesShowcase extends Component {
                                 searchList.push(profile);
                             }
                         }
-                       
-
                         //by full name of course
                         let courseName = course.courseName;
                         let courseNameSub = courseName.substring(0, search_text.length).toLowerCase();
@@ -319,24 +317,32 @@ class ProfilesShowcase extends Component {
                 let profile = profiles[prof];
                 let majors = profile.major;
                 let minors = profile.minor;
-                for(var m in majors){   //add profiles by major 
-                    let major = majors[m];
-                    for(var e in subjectFilterList){
-                        let eachSubject = subjectFilterList[e];
+                let courses = profile.courses;
+
+                for(var e in subjectFilterList){
+                    let eachSubject = subjectFilterList[e];
+                    for(var m in majors){   //add profiles by major 
+                        let major = majors[m];
                         if(eachSubject === major && !results.includes(profile)){
                             results.push(profile);
                         }
                     }
-                }
-                for(var mi in minors){  //add by minor
-                    let minor = minors[mi];
-                    for(var f in subjectFilterList){
-                        let eachSubject = subjectFilterList[f];
+                    for(var mi in minors){  //add by minor
+                        let minor = minors[mi];
                         if(eachSubject === minor && !results.includes(profile)){
                             results.push(profile);
                         }
                     }
+                    for(var c in courses){  //add by course subject
+                        let courseSubject = courses[c].courseSubject;
+                        if(eachSubject === courseSubject && !results.includes(profile)){
+                            results.push(profile);
+                        }
+                    }
                 }
+
+             
+              
             }
             profiles = results;
         }
