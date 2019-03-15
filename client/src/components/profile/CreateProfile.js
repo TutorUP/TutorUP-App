@@ -172,7 +172,7 @@ render() {
     return (
       <div className="padding20">
             <Typography variant="h4" component="h1" align="center" className="editHeading">
-                Create Profile
+                Create Tutor Profile
             </Typography>
             <form onSubmit={this.onSubmit}>    
                 <Grid container spacing={24}>
