@@ -212,14 +212,14 @@ render() {
                         </FormControl>
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <FormControl margin="normal" fullWidth>
+                        <FormControl margin="normal" required fullWidth>
                           <InputLabel htmlFor="bio">Short Bio</InputLabel>
                           <Input type="text" id="bio" name="bio" value={bio} multiline fullWidth onChange={this.onChange}>
                           </Input>
                         </FormControl>
                     </Grid>
                     <Grid item xs={12}>
-                        <FormControl margin="normal" fullWidth>
+                        <FormControl margin="normal" required fullWidth>
                           <InputLabel htmlFor="availability">Availablity</InputLabel>
                           <Input type="text" id="availability" name="availability" value={availability} multiline fullWidth onChange={this.onChange}>
                           </Input>
