@@ -4,6 +4,7 @@ import { createProfile, postCourse } from '../../redux/actions/profileActions';
 import { getSubjects } from '../../redux/actions/subjectActions';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -144,7 +145,8 @@ render() {
                   <CardContent>
                     <FormControl margin="normal" required fullWidth>
                         <InputLabel htmlFor={courseId}>Course Identifier</InputLabel>
-                        <Select value={course.courseId} onChange={this.onChange} variant="outlined" name={courseId} id="courseId">
+                        <Select value={course.courseId} onChange={this.onChange} variant="outlined" name={courseId} id="courseId"
+                          MenuProps={{ style: {maxHeight: 300} }}>
                             {courseMenuItems}
                         </Select>
                     </FormControl>
@@ -170,17 +172,18 @@ render() {
     return (
       <div className="padding20">
             <Typography variant="h4" component="h1" align="center" className="editHeading">
-                Create Profile
+                Create Tutor Profile
             </Typography>
             <form onSubmit={this.onSubmit}>    
                 <Grid container spacing={24}>
                     <Grid item xs={12} sm={6} md={6}>
                         <FormControl margin="normal" required fullWidth>
                             <InputLabel htmlFor="major">Major(s)</InputLabel>
-                            <Select multiple value={major} onChange={this.onChange} variant="outlined" inputProps={{
-                                name: 'major',
-                                id: 'major'
-                            }}>
+                            <Select multiple value={major} onChange={this.onChange} variant="outlined" MenuProps={{ style: {maxHeight: 300} }}
+                              inputProps={{
+                                  name: 'major',
+                                  id: 'major'
+                              }}>
                                 {majorMenuItems}
                             </Select>
                         </FormControl>
@@ -188,7 +191,7 @@ render() {
                     <Grid item xs={12} sm={6} md={6}>
                         <FormControl margin="normal" fullWidth>
                             <InputLabel htmlFor="minor">Minor(s)</InputLabel>
-                            <Select multiple value={minor || []} onChange={this.onChange} inputProps={{
+                            <Select multiple value={minor || []} onChange={this.onChange} MenuProps={{ style: {maxHeight: 300} }} inputProps={{
                                 name: 'minor',
                                 id: 'minor'
                             }}>
@@ -199,7 +202,7 @@ render() {
                     <Grid item xs={12} sm={6}>
                         <FormControl margin="normal" required fullWidth>
                             <InputLabel htmlFor="type">Paid or volunteer?</InputLabel>
-                            <Select value={type || ''} onChange={this.onChange} inputProps={{
+                            <Select value={type || ''} onChange={this.onChange} MenuProps={{ style: {maxHeight: 300} }} inputProps={{
                                 name: 'type',
                                 id: 'type'
                             }}>
@@ -210,14 +213,14 @@ render() {
                         </FormControl>
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <FormControl margin="normal" fullWidth>
+                        <FormControl margin="normal" required fullWidth>
                           <InputLabel htmlFor="bio">Short Bio</InputLabel>
                           <Input type="text" id="bio" name="bio" value={bio} multiline fullWidth onChange={this.onChange}>
                           </Input>
                         </FormControl>
                     </Grid>
                     <Grid item xs={12}>
-                        <FormControl margin="normal" fullWidth>
+                        <FormControl margin="normal" required fullWidth>
                           <InputLabel htmlFor="availability">Availablity</InputLabel>
                           <Input type="text" id="availability" name="availability" value={availability} multiline fullWidth onChange={this.onChange}>
                           </Input>
@@ -237,7 +240,9 @@ render() {
                 </Grid>  
                 <Grid container justify="flex-end" spacing={24}>
                     <Grid item>
-                        <Button align="right" type="cancel" className="button">Cancel</Button>
+                        <Button aria-label="Cancel" align="right" type="cancel" className="Button" component={Link} to="/profile">
+                          Cancel
+                        </Button>
                     </Grid> 
                     <Grid item>   
                         <Button align="right" type="submit" variant="outlined" color="inherit" className="button">Submit</Button>

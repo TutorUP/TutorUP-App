@@ -401,7 +401,7 @@ class ProfilesShowcase extends Component {
                                 <div className="large">Subjects</div>
                                 <div className="small"><SubjectIcon /></div>
                             </Button>   
-                            <Menu id="majorsMenu" anchorEl={majorsDropDown} open={Boolean(majorsDropDown)} onClose={this.closeMajorsMenu}>
+                            <Menu id="majorsMenu" anchorEl={majorsDropDown} open={Boolean(majorsDropDown)} onClose={this.closeMajorsMenu} PaperProps={{ style: {maxHeight: 300} }}>
                                 {courseMenuItems}
                             </Menu>
                         </Grid>

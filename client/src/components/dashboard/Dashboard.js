@@ -21,12 +21,12 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import EditProfileImg from '../../images/edit-profile.jpg';
-import CreateProfileImg from '../../images/create-profile.jpg';
 import DeleteAccountImg from '../../images/delete-account.jpg';
 import EnableProfileImg from '../../images/enable-profile.jpg';
 import DisableProfileImg from '../../images/disable-profile.jpg';
 import ViewProfileImg from '../../images/view-profile.jpg';
 import FindTutorImg from '../../images/find-tutor.jpg';
+import BecomeTutorImg from '../../images/become-tutor.jpg';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -211,10 +211,10 @@ class Dashboard extends Component {
                             <CardActionArea component={Link} to={'/create-profile'}>
                                 <CardMedia
                                   component="img"
-                                  alt="create profile"
+                                  alt="become a tutor"
                                   className={classes.media}
                                   height="140"
-                                  image={CreateProfileImg}
+                                  image={BecomeTutorImg}
                                 />
                             </CardActionArea>
                         </Card>
