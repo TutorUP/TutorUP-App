@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 
 import { createProfile, getCurrentProfile } from '../../redux/actions/profileActions';
 import { getSubjects } from '../../redux/actions/subjectActions';
@@ -254,7 +255,9 @@ render() {
                 </Grid>  
                 <Grid container justify="flex-end" spacing={24}>
                     <Grid item>
-                        <Button align="right" type="cancel" className="button">Cancel</Button>
+                        <Button aria-label="Cancel" align="right" type="cancel" className="Button" component={Link} to="/profile">
+                          Cancel
+                        </Button>
                     </Grid> 
                     <Grid item>   
                         <Button align="right" type="submit" variant="outlined" color="inherit" className="button">Submit</Button>

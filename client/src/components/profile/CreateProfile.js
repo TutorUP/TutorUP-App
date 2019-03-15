@@ -4,6 +4,7 @@ import { createProfile, postCourse } from '../../redux/actions/profileActions';
 import { getSubjects } from '../../redux/actions/subjectActions';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -239,7 +240,9 @@ render() {
                 </Grid>  
                 <Grid container justify="flex-end" spacing={24}>
                     <Grid item>
-                        <Button align="right" type="cancel" className="button">Cancel</Button>
+                        <Button aria-label="Cancel" align="right" type="cancel" className="Button" component={Link} to="/profile">
+                          Cancel
+                        </Button>
                     </Grid> 
                     <Grid item>   
                         <Button align="right" type="submit" variant="outlined" color="inherit" className="button">Submit</Button>
