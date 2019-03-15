@@ -11,6 +11,7 @@ import SentimentSatisfiedAlt from '@material-ui/icons/SentimentSatisfiedAlt';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -130,6 +131,7 @@ class Register extends Component {
                   <FormControl margin="normal" required fullWidth>
                     <InputLabel htmlFor="password">Password</InputLabel>
                     <Input placeholder="Password needs at least 6 characters" name="password" type="password" id="password" autoComplete="current-password" onChange={this.onChange}/>
+                    <FormHelperText id="password-helper-text">Must be at least 6 characters, both upper and lower case letters, a number, and a special character.</FormHelperText>
                   </FormControl>
                   <span className="error">{errors.password}</span>
                   <FormControl margin="normal" required fullWidth>
