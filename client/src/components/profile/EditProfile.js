@@ -192,7 +192,7 @@ render() {
              <form onSubmit={this.onSubmit}>    
                 <Grid container spacing={24}>
                     <Grid item xs={12} sm={6} md={6}>
-                        <FormControl margin="normal" fullWidth>
+                        <FormControl margin="normal" required fullWidth>
                             <InputLabel htmlFor="major">Major(s)</InputLabel>
                             <Select required multiple value={major} onChange={this.onChange} variant="outlined" MenuProps={{ style: {maxHeight: 300} }} 
                               inputProps={{
