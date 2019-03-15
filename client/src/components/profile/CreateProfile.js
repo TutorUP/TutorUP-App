@@ -144,7 +144,8 @@ render() {
                   <CardContent>
                     <FormControl margin="normal" required fullWidth>
                         <InputLabel htmlFor={courseId}>Course Identifier</InputLabel>
-                        <Select value={course.courseId} onChange={this.onChange} variant="outlined" name={courseId} id="courseId">
+                        <Select value={course.courseId} onChange={this.onChange} variant="outlined" name={courseId} id="courseId"
+                          MenuProps={{ style: {maxHeight: 300} }}>
                             {courseMenuItems}
                         </Select>
                     </FormControl>
@@ -177,10 +178,11 @@ render() {
                     <Grid item xs={12} sm={6} md={6}>
                         <FormControl margin="normal" required fullWidth>
                             <InputLabel htmlFor="major">Major(s)</InputLabel>
-                            <Select multiple value={major} onChange={this.onChange} variant="outlined" inputProps={{
-                                name: 'major',
-                                id: 'major'
-                            }}>
+                            <Select multiple value={major} onChange={this.onChange} variant="outlined" MenuProps={{ style: {maxHeight: 300} }}
+                              inputProps={{
+                                  name: 'major',
+                                  id: 'major'
+                              }}>
                                 {majorMenuItems}
                             </Select>
                         </FormControl>
@@ -188,7 +190,7 @@ render() {
                     <Grid item xs={12} sm={6} md={6}>
                         <FormControl margin="normal" fullWidth>
                             <InputLabel htmlFor="minor">Minor(s)</InputLabel>
-                            <Select multiple value={minor || []} onChange={this.onChange} inputProps={{
+                            <Select multiple value={minor || []} onChange={this.onChange} MenuProps={{ style: {maxHeight: 300} }} inputProps={{
                                 name: 'minor',
                                 id: 'minor'
                             }}>
@@ -199,7 +201,7 @@ render() {
                     <Grid item xs={12} sm={6}>
                         <FormControl margin="normal" required fullWidth>
                             <InputLabel htmlFor="type">Paid or volunteer?</InputLabel>
-                            <Select value={type || ''} onChange={this.onChange} inputProps={{
+                            <Select value={type || ''} onChange={this.onChange} MenuProps={{ style: {maxHeight: 300} }} inputProps={{
                                 name: 'type',
                                 id: 'type'
                             }}>
