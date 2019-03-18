@@ -87,6 +87,11 @@ class EditProfile extends Component {
 
  }
 
+ numberOnly = (e) => {
+   console.log(e.charCode);
+   return (e.charCode >= 48 && e.charCode <= 57);
+ }
+
  onSubmit = (e) => {
      e.preventDefault();
      const { bio, major, minor, availability, courses, type } = this.state;
@@ -168,7 +173,8 @@ render() {
                     </FormControl>
                     <FormControl margin="normal" required maxLength="3" fullWidth>
                           <InputLabel htmlFor={courseNumber}>Course Number</InputLabel>
-                          <Input id="courseNumber" name={courseNumber} value={course.courseNumber} onChange={this.onChange} type="number">
+                          <Input id="courseNumber" name={courseNumber} value={course.courseNumber} onChange={this.onChange}
+                          type="number" inputProps={{  min: 1, step: 1, pattern: '[0-9]', max: 999 }}>
                           </Input>
                     </FormControl>
                     <FormControl margin="normal" required fullWidth>

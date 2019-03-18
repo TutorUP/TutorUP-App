@@ -152,7 +152,8 @@ render() {
                     </FormControl>
                     <FormControl margin="normal" required maxLength="3" fullWidth>
                           <InputLabel htmlFor={courseNumber}>Course Number</InputLabel>
-                          <Input id="courseNumber" name={courseNumber} value={course.courseNumber} onChange={this.onChange} type="number">
+                          <Input id="courseNumber" name={courseNumber} value={course.courseNumber} onChange={this.onChange}
+                          type="number" inputProps={{  min: 1, step: 1, pattern: '[0-9]', max: 999 }}>
                           </Input>
                     </FormControl>
                     <FormControl margin="normal" required fullWidth>
