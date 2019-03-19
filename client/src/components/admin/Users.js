@@ -61,7 +61,6 @@ class Users extends Component {
      enableToastMsg: '',
      deleteDialogOpen: false,
      deleteName: '',
-     deleteProfileId: '',
      deleteUserId: '',
      errors: {}
  }
@@ -74,7 +73,7 @@ class Users extends Component {
     if (nextProps.errors) this.setState({ errors: nextProps.errors });
     if (nextProps.profiles) {
         this.setState({
-            profiles: sortArrByAscending(nextProps.profiles, ['user.firstname', 'user.lastname'])
+            profiles: sortArrByAscending(nextProps.profiles, ['firstname', 'lastname'])
         });
     }
   }
@@ -95,7 +94,6 @@ class Users extends Component {
     this.setState({ 
         deleteDialogOpen: false,
         deleteName: '',
-        deleteProfileId: '',
         deleteUserId: ''
     });
   };
@@ -104,13 +102,12 @@ class Users extends Component {
     this.setState({ 
         deleteDialogOpen: false,
         deleteName: '',
-        deleteProfileId: '',
         deleteUserId: ''
     });
 
     let profiles = [...this.state.profiles];
-    const newProfiles = profiles.filter(profile => {
-        return profile._id !== this.state.deleteProfileId
+    const newProfiles = profiles.filter(user => {
+        return user._id !== this.state.deleteUserId
     });
 
     this.setState({
@@ -119,20 +116,18 @@ class Users extends Component {
 
      const id = {
          user: this.state.deleteUserId,
-         profile: this.state.deleteProfileId
      }
      this.props.deleteAccountByAdmin(id);
   };
 
- deleteUser = (e, profileID, userID) => {
+ deleteUser = (e, userID) => {
     e.preventDefault();
     let profiles = [...this.state.profiles];
-    let updatedProfile = removeByMatch(profiles, function(profile) { return profile.user._id === userID; });
-    let userName = updatedProfile[0].user.firstname + " " + updatedProfile[0].user.lastname;
+    let updatedUser = removeByMatch(profiles, function(user) { return user._id === userID; });
+    let userName = updatedUser[0].firstname + " " + updatedUser[0].lastname;
 
     this.setState({
         deleteUserId: userID,
-        deleteProfileId: profileID,
         deleteName: userName,
     }, () => this.handleDeleteOpen());
  }
@@ -140,14 +135,14 @@ class Users extends Component {
  setAdmin = (e, userID, value) => {
      // update the state with the new variable 
      let profiles = [...this.state.profiles];
-     let updatedProfile = removeByMatch(profiles, function(profile) { return profile.user._id === userID; });
-     updatedProfile[0].user.isAdmin = value;
+     let updatedUser = removeByMatch(profiles, function(user) { return user._id === userID; });
+     updatedUser[0].isAdmin = value;
 
      let msgType = value ? "added" : "removed";
-     let msg = `Admin privileges ${msgType} for ${updatedProfile[0].user.firstname} ${updatedProfile[0].user.lastname}.`;
+     let msg = `Admin privileges ${msgType} for ${updatedUser[0].firstname} ${updatedUser[0].lastname}.`;
 
      this.setState({
-         profiles: sortArrByAscending(_.concat(profiles, updatedProfile), ['user.firstname', 'user.lastname']),
+         profiles: sortArrByAscending(_.concat(profiles, updatedUser), ['firstname', 'lastname']),
          adminToastOpen: true,
          adminToastMsg: msg
      });
@@ -160,20 +155,20 @@ class Users extends Component {
      this.props.setAdmin(data);
  }
 
- selectDisable = (e, profileId, setting) => {
+ selectDisable = (e, userId, setting) => {
      e.preventDefault();
-    if (setting === 'enable') this.props.enableProfileByUser(profileId);
-    else if (setting === 'disable') this.props.disableProfileByUser(profileId);
+    if (setting === 'enable') this.props.enableProfileByUser(userId);
+    else if (setting === 'disable') this.props.disableProfileByUser(userId);
 
     let profiles = [...this.state.profiles];
-    let updatedProfile = removeByMatch(profiles, function(profile) { return profile._id === profileId; });
-    updatedProfile[0].disabled = (setting === 'enable') ? false : true;
+    let updatedUser = removeByMatch(profiles, function(user) { return user._id === userId; });
+    updatedUser[0].disabled = (setting === 'enable') ? false : true;
 
     let msgType = (setting === 'enable') ? "enabled" : "disabled";
-    let msg = `${updatedProfile[0].user.firstname} ${updatedProfile[0].user.lastname}'s profile has been ${msgType}.`;
+    let msg = `${updatedUser[0].firstname} ${updatedUser[0].lastname}'s profile has been ${msgType}.`;
 
     this.setState({
-         profiles: sortArrByAscending(_.concat(profiles, updatedProfile), ['user.firstname', 'user.lastname']),
+         profiles: sortArrByAscending(_.concat(profiles, updatedUser), ['firstname', 'lastname']),
          enableToastOpen: true,
          enableToastMsg: msg
      });
@@ -197,44 +192,44 @@ render() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {profiles.map(profile => (
-                  <TableRow key={profile._id} hover={true}>
+                {profiles.map(user => (
+                  <TableRow key={user._id} hover={true}>
                     <TableCell component="th" scope="row">
-                      {profile.user.firstname} {profile.user.lastname} 
-                      {profile.user.isAdmin && <span> (admin)</span>}
+                      {user.firstname} {user.lastname} 
+                      {user.isAdmin && <span> (admin)</span>}
                     </TableCell>
-                    <TableCell className="emailCol">{profile.user.email}</TableCell>
+                    <TableCell className="emailCol">{user.email}</TableCell>
                     <TableCell align="right">
-                        {profile.user.isAdmin &&
+                        {user.isAdmin &&
                         <Tooltip title="Remove Admin">
-                            <span><IconButton disabled={profile.user._id === auth.user.id}
-                                onClick={((e) => this.setAdmin(e, profile.user._id, false))}>
+                            <span><IconButton disabled={user._id === auth.user.id}
+                                onClick={((e) => this.setAdmin(e, user._id, false))}>
                                 <AddAdminIcon />
                             </IconButton></span>
                         </Tooltip>}
-                        {!profile.user.isAdmin &&
+                        {!user.isAdmin &&
                         <Tooltip title="Make Admin">
-                            <IconButton onClick={((e) => this.setAdmin(e, profile.user._id, true))}>
+                            <IconButton onClick={((e) => this.setAdmin(e, user._id, true))}>
                                 <RemoveAdminIcon />
                             </IconButton>
                         </Tooltip>}
-                        {profile.disabled ? (
-                                <Tooltip title="Enable Profile">
-                                    <IconButton onClick={((e) => this.selectDisable(e, profile._id, 'enable'))}>
+                        {user.disabled ? (
+                                <Tooltip title={user.hasProfile ? "Enable Profile" : "No Profile"}>
+                                    <span><IconButton disabled={!user.hasProfile} onClick={((e) => this.selectDisable(e, user._id, 'enable'))}>
                                         <DisabledIcon />
-                                    </IconButton>
+                                    </IconButton></span>
                                 </Tooltip>
                             ) : (
-                                <Tooltip title="Disable Profile">
-                                    <IconButton onClick={((e) => this.selectDisable(e, profile._id, 'disable'))}>
+                                <Tooltip title={user.hasProfile ? "Disable Profile" : "No Profile"}>
+                                    <span><IconButton disabled={!user.hasProfile} onClick={((e) => this.selectDisable(e, user._id, 'disable'))}>
                                         <VisibleIcon />
-                                    </IconButton>
+                                    </IconButton></span>
                                 </Tooltip>
                             )
                         }
-                        <Tooltip title={profile.user.isAdmin ? "" : "Delete User Account"}>
-                            <span><IconButton disabled={profile.user.isAdmin}
-                                onClick={((e) => this.deleteUser(e, profile._id, profile.user._id))}>
+                        <Tooltip title={user.isAdmin ? "Cannot Delete Admin" : "Delete User Account"}>
+                            <span><IconButton disabled={user.isAdmin}
+                                onClick={((e) => this.deleteUser(e, user._id))}>
                                 <DeleteIcon />
                             </IconButton></span>
                         </Tooltip>

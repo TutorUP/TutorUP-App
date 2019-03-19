@@ -69,13 +69,13 @@ export const getProfiles = () => dispatch => {
     });
 }
 
-export const disableProfileByUser = (profileId) => dispatch => {
-    axios.post('api/profile/disableProfile', { profileId: profileId })
+export const disableProfileByUser = (userId) => dispatch => {
+    axios.post('api/profile/disableProfile', { userId: userId })
     .catch(err => console.error(err));
 }
 
-export const enableProfileByUser = (profileId) => dispatch => {
-    axios.post('api/profile/enableProfile', { profileId: profileId })
+export const enableProfileByUser = (userId) => dispatch => {
+    axios.post('api/profile/enableProfile', { userId: userId })
     .catch(err => console.error(err));
 }
 

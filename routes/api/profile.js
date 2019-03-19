@@ -38,19 +38,19 @@ router.get('/all', async (req, res) => {
 router.get('/allUsers', async (req, res) => {
     const errors = {};
     try {
-        const profiles = await Profile.find().populate({
+        const users = await User.find().populate({
             path: 'user',
             select: ['firstname', 'lastname', 'email', 'isAdmin']
         });
 
-        if (!profiles) {
+        if (!users) {
             errors.noprofile = 'This user has not created a profile';
             return res.status(404).json();
         }
-        res.json(profiles);
+        res.json(users);
     }
     catch (err) {
-        res.status(404).json({ profile: 'Error retrieving profile' });
+        res.status(404).json({ user: 'Error retrieving users' });
     }
 });
 
@@ -132,17 +132,29 @@ router.post('/', passport.authenticate('jwt', { session: false}), (req, res) => 
             Profile.findOne({ handle: profileFields.handle }).then(profile => {
                 new Profile(profileFields).save().then(profile => res.json(profile));
             });
+            // set has profile field to true
+            User.findOne({ _id: req.user.id }).then(user => {
+                if (user) {
+                    User.findOneAndUpdate(
+                        { _id: req.user.id },
+                        { $set: { hasProfile: true }}
+                    ).then(user => res.json(user));
+                }
+            });
         }
     });
 });
 
 router.post('/disableProfile', passport.authenticate('jwt', { session: false }), async (req, res) => {
     try {
-        console.log(req.body.profileId)
+        console.log(req.body.userId)
         const profile = await Profile.findOneAndUpdate(
-            { _id: req.body.profileId},
+            { user: req.body.userId},
             { $set: { disabled: true }}
-        ).then(profile => res.json(profile));
+        ).then(profile => {
+            res.json(profile);
+            User.findOneAndUpdate({ _id: req.body.userId }, {$set: {disabled: true }}).then(user => res.json(user));
+        });
     }
     catch (err) {
         console.error(err);
@@ -152,11 +164,15 @@ router.post('/disableProfile', passport.authenticate('jwt', { session: false }),
 
 router.post('/enableProfile', passport.authenticate('jwt', { session: false }), async (req, res) => {
     try {
-        console.log(req.body.profileId)
+        console.log(req.body.userId)
         const profile = await Profile.findOneAndUpdate(
-            { _id: req.body.profileId},
+            { user: req.body.userId},
             { $set: { disabled: false }}
-        ).then(profile => res.json(profile));
+        ).then(profile => {
+            res.json(profile);
+            User.findOneAndUpdate({ _id: req.body.userId}, {$set: {disabled: false }}).then(user => res.json(user));
+        });
+
     }
     catch (err) {
         console.error(err);
@@ -181,10 +197,22 @@ router.delete('/', passport.authenticate('jwt', { session: false }),
 // @access  Private
 router.delete('/id', passport.authenticate('jwt', { session: false }),
     (req, res) => {
-      Profile.findOneAndRemove({ _id: req.body.id.profile }).then(() => {
-        User.findOneAndRemove({ _id: req.body.id.user }).then(() =>
-          res.json({ success: true })
-        );
+      User.findOne({ _id: req.body.id.user }).then(user => {
+          if (user) {
+              if (user.hasProfile) {
+                  Profile.findOneAndRemove({ user: req.body.id.user }).then(() => {
+                      User.findOneAndRemove({ _id: req.body.id.user }).then(() =>
+                        res.json({ success: true })
+                      );
+                  });
+              }
+              else {
+                  User.findOneAndRemove({ _id: req.body.id.user }).then(() =>
+                    res.json({ success: true })
+                  );
+              }
+
+          }
       });
     }
 );

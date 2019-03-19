@@ -27,6 +27,14 @@ const UserSchema = new Schema({
         type: Boolean,
         default: false
     },
+    hasProfile: {
+        type: Boolean,
+        default: false
+    },
+    disabled: {
+        type: Boolean,
+        default: false
+    },
     date: {
         type: Date,
         default: Date.now

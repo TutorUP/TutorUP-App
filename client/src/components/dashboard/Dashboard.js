@@ -113,12 +113,12 @@ class Dashboard extends Component {
     onProfileSettingClick = (e, setting) => {
         e.preventDefault();
         const { profile } = this.props;
-        const profileId = profile.profile._id;
+        const userId = profile.profile.user._id;
 
         this.setState({ disabled: ((setting === 'enable') ? false : true) });
 
-        if (setting === 'enable') this.props.enableProfileByUser(profileId, this.props.history);
-        else if (setting === 'disable') this.props.disableProfileByUser(profileId, this.props.history);
+        if (setting === 'enable') this.props.enableProfileByUser(userId, this.props.history);
+        else if (setting === 'disable') this.props.disableProfileByUser(userId, this.props.history);
     }
 
     render() {
