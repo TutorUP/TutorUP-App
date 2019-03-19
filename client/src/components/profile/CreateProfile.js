@@ -124,15 +124,7 @@ render() {
     const majors = filterByOptions(subjects, ['isMajor', "Yes"]);
     const subjectItems = filterByOptions(subjects, ['isCourse', "Yes"]);
     
-     //beginning of profile validation, continued below
-    var validProfile = false;
-    if(major.length > 0 && type.length > 0){
-        validProfile = true;
-    }
-    else{
-        validProfile = false;
-    }
-
+    
     const majorMenuItems =  majors.map((major, i) =>
             <MenuItem key={i} value={major.name}>{major.name}</MenuItem>
     );
@@ -178,13 +170,21 @@ render() {
              </Grid> 
            )}  
     );
+    ///enforcing major & type to be required
+    var validProfile = false;
+    if(major.length > 0 && type.length > 0){ 
+        validProfile = true;
+    }
+    else{
+        validProfile = false;
+    }
 
-    //submit button disabled unless fields are invalid
+    //courseId required for each new course
     var validCourseIds = true;
     if(courses.length > 0){
         for(var c in courses){ 
             let C = courses[c];
-            if(C.courseId.length > 0){
+            if(C.courseId.length > 0){ 
                 validCourseIds = true;
             }
             else{
@@ -192,7 +192,7 @@ render() {
             }
         }
     }
-
+    //submit button invalid unless both are satisfied
     var valid = false;
     if(validCourseIds && validProfile){
         valid = true;

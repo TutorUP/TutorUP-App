@@ -155,15 +155,6 @@ render() {
             <MenuItem key={i} value={subject.id}>{subject.id}</MenuItem>
     );
     
-    //beginning of profile validation, continued below
-    var validProfile = false;
-    if(major.length > 0 && type.length > 0){
-        validProfile = true;
-    }
-    else{
-        validProfile = false;
-    }
-
     const courseItems = courses.map((course, i) => {
             let courseNumber = "courseNumber-" + i;
             let courseId = "courseId-" + i;
@@ -199,12 +190,21 @@ render() {
              </Grid> 
            )});  
 
-    //submit button disabled unless fields are invalid
+    ///enforcing major & type to be required
+     var validProfile = false;
+     if(major.length > 0 && type.length > 0){ 
+         validProfile = true;
+     }
+     else{
+         validProfile = false;
+     }
+ 
+    //courseId required for each new course
     var validCourseIds = true;
     if(courses.length > 0){
         for(var c in courses){ 
             let C = courses[c];
-            if(C.courseId.length > 0){
+            if(C.courseId.length > 0){ 
                 validCourseIds = true;
             }
             else{
@@ -212,7 +212,7 @@ render() {
             }
         }
     }
-
+    //submit button invalid unless both are satisfied
     var valid = false;
     if(validCourseIds && validProfile){
         valid = true;
@@ -220,7 +220,6 @@ render() {
     else{
         valid = false;
     }
-    
 
     return (
       <div className="padding20">
