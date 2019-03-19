@@ -16,6 +16,11 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Paper from '@material-ui/core/Paper';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 
@@ -56,7 +61,7 @@ const styles = theme => ({
     form: {
       width: '100%', // Fix IE 11 issue.
       marginTop: theme.spacing.unit,
-    },
+    }
   });
 class Register extends Component {
     state = {
@@ -65,11 +70,13 @@ class Register extends Component {
         email: '',
         password: '',
         password2: '',
+        openDialog: false,
         errors: {}
     }
 
     onSubmit = e => {
         e.preventDefault();
+        this.setState({ openDialog: true });
         
         const { firstname, lastname, email, password, password2 } = this.state;
         const upEmail = `${email}@up.edu`;
@@ -81,7 +88,7 @@ class Register extends Component {
             password2: password2
         }
 
-        this.props.registerUser(newUser, this.props.history);
+        this.props.registerUser(newUser);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -90,6 +97,10 @@ class Register extends Component {
       }
 
     }
+
+    handleDialogClose = () => {
+      this.setState({ openDialog: false });
+    };
 
     onChange = e => {
         this.setState({ [e.target.name]: e.target.value })
@@ -155,6 +166,24 @@ class Register extends Component {
                     Existing user? Click here to login!
                 </Link>
               </div>
+                <Dialog
+                  open={this.state.openDialog}
+                  onClose={this.handleDialogClose}
+                  aria-labelledby="alert-dialog-title"
+                  aria-describedby="alert-dialog-description"
+                >
+                  <DialogTitle id="alert-dialog-title">{"Email Confirmation Required"}</DialogTitle>
+                  <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                      Before logging in, you must confirm your email address. Check your email for more information. 
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={this.handleDialogClose} variant="outlined" component={Link} to="/login" className="purpleDelete" autoFocus>
+                      OK
+                    </Button>
+                  </DialogActions>
+                </Dialog>
             </div>
           );
     }
