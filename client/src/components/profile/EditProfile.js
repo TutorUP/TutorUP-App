@@ -154,7 +154,7 @@ render() {
     const courseMenuItems = subjectItems.map((subject, i) =>
             <MenuItem key={i} value={subject.id}>{subject.id}</MenuItem>
     );
-
+    
     const courseItems = courses.map((course, i) => {
             let courseNumber = "courseNumber-" + i;
             let courseId = "courseId-" + i;
@@ -190,6 +190,37 @@ render() {
              </Grid> 
            )});  
 
+    ///enforcing major & type to be required
+     var validProfile = false;
+     if(major.length > 0 && type.length > 0){ 
+         validProfile = true;
+     }
+     else{
+         validProfile = false;
+     }
+ 
+    //courseId required for each new course
+    var validCourseIds = true;
+    if(courses.length > 0){
+        for(var c in courses){ 
+            let C = courses[c];
+            if(C.courseId.length > 0){ 
+                validCourseIds = true;
+            }
+            else{
+                validCourseIds = false;
+            }
+        }
+    }
+    //submit button invalid unless both are satisfied
+    var valid = false;
+    if(validCourseIds && validProfile){
+        valid = true;
+    }
+    else{
+        valid = false;
+    }
+
     return (
       <div className="padding20">
             <Typography variant="h4" component="h1" align="center" className="editHeading">
@@ -200,7 +231,7 @@ render() {
                     <Grid item xs={12} sm={6} md={6}>
                         <FormControl margin="normal" required fullWidth>
                             <InputLabel htmlFor="major">Major(s)</InputLabel>
-                            <Select required multiple value={major} onChange={this.onChange} variant="outlined" MenuProps={{ style: {maxHeight: 300} }} 
+                            <Select multiple value={major} onChange={this.onChange} variant="outlined" MenuProps={{ style: {maxHeight: 300} }} 
                               inputProps={{
                                   name: 'major',
                                   id: 'major'
@@ -266,7 +297,7 @@ render() {
                         </Button>
                     </Grid> 
                     <Grid item>   
-                        <Button align="right" type="submit" variant="outlined" color="inherit" className="button">Submit</Button>
+                        <Button align="right" type="submit" variant="outlined" color="inherit" className="button" disabled={!valid}>Submit</Button>
                     </Grid>
                 </Grid>
             </form>
