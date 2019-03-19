@@ -192,7 +192,7 @@ render() {
               <TableHead>
                 <TableRow>
                   <CustomTableCell>User Name</CustomTableCell>
-                  <CustomTableCell>User Email</CustomTableCell>
+                  <CustomTableCell className="emailCol">User Email</CustomTableCell>
                   <CustomTableCell></CustomTableCell>
                 </TableRow>
               </TableHead>
@@ -203,7 +203,7 @@ render() {
                       {profile.user.firstname} {profile.user.lastname} 
                       {profile.user.isAdmin && <span> (admin)</span>}
                     </TableCell>
-                    <TableCell>{profile.user.email}</TableCell>
+                    <TableCell className="emailCol">{profile.user.email}</TableCell>
                     <TableCell align="right">
                         {profile.user.isAdmin &&
                         <Tooltip title="Remove Admin">

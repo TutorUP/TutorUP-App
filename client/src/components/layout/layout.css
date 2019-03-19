@@ -91,6 +91,10 @@
   }
 }
 
+.emailCol {
+    display: none;
+  }
+
 @media screen and (min-width: 600px) {
   .logo-width {
     width: 60vw;
@@ -100,6 +104,9 @@
   }
   #image-h {
   	display: inline;
+  }
+  .emailCol {
+    display: table-cell;
   }
 }
 
