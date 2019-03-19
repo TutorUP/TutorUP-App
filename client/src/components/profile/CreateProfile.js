@@ -38,7 +38,7 @@ class CreateProfile extends Component {
     if (nextProps.errors) this.setState({ errors: nextProps.errors });
     if (nextProps.subjects.subjects) {
         this.setState({
-            subjects: sortArrByAscending(nextProps.subjects.subjects, [name'])
+            subjects: sortArrByAscending(nextProps.subjects.subjects, ['name'])
         });
     }
  }
