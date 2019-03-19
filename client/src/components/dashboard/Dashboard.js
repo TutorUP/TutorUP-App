@@ -50,7 +50,7 @@ const styles = theme => ({
         objectFit: 'cover',
      },
      success: {
-         backgroundColor: '#AEA444'
+         backgroundColor: '#EEAF30'
      },
      message: {
        display: 'flex',

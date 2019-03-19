@@ -43,7 +43,7 @@ const CustomTableCell = withStyles(theme => ({
 
 const styles = theme => ({
      success: {
-        backgroundColor: '#AEA444',
+        backgroundColor: '#EEAF30',
      },
      message: {
        display: 'flex',

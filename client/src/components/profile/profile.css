@@ -105,6 +105,12 @@
     color: #ffffff !important;
 }
 
+.startButton {
+	color: #ffffff !important;
+	background-color: rgba(238,175,48,1) !important;
+	margin-top: 10px !important;
+}
+
 .tag {
 	background-color: #F5F5F5;
 	padding: 2px 5px;

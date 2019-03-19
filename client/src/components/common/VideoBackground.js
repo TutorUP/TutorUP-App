@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
+import Button from '@material-ui/core/Button';
+
 import Img1 from '../../images/background-1.png';
 import Img2 from '../../images/background-2.png';
 import Img3 from '../../images/background-3.png';
@@ -41,6 +44,11 @@ class VideoBackground extends Component {
           </div>
           <div className="centered">
             <img src={Logo} className="logo-width" alt="logo" />
+            <div>
+              <Button aria-label="Cancel" fullWidth variant="outlined" align="center" className="Button startButton" component={Link} to="/login">
+                  click here to get started!
+              </Button>
+            </div>
           </div>
         </div>
     );
