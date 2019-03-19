@@ -52,7 +52,7 @@ class EditProfile extends Component {
     }
     if (nextProps.subjects.subjects) {
         this.setState({
-            subjects: sortArrByAscending(nextProps.subjects.subjects, ['id', 'name'])
+            subjects: sortArrByAscending(nextProps.subjects.subjects, ['name'])
         });
     }
  }
