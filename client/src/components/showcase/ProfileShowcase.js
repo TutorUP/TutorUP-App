@@ -81,6 +81,8 @@ class ProfilesShowcase extends Component {
                 data: nextProps.profile.profiles
             });
         }
+
+        let query = sessionStorage.length > 0 ? JSON.parse(sessionStorage.getItem('searchQuery')) : ''
      }
 
     //for randomizing profiles displayed
@@ -164,6 +166,8 @@ class ProfilesShowcase extends Component {
             [text]: event.target.searchText,
             searchText: event.target.value
         });
+
+
         let search_text = event.target.value;
         let profileList = this.props.profile.profiles;
         if(this.state.filtering === true){
@@ -249,12 +253,16 @@ class ProfilesShowcase extends Component {
             else{
                 console.log("No results found from search.");
             }
+
+            sessionStorage.setItem('searchQuery', JSON.stringify(searchList))
         }
         else { // if there is no text in search bar, just check other filters
             this.setState(state => ({
                 searching: false
             }), () => this.runAllFilters());
         }
+
+
     }
 
     //Returns results from profiles relating to chosen subject

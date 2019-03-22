@@ -17,7 +17,6 @@ const UserSchema = new Schema({
     confirmed: {
         type: Boolean,
         default: false,
-        required: true
     },
     password: {
         type: String,

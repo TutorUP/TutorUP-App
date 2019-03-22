@@ -41,9 +41,7 @@ router.post('/register', async (req, res, next) => {
                 firstname: req.body.firstname,
                 lastname: req.body.lastname,
                 email: req.body.email,
-                isAdmin: false,
-                password: req.body.password,
-                confirmed: false,
+                password: req.body.password
             });
 
             if (!setting.isProduction) {
