@@ -26,9 +26,6 @@ const ProfileSchema = new Schema({
     courses: {
         type: [Object],
     },
-    isTutor: {
-        type: Boolean
-    },
     type: {
         type: String,
         required: true
