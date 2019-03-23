@@ -22,7 +22,7 @@ import PaidIcon from '@material-ui/icons/AttachMoney';
 
 // redux imports
 import { connect } from 'react-redux';
-import { getProfiles } from '../../redux/actions/profileActions';
+import { getProfiles, getFilteredProfiles, setSearchString } from '../../redux/actions/profileActions';
 import { getSubjects } from '../../redux/actions/subjectActions';
 
 // MUI imports
@@ -64,8 +64,17 @@ class ProfilesShowcase extends Component {
 
     //Functions then render
     componentDidMount() {
-        this.props.getProfiles();
         this.props.getSubjects();
+
+        if (sessionStorage.length > 0) {
+            this.props.getFilteredProfiles();
+            this.setState({
+                searchText: this.props.profile.searchString
+            })
+        }
+        else {
+            this.props.getProfiles();
+        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -81,8 +90,6 @@ class ProfilesShowcase extends Component {
                 data: nextProps.profile.profiles
             });
         }
-
-        let query = sessionStorage.length > 0 ? JSON.parse(sessionStorage.getItem('searchQuery')) : ''
      }
 
     //for randomizing profiles displayed
@@ -166,6 +173,7 @@ class ProfilesShowcase extends Component {
             [text]: event.target.searchText,
             searchText: event.target.value
         });
+        this.props.setSearchString(event.target.value)
 
 
         let search_text = event.target.value;
@@ -249,14 +257,16 @@ class ProfilesShowcase extends Component {
                     searchData: searchList,
                     searching: true
                 }), () => this.runAllFilters());
+                // Store the user's search query
+                sessionStorage.setItem('searchQuery', JSON.stringify(searchList))
             }
             else{
                 console.log("No results found from search.");
             }
-
-            sessionStorage.setItem('searchQuery', JSON.stringify(searchList))
         }
         else { // if there is no text in search bar, just check other filters
+            sessionStorage.removeItem('searchQuery')
+            this.props.getProfiles()
             this.setState(state => ({
                 searching: false
             }), () => this.runAllFilters());
@@ -304,15 +314,16 @@ class ProfilesShowcase extends Component {
     }
 
     runAllFilters() {
+        const { searchText, searchData, allProfiles, filterByPaid, filterByVolunteer } = this.state;
         // use the search data to start if there is search text, if not use the full list
-        let profiles = this.state.searchText.length > 0 ? this.state.searchData : this.state.allProfiles;
+        let profiles = searchText.length > 0 ? searchData : allProfiles;
 
         // check for paid and volunteer
-        if (this.state.filterByPaid) {
+        if (filterByPaid) {
             profiles = _.filter(profiles, { 'type' : "Paid" });
         }
 
-        if (this.state.filterByVolunteer) {
+        if (filterByVolunteer) {
             profiles = _.filter(profiles, { 'type' : "Volunteer" });
         }
 
@@ -374,26 +385,32 @@ class ProfilesShowcase extends Component {
                             );
         let profileItems;
 
+        const profileContent = data.length > 0 ? 
+        data.map(profile => (
+            <ProfileItem key={profile._id} profile={profile} />
+        )) : (
+            <Grid item xs={12}>
+            <div className="padding20">
+                <Typography align="center" className="colorBlue"><WarningIcon id="warning"/> </Typography>
+                <Typography variant="h4" align="center" gutterBottom>No profiles found.</Typography>
+                <Typography variant="subtitle1" align="center">Try widening your search.</Typography>
+            </div>
+            </Grid>
+        )
+
         if (profiles === null || loading) {
-            profileItems = (<ProgressSpinner />)
+            profileItems = <ProgressSpinner />
         }
         else {  //if text in search bar, display search results
-            profileItems = data.length > 0 ?
-            data.map(profile => (
-                <ProfileItem key={profile._id} profile={profile} />
-            )) : (
-                <Grid item xs={12}>
-                <div className="padding20">
-                    <Typography align="center" className="colorBlue"><WarningIcon id="warning"/> </Typography>
-                    <Typography variant="h4" align="center" gutterBottom>No profiles found.</Typography>
-                    <Typography variant="subtitle1" align="center">Try widening your search.</Typography>
-                </div>
+            profileItems = (
+                <Grid container spacing={24}>
+                    {profileContent}
                 </Grid>
-            );
+            )
         }
 
         return (
-            <div>
+            <React.Fragment>
             <header>
                 <Paper className="paddingMargin">
                     <Grid container spacing={24}>
@@ -450,11 +467,9 @@ class ProfilesShowcase extends Component {
                 </Paper>
             </header>
             <div>
-                <Grid container spacing={24}>
-                    {profileItems}
-                </Grid>
+                {profileItems}
             </div>
-        </div>
+        </React.Fragment>
         );
     }
 }
@@ -469,4 +484,4 @@ const mapStateToProps = state => ({
     subjects: state.subjects,
 });
 
-export default connect(mapStateToProps, { getProfiles, getSubjects })(withStyles(styles)(ProfilesShowcase))
+export default connect(mapStateToProps, { getProfiles, setSearchString, getFilteredProfiles, getSubjects })(withStyles(styles)(ProfilesShowcase))
