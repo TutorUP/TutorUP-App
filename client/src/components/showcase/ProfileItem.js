@@ -58,7 +58,7 @@ const ProfileItem = props => {
     const initials =  (firstname && lastname) ? firstname.charAt(0) + lastname.charAt(0) : '';
     const shortname = (firstname && lastname) ? firstname + " " + lastname.charAt(0) + '.' : '';
 
-    const profileEmail = profile.user.email === null ? 'hi@gmail.com' : profile.user.email;
+    const profileEmail = profile.user.email === null ? 'NA' : profile.user.email;
 
     const majors = profile.major.join(", ");
     const minors = (profile.minor.length > 0) ? profile.minor.join(", ") : "";

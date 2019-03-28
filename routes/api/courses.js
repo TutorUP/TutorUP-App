@@ -34,9 +34,6 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
 router.post('/', passport.authenticate('jwt', { session: false }), (req, res) => {
     // const { errors, isValid } = validateCourseInput(req.body);
 
-    console.log('Req body')
-    console.log(req.body[0])
-
 
     // Check validation
     // if (!isValid) {
