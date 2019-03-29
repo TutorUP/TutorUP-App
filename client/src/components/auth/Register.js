@@ -76,7 +76,6 @@ class Register extends Component {
 
     onSubmit = e => {
         e.preventDefault();
-        this.setState({ openDialog: true });
         
         const { firstname, lastname, email, password, password2 } = this.state;
         const upEmail = `${email}@up.edu`;
@@ -89,6 +88,7 @@ class Register extends Component {
         }
 
         this.props.registerUser(newUser);
+        setTimeout(() => this.setState({ openDialog: true }), 1000)
     }
 
     componentDidMount() {
@@ -170,7 +170,7 @@ class Register extends Component {
                     Existing user? Click here to login!
                 </Link>
               </div>
-                {isEmpty(errors) ?
+                {isEmpty(errors) && isEmpty(this.state.errors) ?
                 <Dialog
                   open={this.state.openDialog}
                   onClose={this.handleDialogClose}
