@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-
+import isEmpty from '../../utils/is-empty';
 // redux action
-import { registerUser } from '../../redux/actions/authActions';
+import { registerUser, clearErrors } from '../../redux/actions/authActions';
 
 import SentimentSatisfiedAlt from '@material-ui/icons/SentimentSatisfiedAlt';
 import Avatar from '@material-ui/core/Avatar';
@@ -91,6 +91,10 @@ class Register extends Component {
         this.props.registerUser(newUser);
     }
 
+    componentDidMount() {
+      this.props.clearErrors();
+    }
+
     componentWillReceiveProps(nextProps) {
       if (nextProps.errors) {
         this.setState({ errors: nextProps.errors });
@@ -166,7 +170,7 @@ class Register extends Component {
                     Existing user? Click here to login!
                 </Link>
               </div>
-                {!errors ?
+                {isEmpty(errors) ?
                 <Dialog
                   open={this.state.openDialog}
                   onClose={this.handleDialogClose}
@@ -206,4 +210,4 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(mapStateToProps, { registerUser })(withStyles(styles)(withRouter(Register)));
+export default connect(mapStateToProps, { registerUser, clearErrors })(withStyles(styles)(withRouter(Register)));
