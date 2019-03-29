@@ -166,6 +166,7 @@ class Register extends Component {
                     Existing user? Click here to login!
                 </Link>
               </div>
+                {!errors ?
                 <Dialog
                   open={this.state.openDialog}
                   onClose={this.handleDialogClose}
@@ -184,6 +185,9 @@ class Register extends Component {
                     </Button>
                   </DialogActions>
                 </Dialog>
+                :
+                <React.Fragment></React.Fragment>
+                }
             </div>
           );
     }
