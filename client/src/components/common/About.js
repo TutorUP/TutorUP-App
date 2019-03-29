@@ -18,7 +18,6 @@ const styles = theme => ({
      },
 });
 
-
 class About extends Component {
 
     render() {
@@ -30,7 +29,7 @@ class About extends Component {
               <Grid container spacing={24}>
                 <Grid item xs={12}>
                   <Typography variant="h3" align="center">
-                    Tutor UP is a peer tutoring network for University of Portland.
+                    Tutor UP is a peer tutoring network for University of Portland students.
                   </Typography>
                 </Grid>
                 <Grid item xs={12}>
@@ -41,7 +40,7 @@ class About extends Component {
                     Accessibility.    
                   </Typography>
                   <Typography variant="subtitle1" align="left">
-                    Tutor UP was created with accessibility in mind. Our goal is to make academic aid more accessible for students.
+                    Tutor UP was created with accessibility in mind. Our goal is to make academic aid more accessible for students of all majors.
                   </Typography>
                 </Grid>
                 <Grid item xs={12} md={6} className="box">
@@ -71,7 +70,7 @@ class About extends Component {
                     Simplicity.
                   </Typography>
                   <Typography variant="subtitle1" align="right">
-                    No account is needed to find a tutor! Simply navigate to the search page to begin finding assistance!
+                   Simply register with your UP email to access the tutor search page!
                   </Typography>
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -79,7 +78,7 @@ class About extends Component {
                     Diversity.    
                   </Typography>
                   <Typography variant="subtitle1" align="left">
-                    This online platform allows students to find tutors in a more diverse range of subjects than is offered through on-campus programs.
+                    This online platform allows students to find tutors with a more diverse range of subjects than is offered through on-campus programs.
                   </Typography>
                 </Grid>
                 <Grid item xs={12} md={6} className="box">
