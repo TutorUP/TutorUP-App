@@ -37,7 +37,7 @@ const truncateBio = bio => {
 }
 
 const ProfileItem = props => {
-    const { profile, auth } = props;
+    const { profile, auth, onClick } = props;
 
     const classesCard = profile.courses !== undefined ? (
         <React.Fragment>
@@ -94,26 +94,29 @@ const ProfileItem = props => {
                         </Grid>
                     </Grid>
                     {profile.bio &&
-                    <Grid container wrap="nowrap" spacing={16}>
-                          <Grid item>
-                              <InfoIcon className="icon"/>
-                          </Grid>
-                          <Grid item xs>
-                            <Typography>{truncateBio(profile.bio)}</Typography>
-                          </Grid>
-                    </Grid>}
+                        <Grid container wrap="nowrap" spacing={16}>
+                            <Grid item>
+                                <InfoIcon className="icon"/>
+                            </Grid>
+                            <Grid item xs>
+                                <Typography>{truncateBio(profile.bio)}</Typography>
+                            </Grid>
+                        </Grid>
+                    }
                     {profile.availability &&
-                    <Grid container wrap="nowrap" spacing={16}>
-                          <Grid item>
-                              <CalendarIcon className="icon"/>
-                          </Grid>
-                          <Grid item xs>
-                            <Typography>{profile.availability}</Typography>
-                          </Grid>
-                    </Grid>}
+                        <Grid container wrap="nowrap" spacing={16}>
+                            <Grid item>
+                                <CalendarIcon className="icon"/>
+                            </Grid>
+                            <Grid item xs>
+                                <Typography>{profile.availability}</Typography>
+                            </Grid>
+                        </Grid>
+                    }
                 </CardContent>
                 <CardActions>
                 <Button component={Link}
+                    onClick={onClick}
                     size="small"
                     color="inherit"
                     to={`/profile/${profile.handle}`}
@@ -121,21 +124,22 @@ const ProfileItem = props => {
                     View Profile
                 </Button>
                 {profile.user._id !== auth.user.id &&
-                <Button
-                    size="small"
-                    className="colorPurple"
-                    href={`mailto:${profile.user.email}`}
-                >
-                    Email Tutor
-                </Button>}
+                    <Button
+                        size="small"
+                        className="colorPurple"
+                        href={`mailto:${profile.user.email}`}
+                    >
+                        Email Tutor
+                    </Button>
+                }
                 {auth.isAuthenticated && profile.user._id === auth.user.id &&
-                <Button component={Link}
-                    size="small"
-                    to={`/edit-profile`}
-                    className="colorPurple"
-                >
-                    Edit Profile
-                </Button>
+                    <Button component={Link}
+                        size="small"
+                        to={`/edit-profile`}
+                        className="colorPurple"
+                    >
+                        Edit Profile
+                    </Button>
                 }
                 </CardActions>
             </Card>
@@ -145,7 +149,9 @@ const ProfileItem = props => {
 }
 
 ProfileItem.propTypes = {
-    profile: PropTypes.object.isRequired
+    profile: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired,
+    onClick: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
