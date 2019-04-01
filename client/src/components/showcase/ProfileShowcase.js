@@ -22,7 +22,7 @@ import PaidIcon from '@material-ui/icons/AttachMoney';
 
 // redux imports
 import { connect } from 'react-redux';
-import { getProfiles, getFilteredProfiles, setSearchString } from '../../redux/actions/profileActions';
+import { getProfiles } from '../../redux/actions/profileActions';
 import { getSubjects } from '../../redux/actions/subjectActions';
 
 // MUI imports
@@ -483,4 +483,4 @@ const mapStateToProps = state => ({
     subjects: state.subjects,
 });
 
-export default connect(mapStateToProps, { getProfiles, setSearchString, getFilteredProfiles, getSubjects })(withStyles(styles)(ProfilesShowcase))
+export default connect(mapStateToProps, { getProfiles, getSubjects })(withStyles(styles)(ProfilesShowcase))

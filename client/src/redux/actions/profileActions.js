@@ -1,9 +1,7 @@
 import axios from 'axios';
 import { 
     GET_PROFILE, 
-    GET_PROFILES, 
-    SET_SEARCH_STRING,
-    GET_FILTERED_PROFILES,
+    GET_PROFILES,
     PROFILE_LOADING, 
     GET_ERRORS, 
     CLEAR_CURRENT_PROFILE, 
@@ -68,22 +66,6 @@ export const getProfiles = () => dispatch => {
             type: GET_ERRORS,
             payload: null
         })
-    });
-}
-
-// Return the profiles based on latest search string
-export const getFilteredProfiles = () => dispatch => {
-    const data = sessionStorage.length > 0 ? JSON.parse(sessionStorage.getItem('searchQuery')) : ''
-    dispatch({
-        type: GET_FILTERED_PROFILES,
-        payload: data
-    });
-}
-
-export const setSearchString = searchString => dispatch => {
-    dispatch({
-        type: SET_SEARCH_STRING,
-        payload: searchString
     });
 }
 

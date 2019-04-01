@@ -28,12 +28,16 @@ const styles = theme => ({
     }
 });
 
-const truncateBio = bio => {
-    if (bio.length > 40) {
-        const shortBio = bio.split(" ").splice(0, 13).join(" ") + "...";
-        return shortBio;
+const truncateText = text => {
+    if (text.length > 40) {
+        const shortText = text.split(" ").splice(0, 6).join(" ") + "...";
+        return shortText;
     }
-    return bio;
+    else if (text.length < 1) {
+        return 'N.A.'
+    }
+
+    return text;
 }
 
 const ProfileItem = props => {
@@ -99,7 +103,7 @@ const ProfileItem = props => {
                                 <InfoIcon className="icon"/>
                             </Grid>
                             <Grid item xs>
-                                <Typography>{truncateBio(profile.bio)}</Typography>
+                                <Typography>{truncateText(profile.bio)}</Typography>
                             </Grid>
                         </Grid>
                     }
@@ -109,7 +113,7 @@ const ProfileItem = props => {
                                 <CalendarIcon className="icon"/>
                             </Grid>
                             <Grid item xs>
-                                <Typography>{profile.availability}</Typography>
+                                <Typography>{truncateText(profile.availability)}</Typography>
                             </Grid>
                         </Grid>
                     }
