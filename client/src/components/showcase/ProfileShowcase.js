@@ -46,6 +46,8 @@ class ProfilesShowcase extends Component {
         super();
         this.state = {
             data: [],                    // this is the current list of profiles
+            allProfiles: [],             // this is the full list of profiles
+            searching: false,            // whether or not we are searching
             searchData: [],              // results from searching through all profiles
             filterByPaid: false,         // whether or not we are filtering by paid
             filterByVolunteer: false,    // whether or not we are filtering by volunteer
@@ -57,7 +59,6 @@ class ProfilesShowcase extends Component {
             subjects: [],                // all subjects
             subjectFilters: [],          // currentl list of selected subjects
             shuffled: false,             // whether or not we are shuffling
-            searchNoResults: false,
         };
     }
 
@@ -69,7 +70,7 @@ class ProfilesShowcase extends Component {
             this.props.getProfiles();
             this.setState({
                 subjectFilters: JSON.parse(sessionStorage.getItem('subjectFilters')),
-                // data: JSON.parse(sessionStorage.getItem('searchData')),
+                searchData: JSON.parse(sessionStorage.getItem('searchData')),
                 searchText: sessionStorage.getItem('searchText') === `""` ? '' : sessionStorage.getItem('searchText').replace(/[""]+/g, ''),
                 filterByPaid: sessionStorage.getItem('filterByPaid') == 'true',
                 filterByVolunteer: sessionStorage.getItem('filterByVolunteer') == 'true'
@@ -89,7 +90,7 @@ class ProfilesShowcase extends Component {
         }
         if (nextProps.profile.profiles) {
             this.setState({
-                data: nextProps.profile.profiles
+                allProfiles: nextProps.profile.profiles
             });
         }
      }
@@ -256,12 +257,17 @@ class ProfilesShowcase extends Component {
             if(searchList.length > 0){
                 this.setState(state => ({
                     searchData: searchList,
-                    searchNoResults: false
+                    searching: true
                 }), () => this.runAllFilters());
             }
             else {
-                this.setState({ searchNoResults: true }, () => this.runAllFilters())
+                console.log("No results found from search.");
             }
+        }
+        else { // if there is no text in search bar, just check other filters
+            this.setState(state => ({
+                searching: false
+            }), () => this.runAllFilters());
         }
     }
 
@@ -304,9 +310,9 @@ class ProfilesShowcase extends Component {
     }
 
     runAllFilters() {
-        const { searchText, searchData, data, filterByPaid, filterByVolunteer, subjectFilters } = this.state;
+        const { searchText, searchData, allProfiles, filterByPaid, filterByVolunteer, subjectFilters } = this.state;
         // use the search data to start if there is search text, if not use the full list
-        let profiles = searchText.length > 0 ? searchData : data;
+        let profiles = searchText.length > 0 ? searchData : allProfiles;
 
         // check for paid and volunteer
         if (filterByPaid) {
@@ -384,7 +390,7 @@ class ProfilesShowcase extends Component {
                             );
         let profileItems;
 
-        const profileContent = !this.state.searchNoResults ? 
+        const profileContent = data.length > 0 ? 
             data.map(profile => (
                 <ProfileItem key={profile._id} profile={profile} onClick={this.saveFilters}/>
             )) : (
