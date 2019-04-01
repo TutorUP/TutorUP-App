@@ -38,6 +38,18 @@
   transform: translate(-50%, -50%);
 }
 
+.about {
+  position: absolute;
+  top: 100px;
+}
+
+.bottom {
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 
 #bg {
   position: fixed; 
@@ -69,8 +81,8 @@
 }
 
 .m15 {
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin-top: 15px !important;
+  margin-bottom: 15px !important;
 }
 
 @media screen and (min-width: 300px) {
@@ -89,11 +101,18 @@
   .small {
     display: inline;
   }
+  #sm-header {
+    display: block;
+  }
 }
 
 .emailCol {
     display: none;
   }
+
+#lg-header {
+  display: none;
+}
 
 @media screen and (min-width: 600px) {
   .logo-width {
@@ -107,6 +126,12 @@
   }
   .emailCol {
     display: table-cell;
+  }
+  #lg-header {
+    display: block;
+  }
+  #sm-header {
+    display: none;
   }
 }
 

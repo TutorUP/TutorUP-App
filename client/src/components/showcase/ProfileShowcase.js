@@ -67,10 +67,14 @@ class ProfilesShowcase extends Component {
         this.props.getSubjects();
 
         if (sessionStorage.length > 0) {
-            this.props.getFilteredProfiles();
+            this.props.getProfiles();
             this.setState({
-                searchText: this.props.profile.searchString
-            })
+                subjectFilters: JSON.parse(sessionStorage.getItem('subjectFilters')),
+                searchData: JSON.parse(sessionStorage.getItem('searchData')),
+                searchText: sessionStorage.getItem('searchText') === `""` ? '' : sessionStorage.getItem('searchText').replace(/[""]+/g, ''),
+                filterByPaid: sessionStorage.getItem('filterByPaid') == 'true',
+                filterByVolunteer: sessionStorage.getItem('filterByVolunteer') == 'true'
+            }, () => this.runAllFilters())
         }
         else {
             this.props.getProfiles();
@@ -86,8 +90,7 @@ class ProfilesShowcase extends Component {
         }
         if (nextProps.profile.profiles) {
             this.setState({
-                allProfiles: nextProps.profile.profiles,
-                data: nextProps.profile.profiles
+                allProfiles: nextProps.profile.profiles
             });
         }
      }
@@ -173,7 +176,6 @@ class ProfilesShowcase extends Component {
             [text]: event.target.searchText,
             searchText: event.target.value
         });
-        this.props.setSearchString(event.target.value)
 
 
         let search_text = event.target.value;
@@ -257,22 +259,17 @@ class ProfilesShowcase extends Component {
                     searchData: searchList,
                     searching: true
                 }), () => this.runAllFilters());
-                // Store the user's search query
-                sessionStorage.setItem('searchQuery', JSON.stringify(searchList))
             }
-            else{
+            else {
                 console.log("No results found from search.");
             }
         }
         else { // if there is no text in search bar, just check other filters
-            sessionStorage.removeItem('searchQuery')
             this.props.getProfiles()
             this.setState(state => ({
                 searching: false
             }), () => this.runAllFilters());
         }
-
-
     }
 
     //Returns results from profiles relating to chosen subject
@@ -314,7 +311,7 @@ class ProfilesShowcase extends Component {
     }
 
     runAllFilters() {
-        const { searchText, searchData, allProfiles, filterByPaid, filterByVolunteer } = this.state;
+        const { searchText, searchData, allProfiles, filterByPaid, filterByVolunteer, subjectFilters } = this.state;
         // use the search data to start if there is search text, if not use the full list
         let profiles = searchText.length > 0 ? searchData : allProfiles;
 
@@ -328,19 +325,20 @@ class ProfilesShowcase extends Component {
         }
 
         // check subjects
-        let subjectFilterList = this.state.subjectFilters;
+        let subjectFilterList = subjectFilters;
         if (subjectFilterList.length > 0) {
             let results = [];
+
             //this loop matches profiles to given subjects 
-            for(var prof in profiles){
+            for(let prof in profiles){
                 let profile = profiles[prof];
                 let majors = profile.major;
                 let minors = profile.minor;
                 let courses = profile.courses;
 
-                for(var e in subjectFilterList){
+                for(let e in subjectFilterList){
                     let eachSubject = subjectFilterList[e];
-                    for(var m in majors){   //add profiles by major 
+                    for(let m in majors){   //add profiles by major 
                         let major = majors[m];
                         if(eachSubject === major && !results.includes(profile)){
                             results.push(profile);
@@ -359,15 +357,23 @@ class ProfilesShowcase extends Component {
                         }
                     }
                 }
-
-             
               
             }
+            this.setState({ data: results });
             profiles = results;
         }
 
         this.setState({ data: profiles });
     };
+
+    saveFilters = () => {
+        const { subjectFilters, searchText, searchData, filterByPaid, filterByVolunteer } = this.state;
+        sessionStorage.setItem('subjectFilters', JSON.stringify(subjectFilters));
+        sessionStorage.setItem('searchText', JSON.stringify(searchText))
+        sessionStorage.setItem('filterByPaid', JSON.stringify(filterByPaid))
+        sessionStorage.setItem('filterByVolunteer', JSON.stringify(filterByVolunteer))
+        sessionStorage.setItem('searchData', JSON.stringify(searchData))
+    }
 
     render() {
         const { profiles, loading } = this.props.profile;
@@ -381,22 +387,22 @@ class ProfilesShowcase extends Component {
 
         let subjectChips = this.state.subjectFilters.map((subject, index) => 
                                 <Chip className="search-chip" variant="outlined" key={index} label={subject} 
-                                    onDelete={(e) => this.removeSubject(subject)}/> 
+                                    onDelete={(e) => this.removeSubject(subject)} /> 
                             );
         let profileItems;
 
         const profileContent = data.length > 0 ? 
-        data.map(profile => (
-            <ProfileItem key={profile._id} profile={profile} />
-        )) : (
-            <Grid item xs={12}>
-            <div className="padding20">
-                <Typography align="center" className="colorBlue"><WarningIcon id="warning"/> </Typography>
-                <Typography variant="h4" align="center" gutterBottom>No profiles found.</Typography>
-                <Typography variant="subtitle1" align="center">Try widening your search.</Typography>
-            </div>
-            </Grid>
-        )
+            data.map(profile => (
+                <ProfileItem key={profile._id} profile={profile} onClick={this.saveFilters}/>
+            )) : (
+                <Grid item xs={12}>
+                    <div className="padding20">
+                        <Typography align="center" className="colorBlue"><WarningIcon id="warning"/> </Typography>
+                        <Typography variant="h4" align="center" gutterBottom>No profiles found.</Typography>
+                        <Typography variant="subtitle1" align="center">Try widening your search.</Typography>
+                    </div>
+                </Grid>
+            )
 
         if (profiles === null || loading) {
             profileItems = <ProgressSpinner />
