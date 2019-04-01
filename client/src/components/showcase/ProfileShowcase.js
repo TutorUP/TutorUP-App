@@ -65,9 +65,9 @@ class ProfilesShowcase extends Component {
     //Functions then render
     componentDidMount() {
         this.props.getSubjects();
+        this.props.getProfiles();
 
         if (sessionStorage.length > 0) {
-            this.props.getProfiles();
             this.setState({
                 subjectFilters: JSON.parse(sessionStorage.getItem('subjectFilters')),
                 searchData: JSON.parse(sessionStorage.getItem('searchData')),
@@ -75,9 +75,6 @@ class ProfilesShowcase extends Component {
                 filterByPaid: sessionStorage.getItem('filterByPaid') == 'true',
                 filterByVolunteer: sessionStorage.getItem('filterByVolunteer') == 'true'
             }, () => this.runAllFilters())
-        }
-        else {
-            this.props.getProfiles();
         }
     }
 
@@ -92,6 +89,9 @@ class ProfilesShowcase extends Component {
             this.setState({
                 allProfiles: nextProps.profile.profiles
             });
+        }
+        if (sessionStorage.length < 1) {
+            this.setState({ data: nextProps.profile.profiles })
         }
      }
 
@@ -388,9 +388,10 @@ class ProfilesShowcase extends Component {
                                 <Chip className="search-chip" variant="outlined" key={index} label={subject} 
                                     onDelete={(e) => this.removeSubject(subject)} /> 
                             );
-        let profileItems;
+        
+                            let profileItems;
 
-        const profileContent = data.length > 0 ? 
+        const profileContent = data !== null ? 
             data.map(profile => (
                 <ProfileItem key={profile._id} profile={profile} onClick={this.saveFilters}/>
             )) : (
