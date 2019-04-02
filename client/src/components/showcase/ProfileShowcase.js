@@ -310,7 +310,11 @@ class ProfilesShowcase extends Component {
 
     removeSubject = (subject, event) => {
         _.pull(this.state.subjectFilters, subject);
-        this.setState({ subjectFilters: this.state.subjectFilters }, () => this.runAllFilters());
+        this.setState({ 
+            subjectFilters: this.state.subjectFilters,
+            searchNotFound: false
+        }, 
+        () => this.runAllFilters());
     }
 
     runAllFilters() {
@@ -361,6 +365,12 @@ class ProfilesShowcase extends Component {
                     }
                 }
               
+            }
+            if (results.length < 1) {
+                this.setState({ searchNotFound: true })
+            }
+            else {
+                this.setState({ searchNotFound: false })
             }
             this.setState({ data: results });
             profiles = results;
