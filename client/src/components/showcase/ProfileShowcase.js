@@ -58,6 +58,7 @@ class ProfilesShowcase extends Component {
             majorsDropDown: null,        // majors dropdown
             subjects: [],                // all subjects
             subjectFilters: [],          // currentl list of selected subjects
+            searchNotFound: false,
             shuffled: false,             // whether or not we are shuffling
         };
     }
@@ -257,11 +258,14 @@ class ProfilesShowcase extends Component {
             if(searchList.length > 0){
                 this.setState(state => ({
                     searchData: searchList,
+                    searchNotFound: false,
                     searching: true
                 }), () => this.runAllFilters());
             }
             else {
-                console.log("No results found from search.");
+                this.setState({
+                    searchNotFound: true
+                })
             }
         }
         else { // if there is no text in search bar, just check other filters
@@ -376,7 +380,7 @@ class ProfilesShowcase extends Component {
 
     render() {
         const { profiles, loading } = this.props.profile;
-        const { orderDropDown, filterDropDown, majorsDropDown, subjects, data} = this.state;
+        const { orderDropDown, filterDropDown, majorsDropDown, subjects, data, searchNotFound } = this.state;
 
         let courseMenuItems = subjects.map((subject, i) =>
                 <MenuItem key={i} value={subject} 
@@ -391,7 +395,7 @@ class ProfilesShowcase extends Component {
         
                             let profileItems;
 
-        const profileContent = data !== null ? 
+        const profileContent = data !== null && !searchNotFound ?
             data.map(profile => (
                 <ProfileItem key={profile._id} profile={profile} onClick={this.saveFilters}/>
             )) : (
