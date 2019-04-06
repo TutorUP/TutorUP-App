@@ -13,10 +13,12 @@ const PrivateRoute = ({ component: Component, auth, ...rest}) => (
     />
 )
 
+// Props checking (like type checking for our components)
 PrivateRoute.propTypes = {
     auth: PropTypes.object.isRequired
 }
 
+// Connect our global Redux auth state to be used by this component
 const mapStateToProps = state => ({
     auth: state.auth
 })

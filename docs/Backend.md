@@ -48,16 +48,20 @@ router.<get/post>('/myroute', passport.authenticate('jwt', { session: false }), 
 ## JWT Snippet
 
 ```javascript
+// JWT auth snippet
 const JwtStrategy = require("passport-jwt").Strategy,
   ExtractJwt = require("passport-jwt").ExtractJwt;
 const opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+// Session secret (stored as environment variable, not hard coded)
 opts.secretOrKey = "secret";
 
+// Configure Passport to use JWT authentication
 passport.use(
     new JwtStrategy(opts, (jwt_payload, done) => {
         User.findById(jwt_payload.id)
             .then(user => {
+                // Return user data if found in database
                 if (user) return done(null, user);
                 return done(null, false);
             })

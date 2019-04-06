@@ -60,13 +60,16 @@ All React classes extend from Component:
 ```javascript
 import React, { Component } from "react";
 
+// All React classes extend from Component
 class MyClass extends Component {
+  // Initialize state that will refer to this component
   state = {
     blah: data,
     isState: true,
     isExample: true
   };
 
+  // Return the UI chunk to the page
   render() {
     <div>
       <h1>Hi There</h1>
@@ -84,6 +87,7 @@ It is preferred using React functions for components instead of classes. Functio
 ```javascript
 import React from "react";
 
+// Pure function that returns the UI chunk, without needing state, good for static data
 const myFunc = () => (
   <div>
     <h1>Hi There</h1>
