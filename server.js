@@ -1,3 +1,4 @@
+const compression = require('compression');
 const express = require('express');
 const dotenv = require('dotenv');
 dotenv.config();
@@ -20,6 +21,8 @@ const subjects = require('./routes/api/subjects');
 const app = express();
 const port = process.env.PORT || 8080;
 
+// Use GZip compression
+app.use(compression());
 app.use(cors());
 app.use(helmet());
 // app.use(express.cookieParser());
