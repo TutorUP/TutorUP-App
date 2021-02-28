@@ -5,7 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^3.9.3",
     "@material-ui/icons": "^3.0.1",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "classnames": "^2.2.6",
     "formik": "^1.4.1",
     "i": "^0.3.6",
