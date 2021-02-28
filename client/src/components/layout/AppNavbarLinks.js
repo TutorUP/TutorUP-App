@@ -1,22 +1,22 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import PersonIcon from '@material-ui/icons/Person';
-import AddIcon from '@material-ui/icons/Add';
-import LockIcon from '@material-ui/icons/LockOutlined';
-import PeopleIcon from '@material-ui/icons/People';
-import SearchIcon from '@material-ui/icons/Search';
-import InfoIcon from '@material-ui/icons/Info';
-import SubjectIcon from '@material-ui/icons/LibraryBooks'
-import './layout.css';
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListSubheader from "@material-ui/core/ListSubheader";
+import PersonIcon from "@material-ui/icons/Person";
+import AddIcon from "@material-ui/icons/Add";
+import LockIcon from "@material-ui/icons/LockOutlined";
+import PeopleIcon from "@material-ui/icons/People";
+import SearchIcon from "@material-ui/icons/Search";
+import InfoIcon from "@material-ui/icons/Info";
+import SubjectIcon from "@material-ui/icons/LibraryBooks";
+import "./layout.css";
 
-const ListItemLink = props => {
+const ListItemLink = (props) => {
   return <ListItem button component="a" {...props} />;
-}
+};
 
 export const authLinks = (
   <React.Fragment>
@@ -85,12 +85,12 @@ export const guestLinks = (
 export const secondaryListItems = (
   <div>
     <ListSubheader inset>Resources</ListSubheader>
-      
+
     <ListItemLink href="/about">
-        <ListItemIcon>
-          <InfoIcon />
-        </ListItemIcon>
-        <ListItemText primary="About" />
+      <ListItemIcon>
+        <InfoIcon />
+      </ListItemIcon>
+      <ListItemText primary="About" />
     </ListItemLink>
   </div>
 );

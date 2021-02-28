@@ -1,13 +1,13 @@
-import React from 'react';
+import React from "react";
 
-import VideoBackground from '../common/VideoBackground';
+import VideoBackground from "../common/VideoBackground";
 
-const AppLanding= props => {
+const AppLanding = () => {
   return (
     <React.Fragment>
-        <VideoBackground />
+      <VideoBackground />
     </React.Fragment>
   );
-}
+};
 
 export default AppLanding;
