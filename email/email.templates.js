@@ -1,13 +1,16 @@
 // This file is exporting an Object with a single key/value pair.
 // However, because this is not a part of the logic of the application
-// it makes sense to abstract it to another file. Plus, it is now easily 
+// it makes sense to abstract it to another file. Plus, it is now easily
 // extensible if the application needs to send different email templates
 // (eg. unsubscribe) in the future.
 
-const url = process.env.NODE_ENV === 'production' ? process.env.hostedClientURL : 'localhost:3000';
+const url =
+  process.env.NODE_ENV === "production"
+    ? process.env.hostedClientURL
+    : "localhost:3000";
 
 module.exports = {
-  confirm: id => {
+  confirm: (id) => {
     const html = `
     <style>
       a {
@@ -48,9 +51,7 @@ module.exports = {
         </a>
   </div>
   `;
-  
-    return html;
-  }
-  
-}
 
+    return html;
+  },
+};
