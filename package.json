@@ -49,7 +49,7 @@
     "heroku-logger": "^0.3.3",
     "hsts": "^2.2.0",
     "i": "^0.3.6",
-    "jsonwebtoken": "^8.4.0",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^5.4.0",
     "morgan": "^1.9.1",
     "passport": "^0.4.0",
